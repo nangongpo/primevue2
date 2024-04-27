@@ -1,0 +1,34 @@
+{
+    "name": "primevue2",
+    "version": "2.10.4",
+    "private": false,
+    "homepage": "https://www.primefaces.org/primevue2-v2/",
+    "repository": {
+      "type": "git",
+      "url": "https://nangongpo.github.io/primevue2"
+    },
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/nangongpo/primevue2/issues"
+    },
+    "keywords": [
+      "primevue2",
+      "vue2",
+      "ui framework",
+      "component framework",
+      "ui library",
+      "component library",
+      "material",
+      "bootstrap"
+    ],
+    "web-types": "./web-types.json",
+    "vetur": {
+      "tags": "./vetur-tags.json",
+      "attributes": "./vetur-attributes.json"
+    },
+    "peerDependencies": {
+      "vue": "^2.6.0",
+      "primeicons": "^5.0.0 || ^6.0.0",
+      "@fullcalendar/core": "^5.0.0"
+    }
+  }
