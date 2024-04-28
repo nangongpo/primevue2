@@ -68,8 +68,8 @@ const TreeNodeTemplate = {
 
     const content = context.props.template
       ? context.props.template({
-          node: context.props.node
-        })
+        node: context.props.node
+      })
       : label(context.props.node)
 
     return [content]
@@ -138,60 +138,60 @@ export default {
       const nodeElement = event.target.parentElement
 
       switch (event.which) {
-        //down arrow
-        case 40:
-          var listElement = nodeElement.children[1]
-          if (listElement) {
-            this.focusNode(listElement.children[0])
+      //down arrow
+      case 40:
+        var listElement = nodeElement.children[1]
+        if (listElement) {
+          this.focusNode(listElement.children[0])
+        } else {
+          const nextNodeElement = nodeElement.nextElementSibling
+          if (nextNodeElement) {
+            this.focusNode(nextNodeElement)
           } else {
-            const nextNodeElement = nodeElement.nextElementSibling
-            if (nextNodeElement) {
-              this.focusNode(nextNodeElement)
-            } else {
-              let nextSiblingAncestor =
+            let nextSiblingAncestor =
                 this.findNextSiblingOfAncestor(nodeElement)
-              if (nextSiblingAncestor) {
-                this.focusNode(nextSiblingAncestor)
-              }
+            if (nextSiblingAncestor) {
+              this.focusNode(nextSiblingAncestor)
             }
           }
+        }
 
-          event.preventDefault()
-          break
+        event.preventDefault()
+        break
 
         //up arrow
-        case 38:
-          if (nodeElement.previousElementSibling) {
-            this.focusNode(
-              this.findLastVisibleDescendant(nodeElement.previousElementSibling)
-            )
-          } else {
-            let parentNodeElement = this.getParentNodeElement(nodeElement)
-            if (parentNodeElement) {
-              this.focusNode(parentNodeElement)
-            }
+      case 38:
+        if (nodeElement.previousElementSibling) {
+          this.focusNode(
+            this.findLastVisibleDescendant(nodeElement.previousElementSibling)
+          )
+        } else {
+          let parentNodeElement = this.getParentNodeElement(nodeElement)
+          if (parentNodeElement) {
+            this.focusNode(parentNodeElement)
           }
+        }
 
-          event.preventDefault()
-          break
+        event.preventDefault()
+        break
 
         //right-left arrows
-        case 37:
-        case 39:
-          this.$emit('node-toggle', this.node)
+      case 37:
+      case 39:
+        this.$emit('node-toggle', this.node)
 
-          event.preventDefault()
-          break
+        event.preventDefault()
+        break
 
         //enter
-        case 13:
-          this.onClick(event)
-          event.preventDefault()
-          break
+      case 13:
+        this.onClick(event)
+        event.preventDefault()
+        break
 
-        default:
-          //no op
-          break
+      default:
+        //no op
+        break
       }
     },
     toggleCheckbox() {

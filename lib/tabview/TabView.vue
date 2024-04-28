@@ -68,7 +68,6 @@ const TabPanelHeaderSlot = {
 }
 
 export default {
-  name: 'TabView',
   props: {
     activeIndex: {
       type: Number,
@@ -133,10 +132,8 @@ export default {
       }
     },
     updateScrollBar(index) {
-      if (this.tabs.length) {
-        let tabHeader = this.$refs.nav.children[index]
-        tabHeader.scrollIntoView({ block: 'nearest' })
-      }
+      let tabHeader = this.$refs.nav.children[index]
+      tabHeader.scrollIntoView({ block: 'nearest' })
     },
     updateButtonState() {
       const content = this.$refs.content
@@ -185,9 +182,8 @@ export default {
     },
     tabs() {
       let tabs = []
-
       if (this.allChildren) {
-        tabs = this.allChildren.filter(child => child.$vnode.tag.indexOf('tabpanel') !== -1)
+        tabs = this.allChildren.filter(child => child.$vnode.tag.toLowerCase().indexOf('tabpanel') !== -1)
       }
 
       return tabs

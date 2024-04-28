@@ -35,7 +35,8 @@ function copyDependencies(inFolder, outFolder, subFolder) {
               outFolder + folderName + subFolder + '/' + subFile
             )
           })
-        } catch {}
+        // eslint-disable-next-line no-empty
+        } catch (err) {}
       }
     })
 }

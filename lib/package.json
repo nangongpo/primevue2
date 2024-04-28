@@ -1,11 +1,11 @@
 {
     "name": "primevue2",
-    "version": "2.10.4",
+    "version": "2.10.5",
     "private": false,
-    "homepage": "https://www.primefaces.org/primevue2-v2/",
+    "homepage": "https://nangongpo.github.io/primevue2/",
     "repository": {
       "type": "git",
-      "url": "https://nangongpo.github.io/primevue2"
+      "url": "https://github.com/nangongpo/primevue2.git"
     },
     "license": "MIT",
     "bugs": {

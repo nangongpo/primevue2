@@ -1,8 +1,8 @@
 var gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    uglifycss = require('gulp-uglifycss'),
-    rename = require('gulp-rename'),
-    flatten = require('gulp-flatten')
+  concat = require('gulp-concat'),
+  uglifycss = require('gulp-uglifycss'),
+  rename = require('gulp-rename'),
+  flatten = require('gulp-flatten')
 
 gulp.task('build-css', function () {
   return gulp

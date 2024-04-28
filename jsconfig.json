@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "primevue2/*": ["src/components/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

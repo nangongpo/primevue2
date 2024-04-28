@@ -261,7 +261,7 @@ function addUtils() {
 }
 
 function addApi() {
-  addEntry('api', 'Api.js', 'api');
+  addEntry('api', 'Api.js', 'api')
 }
 
 function addServices() {
@@ -278,10 +278,10 @@ function addPackageJson() {
     "name": "primevue2",
     "version": "${pkg.version}",
     "private": false,
-    "homepage": "https://www.primefaces.org/primevue2-v2/",
+    "homepage": "https://nangongpo.github.io/primevue2/",
     "repository": {
       "type": "git",
-      "url": "https://nangongpo.github.io/primevue2"
+      "url": "https://github.com/nangongpo/primevue2.git"
     },
     "license": "MIT",
     "bugs": {

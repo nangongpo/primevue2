@@ -1,6 +1,7 @@
 # primevue2
-  node16 + rollup2 重新打包primevue2.10.4，支持es
-  待编写测试用例
+  rollup2 重新打包primevue2.10.4，支持es
+  vite5 文档网站
+  vitest 测试, 待编写测试用例
 
 # PrimeVue
 
