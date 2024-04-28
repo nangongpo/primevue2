@@ -1,0 +1,1 @@
+{"version":3,"file":"EditDemo-qsHw9lVY.js","sources":["../../src/views/tabmenu/EditDemo.vue"],"sourcesContent":["<template>\n    <div class=\"tabmenudemo-content\">\n        <h5>Edit Component Content</h5>\n    </div>\n</template>\n\n<script>\nexport default {\n\n}\n</script>"],"names":["_sfc_main"],"mappings":"mJAOA,MAAAA,EAAA,CAEA"}
