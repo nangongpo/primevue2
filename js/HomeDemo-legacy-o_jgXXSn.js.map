@@ -1,0 +1,1 @@
+{"version":3,"file":"HomeDemo-legacy-o_jgXXSn.js","sources":["../../src/views/tabmenu/HomeDemo.vue"],"sourcesContent":["<template>\n    <div class=\"tabmenudemo-content\">\n        <h5>Home Component Content</h5>\n    </div>\n</template>\n\n<script>\nexport default {\n\n}\n</script>"],"names":[],"mappings":"mRAOA,CAEA"}
