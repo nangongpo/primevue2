@@ -17,8 +17,8 @@
             :href="href"
             :class="linkClass(item, { isActive, isExactActive })"
             v-ripple
-            @click.native="onItemClick($event, item, navigate)"
-            @keydown.native="onItemKeyDown($event, item)"
+            @click="onItemClick($event, item, navigate)"
+            @keydown="onItemKeyDown($event, item)"
             role="menuitem">
             <span :class="['p-menuitem-icon', item.icon]"></span>
             <span class="p-menuitem-text">{{ label(item) }}</span>

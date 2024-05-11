@@ -17,7 +17,7 @@
             <a
               :href="href"
               :class="linkClass(item, { isActive, isExactActive })"
-              @click.native="onItemClick($event, item, navigate)"
+              @click="onItemClick($event, item, navigate)"
               role="menuitem"
               v-ripple>
               <span :class="['p-menuitem-icon', item.icon]"></span>

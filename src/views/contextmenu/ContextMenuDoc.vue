@@ -23,6 +23,11 @@ export default {
                    icon:'pi pi-fw pi-file',
                    items:[
                       {
+                        label:'Update',
+                        icon:'pi pi-fw pi-upload',
+                        to: '/fileupload'
+                      },
+                      {
                          label:'New',
                          icon:'pi pi-fw pi-plus',
                          items:[
@@ -144,8 +149,12 @@ export default {
                    separator:true
                 },
                 {
-                   label:'Quit',
-                   icon:'pi pi-fw pi-power-off'
+                  label:'Quit',
+                  icon:'pi pi-fw pi-power-off',
+                  command: (event) => {
+                    this.$toast.add({ severity: 'success', summary: 'Quit', detail: 'Quit success' })
+                    return 
+                  }
                 }
              ]
         }
