@@ -53,6 +53,11 @@
               :alt="file.name"
               :src="file.objectURL"
               :width="previewWidth" />
+            <i 
+              v-else 
+              class="pi pi-file" 
+              role="file" 
+              :style="{ fontSize: '1.5rem', width: `${previewWidth}px` }" />
           </div>
           <div class="p-fileupload-filename">{{ file.name }}</div>
           <div>{{ formatSize(file.size) }}</div>

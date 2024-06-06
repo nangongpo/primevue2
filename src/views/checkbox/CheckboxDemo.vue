@@ -18,7 +18,7 @@
 
                 <h5>Multiple</h5>
                 <div class="field-checkbox">
-                    <Checkbox id="city1" name="city" value="Chicago" v-model="cities" />
+                    <Checkbox id="city1" name="city" value="Chicago" v-model="cities" :disabled="true" />
                     <label for="city1">Chicago</label>
                 </div>
                 <div class="field-checkbox">

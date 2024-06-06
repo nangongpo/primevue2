@@ -1,2 +1,0 @@
-import{n as e}from"./app.component-2M6wTQPG.js";import"./app.fullcalendar-CKwQu0km.js";import"./preact-CNwUjBXN.js";import"./app.core-Bxt8ZFo4.js";const o={};var r=function(){var t=this;return t._self._c,t._m(0)},_=[function(){var n=this,t=n._self._c;return t("div",{staticClass:"tabmenudemo-content"},[t("h5",[n._v("Edit Component Content")])])}],s=e(o,r,_,!1,null,null);const f=s.exports;export{f as default};
-//# sourceMappingURL=EditDemo-DJFrE3KX.js.map

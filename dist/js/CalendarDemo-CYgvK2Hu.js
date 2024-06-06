@@ -1,2 +1,0 @@
-import{n as e}from"./app.component-2M6wTQPG.js";import"./app.fullcalendar-CKwQu0km.js";import"./preact-CNwUjBXN.js";import"./app.core-Bxt8ZFo4.js";const r={};var o=function(){var n=this;return n._self._c,n._m(0)},a=[function(){var t=this,n=t._self._c;return n("div",{staticClass:"tabmenudemo-content"},[n("h5",[t._v("Calendar Component Content")])])}],_=e(r,o,a,!1,null,null);const l=_.exports;export{l as default};
-//# sourceMappingURL=CalendarDemo-CYgvK2Hu.js.map

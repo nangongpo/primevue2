@@ -9,6 +9,7 @@
     </div>
     <DTPaginator
       v-if="paginatorTop"
+      ref="paginatorTop"
       :rows="d_rows"
       :first="lazy ? 0 : d_first"
       :totalRecords="totalRecordsLength"
@@ -163,6 +164,7 @@
     </div>
     <DTPaginator
       v-if="paginatorBottom"
+      ref="paginatorBottom"
       :rows="d_rows"
       :first="lazy ? 0 : d_first"
       :totalRecords="totalRecordsLength"
@@ -1212,6 +1214,14 @@ export default {
       }
     },
     resetPage() {
+      if (this.lazy) {
+        if (this.paginatorTop) {
+          this.$refs.paginatorTop.d_first = 0
+        }
+        if (this.paginatorBottom) {
+          this.$refs.paginatorBottom.d_first = 0
+        }
+      }
       this.d_first = 0
       this.$emit('update:first', this.d_first)
     },

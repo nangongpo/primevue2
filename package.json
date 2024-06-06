@@ -1,6 +1,6 @@
 {
   "name": "primevue2",
-  "version": "2.10.6",
+  "version": "2.10.7",
   "description": "rollup2 重新打包primevue2.10.4, 支持es moudle",
   "scripts": {
     "dev": "vite",
