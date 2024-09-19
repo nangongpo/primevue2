@@ -1,9 +1,9 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 declare class Divider extends Vue {
-  align?: string;
-  layout?: string;
-  type?: string;
+  align?: string
+  layout?: string
+  type?: string
 }
 
-export default Divider;
+export default Divider

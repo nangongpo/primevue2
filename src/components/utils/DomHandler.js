@@ -622,5 +622,9 @@ export default {
       navigator.maxTouchPoints > 0 ||
       navigator.msMaxTouchPoints > 0
     )
+  },
+
+  isClient() {
+    return !!(typeof window !== 'undefined' && window.document && window.document.createElement)
   }
 }

@@ -1,5 +1,5 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 declare class AvatarGroup extends Vue {}
 
-export default AvatarGroup;
+export default AvatarGroup

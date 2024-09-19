@@ -1,4 +1,4 @@
-import Vue, { VNode } from 'vue'
+import Vue from 'vue'
 
 declare class InputMask extends Vue {
   value?: string

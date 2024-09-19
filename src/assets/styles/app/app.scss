@@ -1,3 +1,7 @@
+@charset 'UTF-8';
+
+@import './variables/_variables.scss';
+@import './_mixins';
 @import './_core';
 @import './_code';
 @import './_topbar';
@@ -7,6 +11,7 @@
 @import './_footer';
 @import './_config';
 @import './_designer';
+@import './doc';
 @import './_home';
 @import './_responsive';
 @import './_demo';

@@ -49,7 +49,7 @@
     "vue-template-compiler": "^2.7.16"
   },
   "dependencies": {
-    "@fullcalendar/core": "^5.11.5",
+    "@fullcalendar/core": "^5.0.0",
     "@fullcalendar/daygrid": "^5.11.5",
     "@fullcalendar/interaction": "^5.11.5",
     "@fullcalendar/timegrid": "^5.11.5",
@@ -57,18 +57,17 @@
     "chart.js": "^3.9.1",
     "core-js": "^3.37.0",
     "primeflex": "^3.3.1",
-    "primeicons": "^6.0.1",
-    "prismjs": "^1.29.0",
+    "primeicons": "^6.0.0",
     "quill": "^2.0.0",
-    "vue": "^2.7.16",
-    "vue-router": "^3.6.5",
+    "vue": "^2.7.0",
+    "vue-router": "^3.1.0",
     "vuelidate": "^0.7.7"
   },
   "peerDependencies": {
-    "vue": "^2.7.0",
-    "vue-router": "^3.1.0",
+    "@fullcalendar/core": "^5.0.0",
     "primeicons": "^6.0.0",
-    "@fullcalendar/core": "^5.0.0"
+    "vue": "^2.7.0",
+    "vue-router": "^3.1.0"
   },
   "browserslist": [
     "defaults",

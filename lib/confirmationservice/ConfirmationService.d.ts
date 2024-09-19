@@ -1,6 +1,7 @@
-import Vue, { PluginFunction } from 'vue';
+/* eslint-disable no-unused-vars */
+import Vue, { PluginFunction } from 'vue'
 
-export const install: PluginFunction<{}>;
+export const install: PluginFunction<{}>
 
 interface ConfirmationServiceMethods {
   require(options: any): any;

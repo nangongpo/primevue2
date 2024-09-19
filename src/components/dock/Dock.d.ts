@@ -1,15 +1,15 @@
-import Vue, { VNode } from 'vue';
+import Vue, { VNode } from 'vue'
 
 declare class Dock extends Vue {
-  position?: string;
-  model?: any[];
-  className?: string;
-  styles?: any;
-  tooltipOptions?: any;
-  exact?: boolean;
+  position?: string
+  model?: any[]
+  className?: string
+  styles?: any
+  tooltipOptions?: any
+  exact?: boolean
   $slots: {
-    'item': VNode[];
+    item: VNode[]
   }
 }
 
-export default Dock;
+export default Dock

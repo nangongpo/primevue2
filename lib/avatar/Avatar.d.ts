@@ -1,9 +1,9 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 declare class Avatar extends Vue {
-    label?: string;
-    icon?: string;
-    image?: string;
+  label?: string
+  icon?: string
+  image?: string
 }
 
-export default Avatar;
+export default Avatar

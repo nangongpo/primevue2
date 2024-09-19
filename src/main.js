@@ -2,7 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import Code from './directives/CodeHighlight'
 import AppInputStyleSwitch from './AppInputStyleSwitch.vue'
+import DocSectionCode from './views/doc/DocSectionCode.vue'
 import CodeHighlight from './views/codehighlight/CodeHighlight.vue'
 
 // 生产
@@ -14,7 +16,6 @@ import PrimeVue from './primevue.js'
 
 import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
-import 'prismjs/themes/prism-coy.css'
 import './assets/styles/flags.css'
 
 import Vuelidate from 'vuelidate'
@@ -114,8 +115,10 @@ Vue.prototype.$appState = Vue.observable({ darkTheme: false })
 
 Vue.config.productionTip = false
 
-Vue.component('CodeHighlight', CodeHighlight)
+Vue.directive('code', Code)
 Vue.component('AppInputStyleSwitch', AppInputStyleSwitch)
+Vue.component('DocSectionCode', DocSectionCode)
+Vue.component('CodeHighlight', CodeHighlight)
 
 router.beforeEach(function (to, from, next) {
   window.scrollTo(0, 0)

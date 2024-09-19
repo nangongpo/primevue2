@@ -1,7 +1,7 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 declare class ConfirmDialog extends Vue {
-  group?: string;
+  group?: string
 }
 
-export default ConfirmDialog;
+export default ConfirmDialog

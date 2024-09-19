@@ -1,7 +1,7 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 declare class ColumnGroup extends Vue {
-  type?: string;
+  type?: string
 }
 
-export default ColumnGroup;
+export default ColumnGroup

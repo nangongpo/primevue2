@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import Prism from 'prismjs'
-
 export default {
   props: {
     lang: {
@@ -16,11 +14,12 @@ export default {
   },
   computed: {
     languageClass() {
-      return 'language-' + this.lang
+      return ''
+      // return 'language-' + this.lang
     }
   },
   mounted() {
-    Prism.highlightElement(this.$el.children[0])
+    // window.Prism.highlightElement(this.$el.children[0])
   }
 }
 </script>

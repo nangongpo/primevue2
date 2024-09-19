@@ -226,10 +226,13 @@ function addSFC() {
   fs.readdirSync(entryDir, { withFileTypes: true })
     .filter((dir) => dir.isDirectory())
     .forEach(({ name: folderName }) => {
-      fs.readdirSync(path.resolve(entryDir, folderName)).forEach((file) => {
+      const dirPath = path.resolve(entryDir, folderName)
+      fs.readdirSync(dirPath).forEach((file) => {
         let name = file.split(/(.vue)$|(.js)$/)[0].toLowerCase()
 
-        if (/\.vue$/.test(file) && name === folderName) {
+        if (name === 'plugin') {
+          fs.copySync(path.resolve(entryDir, folderName, file), path.resolve(outputDir, folderName, file))
+        } else if ((/\.vue$/.test(file) && name === folderName)) {
           addEntry(folderName, file, name)
         }
       })
@@ -314,10 +317,6 @@ function addPackageJson() {
   fs.writeFileSync(path.resolve(outputDir, 'package.json'), packageJson)
 }
 
-function addNuxt() {
-  fs
-}
-
 addCommonStyle()
 addUtils()
 addApi()
@@ -326,7 +325,6 @@ addDirectives()
 addServices()
 addSFC()
 addCore()
-addNuxt()
 addPackageJson()
 
 export default entries

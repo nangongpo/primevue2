@@ -1,9 +1,9 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 declare class Breadcrumb extends Vue {
-  home?: any;
-  model?: any[];
-  exact?: boolean;
+  home?: any
+  model?: any[]
+  exact?: boolean
 }
 
-export default Breadcrumb;
+export default Breadcrumb

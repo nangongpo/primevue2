@@ -1,0 +1,14 @@
+:root[class="dark"] {
+  --card-background: var(--surface-900);
+  --border-color: var(--surface-700);
+  --hover-background: var(--surface-800);
+  --high-contrast-text-color: var(--surface-0);
+  --hover-border-color: var(--surface-500);
+  --mark-background: var(--surface-700);
+  --mark-text-color: var(--surface-200);
+  --selection-background: var(--surface-700);
+  --selection-text-color: var(--surface-0);
+  --code-button-background: rgba(255, 255, 255, .05);
+  --code-button-border: 1px solid rgba(255, 255, 255, .1);
+  --code-button-text-color: var(--surface-300);
+}

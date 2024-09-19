@@ -47,7 +47,7 @@ interface FilterServiceOptions {
   register?(rule: string, fn: any): void
 }
 
-export const FilterService: FilterServiceOptions;
+export const FilterService: FilterServiceOptions
 
 export const PrimeIcons: {
   ALIGN_CENTER?: string,
