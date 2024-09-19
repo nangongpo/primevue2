@@ -230,7 +230,7 @@ function addSFC() {
       fs.readdirSync(dirPath).forEach((file) => {
         let name = file.split(/(.vue)$|(.js)$/)[0].toLowerCase()
 
-        if (name === 'plugin') {
+        if (name.indexOf('plugin') > -1) {
           fs.copySync(path.resolve(entryDir, folderName, file), path.resolve(outputDir, folderName, file))
         } else if ((/\.vue$/.test(file) && name === folderName)) {
           addEntry(folderName, file, name)
