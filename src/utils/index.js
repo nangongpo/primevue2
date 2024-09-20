@@ -2,6 +2,15 @@ export function getPublicUrl(url) {
   return import.meta.env.BASE_URL + url
 }
 
+export function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 export function isNotEmpty(value) {
   return value !== undefined && value !== null && value !== ''
 }

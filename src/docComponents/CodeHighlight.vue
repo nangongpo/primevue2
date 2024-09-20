@@ -14,12 +14,11 @@ export default {
   },
   computed: {
     languageClass() {
-      return ''
-      // return 'language-' + this.lang
+      return 'language-' + this.lang
     }
   },
   mounted() {
-    // window.Prism.highlightElement(this.$el.children[0])
+    window.Prism.highlightElement(this.$el.children[0])
   }
 }
 </script>

@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import CountryService from '../../service/CountryService'
-import AutoCompleteDoc from './AutoCompleteDoc.vue'
+import CountryService from '@/service/CountryService'
+import AutoCompleteDoc from '@/doc/autocomplete/autocomplete.vue'
 
 export default {
   data() {

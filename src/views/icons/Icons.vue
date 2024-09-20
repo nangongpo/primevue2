@@ -15,9 +15,7 @@
         to your project.
       </p>
 
-      <CodeHighlight lang="javascript">
-        npm install primeicons --save
-      </CodeHighlight>
+      <DocSectionCode :code="npmCode" importCode />
 
       <h5>Getting Started</h5>
       <p>
@@ -26,33 +24,23 @@
         using an element like <i>i</i> or <i>span</i>
       </p>
 
-      <CodeHighlight>
-        &lt;i class="pi pi-check"&gt;&lt;/i&gt; &lt;i class="pi
-        pi-times"&gt;&lt;/i&gt;
-      </CodeHighlight>
-
+      <DocSectionCode :code="usageCode" />
       <i class="pi pi-check" style="margin-right: 0.5rem"></i>
       <i class="pi pi-times"></i>
 
       <h5>Size</h5>
       <p>Size of the icons can easily be changed using font-size property.</p>
 
-      <CodeHighlight> &lt;i class="pi pi-check"&gt;&lt;/i&gt; </CodeHighlight>
-
+      <DocSectionCode :code="sizeCode" />
       <i class="pi pi-check"></i>
 
-      <CodeHighlight>
-        &lt;i class="pi pi-check" style="font-size: 2rem"&gt;&lt;/i&gt;
-      </CodeHighlight>
-
+      <DocSectionCode :code="sizeCode2" />
       <i class="pi pi-check" style="font-size: 2rem"></i>
 
       <h5>Spinning Animation</h5>
       <p>Special pi-spin class applies continuous rotation to an icon.</p>
-      <CodeHighlight>
-        &lt;i class="pi pi-spin pi-spinner" style="font-size:
-        2rem"&gt;&lt;/i&gt;
-      </CodeHighlight>
+
+      <DocSectionCode :code="spinningAnimationCode" />
 
       <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
 
@@ -61,14 +49,9 @@
         PrimeIcons constants API is provided to easily choose an icon with
         typescript e.g. when defining a menu model.
       </p>
-      <CodeHighlight> &lt;Menu :model="items" /&gt; </CodeHighlight>
 
-      <CodeHighlight lang="javascript">
-        import {PrimeIcons} from 'primevue2/api'; export default { data() {
-        return { items: [ { label: 'Update', icon: PrimeIcons.REFRESH, to:
-        '/update' }, { label: 'Delete', icon: PrimeIcons.TIMES, to: '/delete' }
-        ] } } }
-      </CodeHighlight>
+      <DocSectionCode :code="constantsCode" />
+      <DocSectionCode :code="constantsCode2" importCode />
 
       <h5>List of Icons</h5>
       <p>
@@ -103,7 +86,62 @@ export default {
   data() {
     return {
       icons: null,
-      filter: null
+      filter: null,
+      npmCode: {
+        basic: `
+npm install primeicons --save
+        `
+      },
+      usageCode: {
+        basic: `
+<i class="pi pi-check"></i>
+<i class="pi pi-times"></i> 
+        `
+      },
+      sizeCode: {
+        basic: `
+<i class="pi pi-check"></i> 
+        `
+      },
+      sizeCode2: {
+        basic: `
+<i class="pi pi-check" style="font-size: 2rem"></i>
+        `
+      },
+      spinningAnimationCode: {
+        basic: `
+<i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+        `
+      },
+      constantsCode: {
+        basic: `
+<Menu :model="items" /> 
+        `
+      },
+      constantsCode2: {
+        basic: `
+import {PrimeIcons} from 'primevue/api';
+
+export default {
+	data() {
+		return {
+			items: [
+				{
+					label: 'Update',
+					icon: PrimeIcons.REFRESH,
+                    to: '/update'
+				},
+				{
+					label: 'Delete',
+					icon: PrimeIcons.TIMES,
+                    to: '/delete'
+				}
+			]
+		}
+	}
+}
+        `
+      },
     }
   },
   mounted() {

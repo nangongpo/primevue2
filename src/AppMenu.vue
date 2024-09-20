@@ -3,15 +3,14 @@
         <div class="layout-menu">
             <div class="menu-category">Vue 3</div>
             <div class="menu-items">
-                <a href="https://www.primefaces.org/primevue" target="_blank">PrimeVue v3</a>
+                <a href="https://v3.primevue.org" target="_blank">PrimeVue v3</a>
             </div>
 
             <div class="menu-category">General</div>
             <div class="menu-items">
                 <router-link to="/setup">Get Started</router-link>
-                <a href="https://forum.primefaces.org/viewforum.php?f=110" target="_blank">Forum</a>
-                <a href="https://discord.gg/gzKFYnpmCY" target="_blank">Discord Chat</a>
-                <a href="https://github.com/primefaces/primevue/tree/2.x" target="_blank">Source Code</a>
+                <a href="https://github.com/nangongpo/primevue2/issues" target="_blank">Issues</a>
+                <a href="https://github.com/nangongpo/primevue2" target="_blank">Source Code</a>
                 <router-link to="/support">Support</router-link>
                 <a href="https://www.primefaces.org/store" target="_blank">Store</a>
                 <router-link to="/locale">Locale</router-link>
@@ -21,15 +20,7 @@
             <div class="menu-category">Theming</div>
             <div class="menu-items">
                 <router-link to="/theming">Guide</router-link>
-                <a href="https://www.primefaces.org/designer/primevue">Theme Designer</a>
-                <a href="https://www.primefaces.org/designer-vue">Visual Editor</a>
                 <a href="https://www.primefaces.org/designer/api/primevue/2.0.1">SASS API</a>
-            </div>
-
-            <div class="menu-category">PRIMEBLOCKS</div>
-            <div class="menu-items">
-                <a href="https://www.primefaces.org/primeblocks-vue/#/free">Free Blocks</a>
-                <a href="https://www.primefaces.org/primeblocks-vue">All Blocks</a>
             </div>
 
             <div class="menu-category">PRIMEFLEX</div>

@@ -4,8 +4,8 @@ import router from './router'
 
 import Code from './directives/CodeHighlight'
 import AppInputStyleSwitch from './AppInputStyleSwitch.vue'
-import DocSectionCode from './views/doc/DocSectionCode.vue'
-import CodeHighlight from './views/codehighlight/CodeHighlight.vue'
+import DocSectionCode from './docComponents/DocSectionCode.vue'
+import CodeHighlight from './docComponents/CodeHighlight.vue'
 
 // 生产
 // import PrimeVue from '../lib/index.js'

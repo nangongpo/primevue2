@@ -203,7 +203,7 @@
 </template>
 
 <script>
-import AccordionDoc from './AccordionDoc.vue'
+import AccordionDoc from '@/doc/accordion/accordion.vue'
 
 export default {
   data() {

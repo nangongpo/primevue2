@@ -6,14 +6,36 @@
 
             <h5>Getting Started</h5>
             <p>Locale values are stored in the global configuration that becomes accessible after installing the PrimeVue.</p>
-<CodeHighlight lang="javascript">
+            <DocSectionCode :code="importCode" importCode />
+
+            <p>Second parameter of the <i>use</i> function can be used to initiate the locale during PrimeVue installation.</p>
+            <DocSectionCode :code="usageCode" importCode />
+
+            <p>The locale configuration is reactive so that any changes are instantly reflected in the UI. Suppose you are doing a multi language
+                application and need to change the language dynamically.</p>
+
+            <h6>Options API</h6>
+            <DocSectionCode :code="optionsCode" importCode />
+
+            <h5>Locale Options</h5>
+            <DocSectionCode :code="localeCode" importCode />
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      importCode: {
+        basic: `
 import PrimeVue from 'primevue2/config';
 
 Vue.use(PrimeVue);
-</CodeHighlight>
-
-            <p>Second parameter of the <i>use</i> function can be used to initiate the locale during PrimeVue installation.</p>
-<CodeHighlight lang="javascript">
+        `
+      },
+      usageCode: {
+        basic: `
 Vue.use(PrimeVue, {
     locale: {
         accept: 'Aceptar',
@@ -21,13 +43,10 @@ Vue.use(PrimeVue, {
         //...
     }
 });
-</CodeHighlight>
-
-            <p>The locale configuration is reactive so that any changes are instantly reflected in the UI. Suppose you are doing a multi language
-                application and need to change the language dynamically.</p>
-
-            <h6>Options API</h6>
-<CodeHighlight lang="javascript">
+        `
+      },
+      optionsCode: {
+        basic: `
 export default {
     methods: {
         changeToSpanish() {
@@ -36,10 +55,10 @@ export default {
         }
     }
 }
-</CodeHighlight>
-
-            <h5>Locale Options</h5>
-<CodeHighlight lang="javascript">
+        `       
+      },
+      localeCode: {
+        basic: `
 locale: {
     startsWith: 'Starts with',
     contains: 'Contains',
@@ -83,14 +102,10 @@ locale: {
     emptyFilterMessage: 'No results found',
     emptyMessage: 'No available options'
 }
-</CodeHighlight>
-        </div>
-    </div>
-</template>
-
-<script>
-export default {
-
+        `       
+      }
+    }
+  }
 }
 </script>
 

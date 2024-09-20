@@ -21,12 +21,12 @@ export default new Router({
     {
       path: '/accessibility',
       name: 'accessibility',
-      component: () => import('./views/accessibility/AccessibilityDemo.vue')
+      component: () => import('./views/accessibility/index.vue')
     },
     {
       path: '/locale',
       name: 'locale',
-      component: () => import('./views/locale/LocaleDemo.vue')
+      component: () => import('./views/locale/index.vue')
     },
     {
       path: '/avatar',
@@ -51,12 +51,12 @@ export default new Router({
     {
       path: '/accordion',
       name: 'accordion',
-      component: () => import('./views/accordion/AccordionDemo.vue')
+      component: () => import('./views/accordion/index.vue')
     },
     {
       path: '/autocomplete',
       name: 'autocomplete',
-      component: () => import('./views/autocomplete/AutoCompleteDemo.vue')
+      component: () => import('./views/autocomplete/index.vue')
     },
     {
       path: '/badge',
