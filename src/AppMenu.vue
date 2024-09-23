@@ -12,7 +12,6 @@
                 <a href="https://github.com/nangongpo/primevue2/issues" target="_blank">Issues</a>
                 <a href="https://github.com/nangongpo/primevue2" target="_blank">Source Code</a>
                 <router-link to="/support">Support</router-link>
-                <a href="https://www.primefaces.org/store" target="_blank">Store</a>
                 <router-link to="/locale">Locale</router-link>
                 <router-link to="/accessibility">Accessibility</router-link>
             </div>

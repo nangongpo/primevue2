@@ -31,7 +31,7 @@ export default new Router({
     {
       path: '/avatar',
       name: 'avatar',
-      component: () => import('./views/avatar/AvatarDemo.vue')
+      component: () => import('./views/avatar/index.vue')
     },
     {
       path: '/support',
@@ -61,7 +61,7 @@ export default new Router({
     {
       path: '/badge',
       name: 'badge',
-      component: () => import('./views/badge/BadgeDemo.vue')
+      component: () => import('./views/badge/index.vue')
     },
     {
       path: '/chip',
@@ -71,37 +71,37 @@ export default new Router({
     {
       path: '/blockui',
       name: 'blockui',
-      component: () => import('./views/blockui/BlockUIDemo.vue')
+      component: () => import('./views/blockui/index.vue')
     },
     {
       path: '/breadcrumb',
       name: 'breadcrumb',
-      component: () => import('./views/breadcrumb/BreadcrumbDemo.vue')
+      component: () => import('./views/breadcrumb/index.vue')
     },
     {
       path: '/button',
       name: 'button',
-      component: () => import('./views/button/ButtonDemo.vue')
+      component: () => import('./views/button/index.vue')
     },
     {
       path: '/calendar',
       name: 'calendar',
-      component: () => import('./views/calendar/CalendarDemo.vue')
+      component: () => import('./views/calendar/index.vue')
     },
     {
       path: '/card',
       name: 'card',
-      component: () => import('./views/card/CardDemo.vue')
+      component: () => import('./views/card/index.vue')
     },
     {
       path: '/carousel',
       name: 'carousel',
-      component: () => import('./views/carousel/CarouselDemo.vue')
+      component: () => import('./views/carousel/index.vue')
     },
     {
       path: '/cascadeselect',
       name: 'cascadeselect',
-      component: () => import('./views/cascadeselect/CascadeSelectDemo.vue')
+      component: () => import('./views/cascadeselect/index.vue')
     },
     {
       path: '/chart',

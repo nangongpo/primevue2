@@ -24,21 +24,24 @@
         <i class="pi pi-copy"></i>
       </button>
     </div>
-    <div v-if="codeMode === 'basic' && importCode" key="basic_importCode">
-      <pre v-code.script><code>{{ code.basic }}
+    <template v-if="codeMode === 'basic'">
+      <div v-if="importCode" key="script">
+        <pre v-code.script><code>{{ code.basic }}
 </code></pre>
-    </div>
-
-    <div v-if="codeMode === 'basic' && !importCode && !importHTML" key="basic">
-      <pre v-code><code>{{ code.basic }}
+      </div>
+      <div v-else-if="importStyle" key="style">
+        <pre v-code.css><code>{{ code.basic }}
 </code></pre>
-    </div>
-
-    <div v-if="codeMode === 'basic' && importHTML" key="html">
-      <pre v-code><code v-html="code.basic"></code></pre>
-    </div>
-
-    <div v-if="codeMode !== 'basic'" :key="codeMode">
+      </div>
+      <div v-else-if="importHTML" key="html">
+        <pre v-code><code v-html="code.basic"></code></pre>
+      </div>
+      <div v-else>
+        <pre v-code><code>{{ code.basic }}
+</code></pre>
+      </div>
+    </template>
+    <div v-else :key="codeMode">
       <pre v-code><code>{{ code[codeMode] }}
 </code></pre>
     </div>

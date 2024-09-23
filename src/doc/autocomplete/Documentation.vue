@@ -311,7 +311,7 @@ export default {
     return {
       importCode: {
         basic: `
-import AutoComplete from 'primevue/autocomplete';
+import AutoComplete from 'primevue2/autocomplete';
         `
       },
       baseCode: {

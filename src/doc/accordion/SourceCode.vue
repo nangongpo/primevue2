@@ -10,7 +10,7 @@
 
     <DocSectionCode :code="sourceCode1" />
     <DocSectionCode :code="sourceCode2" importCode />
-    <DocSectionCode :code="sourceCode3" />
+    <DocSectionCode :code="sourceCode3" importStyle />
   </div>
 </template>
 
