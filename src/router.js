@@ -66,7 +66,7 @@ export default new Router({
     {
       path: '/chip',
       name: 'chip',
-      component: () => import('./views/chip/ChipDemo.vue')
+      component: () => import('./views/chip/index.vue')
     },
     {
       path: '/blockui',
@@ -106,82 +106,82 @@ export default new Router({
     {
       path: '/chart',
       name: 'chart',
-      component: () => import('./views/chart/ChartDemo.vue')
+      component: () => import('./views/chart/Chart.vue')
     },
     {
       path: '/chart/bar',
       name: 'barchart',
-      component: () => import('./views/chart/BarChartDemo.vue')
+      component: () => import('./views/chart/Bar.vue')
     },
     {
       path: '/chart/combo',
       name: 'combochart',
-      component: () => import('./views/chart/ComboChartDemo.vue')
+      component: () => import('./views/chart/Combo.vue')
     },
     {
       path: '/chart/doughnut',
       name: 'doughnutchart',
-      component: () => import('./views/chart/DoughnutChartDemo.vue')
+      component: () => import('./views/chart/Doughnut.vue')
     },
     {
       path: '/chart/line',
       name: 'linechart',
-      component: () => import('./views/chart/LineChartDemo.vue')
+      component: () => import('./views/chart/Line.vue')
     },
     {
       path: '/chart/pie',
       name: 'piechart',
-      component: () => import('./views/chart/PieChartDemo.vue')
+      component: () => import('./views/chart/Pie.vue')
     },
     {
       path: '/chart/polararea',
       name: 'polarareachart',
-      component: () => import('./views/chart/PolarAreaChartDemo.vue')
+      component: () => import('./views/chart/PolarArea.vue')
     },
     {
       path: '/chart/radar',
       name: 'radarchart',
-      component: () => import('./views/chart/RadarChartDemo.vue')
+      component: () => import('./views/chart/Radar.vue')
     },
     {
       path: '/checkbox',
       name: 'checkbox',
-      component: () => import('./views/checkbox/CheckboxDemo.vue')
+      component: () => import('./views/checkbox/index.vue')
     },
     {
       path: '/chips',
       name: 'chips',
-      component: () => import('./views/chips/ChipsDemo.vue')
+      component: () => import('./views/chips/index.vue')
     },
     {
       path: '/colorpicker',
       name: 'colorpicker',
-      component: () => import('./views/colorpicker/ColorPickerDemo.vue')
+      component: () => import('./views/colorpicker/index.vue')
     },
     {
       path: '/confirmdialog',
       name: 'confirmdialog',
-      component: () => import('./views/confirmdialog/ConfirmDialogDemo.vue')
+      component: () => import('./views/confirmdialog/index.vue')
     },
     {
       path: '/confirmpopup',
       name: 'confirmpopup',
-      component: () => import('./views/confirmpopup/ConfirmPopupDemo.vue')
+      component: () => import('./views/confirmpopup/index.vue')
     },
     {
       path: '/contextmenu',
       name: 'contextmenu',
-      component: () => import('./views/contextmenu/ContextMenuDemo.vue')
+      component: () => import('./views/contextmenu/index.vue')
     },
     {
       path: '/datatable',
       name: 'datatable',
-      component: () => import('./views/datatable/DataTableDemo.vue')
+      component: () => import('./views/datatable/index.vue')
     },
     {
       path: '/datatable/basic',
       name: 'datatablebasic',
-      component: () => import('./views/datatable/DataTableBasicDemo.vue')
+      component: () => import('./views/datatable/DataTableBasic.vue')
     },
     {
       path: '/datatable/dynamiccolumns',
