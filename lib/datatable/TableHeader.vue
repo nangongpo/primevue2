@@ -210,7 +210,6 @@ export default {
 
       if (row.child && row.child.$scopedSlots.default) {
         row.child.$scopedSlots.default().forEach(child => {
-          console.log('getHeaderColumns', child)
           if (child.child && child.child.children && child.child.children instanceof Array)
             cols = [...cols, ...child.child.children]
           else if (child.componentOptions && child.componentOptions.tag === 'Column')

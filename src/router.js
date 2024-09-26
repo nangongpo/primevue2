@@ -191,17 +191,17 @@ export default new Router({
     {
       path: '/datatable/templating',
       name: 'datatabletemplating',
-      component: () => import('./views/datatable/DataTableTemplatingDemo.vue')
+      component: () => import('./views/datatable/Templating.vue')
     },
     {
       path: '/datatable/paginator',
       name: 'datatablepaginator',
-      component: () => import('./views/datatable/DataTablePaginatorDemo.vue')
+      component: () => import('./views/datatable/Paginator.vue')
     },
     {
       path: '/datatable/sort',
       name: 'datatablesort',
-      component: () => import('./views/datatable/DataTableSortDemo.vue')
+      component: () => import('./views/datatable/Sort.vue')
     },
     {
       path: '/datatable/filter',
@@ -211,12 +211,12 @@ export default new Router({
     {
       path: '/datatable/lazy',
       name: 'datatablelazy',
-      component: () => import('./views/datatable/DataTableLazyDemo.vue')
+      component: () => import('./views/datatable/Lazy.vue')
     },
     {
       path: '/datatable/selection',
       name: 'datatableselection',
-      component: () => import('./views/datatable/DataTableSelectionDemo.vue')
+      component: () => import('./views/datatable/Selection.vue')
     },
     {
       path: '/datatable/coltoggle',
@@ -226,17 +226,17 @@ export default new Router({
     {
       path: '/datatable/reorder',
       name: 'datatablereorder',
-      component: () => import('./views/datatable/DataTableReorderDemo.vue')
+      component: () => import('./views/datatable/Reorder.vue')
     },
     {
       path: '/datatable/rowgroup',
       name: 'datatablerowgroup',
-      component: () => import('./views/datatable/DataTableRowGroupDemo.vue')
+      component: () => import('./views/datatable/RowGroup.vue')
     },
     {
       path: '/datatable/responsive',
       name: 'datatableresponsive',
-      component: () => import('./views/datatable/DataTableResponsiveDemo.vue')
+      component: () => import('./views/datatable/Responsive.vue')
     },
     {
       path: '/datatable/export',
@@ -251,7 +251,7 @@ export default new Router({
     {
       path: '/datatable/size',
       name: 'datatablesize',
-      component: () => import('./views/datatable/DataTableSizeDemo.vue')
+      component: () => import('./views/datatable/Size.vue')
     },
     {
       path: '/datatable/colresize',
@@ -261,12 +261,12 @@ export default new Router({
     {
       path: '/datatable/rowexpand',
       name: 'datatablerowexpand',
-      component: () => import('./views/datatable/DataTableRowExpandDemo.vue')
+      component: () => import('./views/datatable/RowExpand.vue')
     },
     {
       path: '/datatable/state',
       name: 'datatablestate',
-      component: () => import('./views/datatable/DataTableStateDemo.vue')
+      component: () => import('./views/datatable/State.vue')
     },
     {
       path: '/datatable/edit',
@@ -281,17 +281,17 @@ export default new Router({
     {
       path: '/datatable/scroll',
       name: 'datatablescroll',
-      component: () => import('./views/datatable/DataTableScrollDemo.vue')
+      component: () => import('./views/datatable/Scroll.vue')
     },
     {
       path: '/datatable/flexscroll',
       name: 'datatableflexscroll',
-      component: () => import('./views/datatable/DataTableFlexScrollDemo.vue')
+      component: () => import('./views/datatable/FlexScroll.vue')
     },
     {
       path: '/datatable/style',
       name: 'datatablestyle',
-      component: () => import('./views/datatable/DataTableStyleDemo.vue')
+      component: () => import('./views/datatable/Style.vue')
     },
     {
       path: '/datatable/contextmenu',
@@ -301,42 +301,42 @@ export default new Router({
     {
       path: '/datatable/gridlines',
       name: 'datatablegridlines',
-      component: () => import('./views/datatable/DataTableGridLinesDemo.vue')
+      component: () => import('./views/datatable/GridLines.vue')
     },
     {
       path: '/datatable/striped',
       name: 'datatablestriped',
-      component: () => import('./views/datatable/DataTableStripedDemo.vue')
+      component: () => import('./views/datatable/Striped.vue')
     },
     {
       path: '/dataview',
       name: 'dataview',
-      component: () => import('./views/dataview/DataViewDemo.vue')
+      component: () => import('./views/dataview/index.vue')
     },
     {
       path: '/deferredcontent',
       name: 'deferredcontent',
-      component: () => import('./views/deferredcontent/DeferredContentDemo.vue')
+      component: () => import('./views/deferredcontent/index.vue')
     },
     {
       path: '/dialog',
       name: 'dialog',
-      component: () => import('./views/dialog/DialogDemo.vue')
+      component: () => import('./views/dialog/index.vue')
     },
     {
       path: '/divider',
       name: 'divider',
-      component: () => import('./views/divider/DividerDemo.vue')
+      component: () => import('./views/divider/index.vue')
     },
     {
       path: '/dock',
       name: 'Dock',
-      component: () => import('./views/dock/DockDemo.vue')
+      component: () => import('./views/dock/index.vue')
     },
     {
       path: '/dropdown',
       name: 'dropdown',
-      component: () => import('./views/dropdown/DropdownDemo.vue')
+      component: () => import('./views/dropdown/index.vue')
     },
     {
       path: '/editor',
