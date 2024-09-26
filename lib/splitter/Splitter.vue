@@ -236,7 +236,7 @@ export default {
         panel.$vnode.data.staticClass,
         {
           'p-splitter-panel-nested':
-            panel.$parent.$vnode.tag.indexOf('splitter')
+            panel.$parent.$vnode.tag.toLowerCase().indexOf('splitter')
         }
       ]
     }
@@ -247,7 +247,7 @@ export default {
 
       if (this.allChildren) {
         panels = this.allChildren.filter(
-          (child) => child.$vnode.tag.indexOf('splitterpanel') !== -1
+          (child) => child.$vnode.tag.toLowerCase().indexOf('splitterpanel') !== -1
         )
       }
       return panels

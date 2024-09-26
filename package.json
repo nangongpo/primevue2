@@ -1,6 +1,6 @@
 {
   "name": "primevue2",
-  "version": "2.10.7",
+  "version": "2.10.8",
   "description": "rollup2 重新打包primevue2.10.4, 支持es moudle",
   "scripts": {
     "dev": "vite",
@@ -45,8 +45,7 @@
     "vite": "^5.2.10",
     "vite-plugin-html-config": "^1.0.11",
     "vitest": "^1.5.2",
-    "vue-eslint-parser": "^9.4.2",
-    "vue-template-compiler": "^2.7.16"
+    "vue-eslint-parser": "^9.4.2"
   },
   "dependencies": {
     "@fullcalendar/core": "^5.0.0",
@@ -61,6 +60,7 @@
     "quill": "^2.0.0",
     "vue": "^2.7.0",
     "vue-router": "^3.1.0",
+    "vue-template-compiler": "^2.7.0",
     "vuelidate": "^0.7.7"
   },
   "peerDependencies": {

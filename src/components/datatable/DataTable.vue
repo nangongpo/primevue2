@@ -1970,7 +1970,7 @@ export default {
     headerColumnGroup() {
       if (this.allChildren) {
         for (let child of this.allChildren) {
-          if (child.$vnode.tag.indexOf('columngroup') !== -1 && this.columnProp(child, 'type') === 'header') {
+          if (child.$vnode.tag.toLowerCase().indexOf('columngroup') !== -1 && this.columnProp(child, 'type') === 'header') {
             return child
           }
         }
@@ -1980,7 +1980,7 @@ export default {
     footerColumnGroup() {
       if (this.allChildren) {
         for (let child of this.allChildren) {
-          if (child.$vnode.tag.indexOf('columngroup') !== -1 && this.columnProp(child, 'type') === 'footer') {
+          if (child.$vnode.tag.toLowerCase().indexOf('columngroup') !== -1 && this.columnProp(child, 'type') === 'footer') {
             return child
           }
         }

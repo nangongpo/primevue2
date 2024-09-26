@@ -306,7 +306,7 @@ function addPackageJson() {
       "attributes": "./vetur-attributes.json"
     },
     "peerDependencies": {
-      "vue": "^2.6.0",
+      "vue": "^2.7.0",
       "vue-router": "^3.1.0",
       "primeicons": "^5.0.0 || ^6.0.0",
       "@fullcalendar/core": "^5.0.0"

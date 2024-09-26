@@ -90,7 +90,7 @@ In addition, components require PrimeIcons library for icons.
 
 ```javascript
 dependencies: {
-    "vue": "^2.6.10",
+    "vue": "^2.7.0",
     "primeicons": "^6.0.0"
 }
 ```

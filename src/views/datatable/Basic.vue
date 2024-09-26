@@ -26,7 +26,7 @@
 
 <script>
 import ProductService from '../../service/ProductService'
-import DataTableBasicDoc from '@/doc/datatable/DataTableBasic.vue'
+import DataTableBasicDoc from '@/doc/datatable/Basic.vue'
 
 export default {
   components: { DataTableBasicDoc },

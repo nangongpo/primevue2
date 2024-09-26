@@ -181,12 +181,12 @@ export default new Router({
     {
       path: '/datatable/basic',
       name: 'datatablebasic',
-      component: () => import('./views/datatable/DataTableBasic.vue')
+      component: () => import('./views/datatable/Basic.vue')
     },
     {
       path: '/datatable/dynamiccolumns',
       name: 'datatabledynamiccolumns',
-      component: () => import('./views/datatable/DataTableDynamicColumnsDemo.vue')
+      component: () => import('./views/datatable/DynamicColumns.vue')
     },
     {
       path: '/datatable/templating',
@@ -206,7 +206,7 @@ export default new Router({
     {
       path: '/datatable/filter',
       name: 'datatablefilter',
-      component: () => import('./views/datatable/DataTableFilterDemo.vue')
+      component: () => import('./views/datatable/Filter.vue')
     },
     {
       path: '/datatable/lazy',
@@ -221,7 +221,7 @@ export default new Router({
     {
       path: '/datatable/coltoggle',
       name: 'datatablecoltoggle',
-      component: () => import('./views/datatable/DataTableColToggleDemo.vue')
+      component: () => import('./views/datatable/ColToggle.vue')
     },
     {
       path: '/datatable/reorder',
@@ -241,12 +241,12 @@ export default new Router({
     {
       path: '/datatable/export',
       name: 'datatableexport',
-      component: () => import('./views/datatable/DataTableExportDemo.vue')
+      component: () => import('./views/datatable/Export.vue')
     },
     {
       path: '/datatable/colgroup',
       name: 'datatablecolgroup',
-      component: () => import('./views/datatable/DataTableColGroupDemo.vue')
+      component: () => import('./views/datatable/ColGroup.vue')
     },
     {
       path: '/datatable/size',
@@ -256,7 +256,7 @@ export default new Router({
     {
       path: '/datatable/colresize',
       name: 'datatablecolresize',
-      component: () => import('./views/datatable/DataTableColResizeDemo.vue')
+      component: () => import('./views/datatable/ColResize.vue')
     },
     {
       path: '/datatable/rowexpand',
@@ -271,12 +271,12 @@ export default new Router({
     {
       path: '/datatable/edit',
       name: 'datatableedit',
-      component: () => import('./views/datatable/DataTableEditDemo.vue')
+      component: () => import('./views/datatable/Edit.vue')
     },
     {
       path: '/datatable/crud',
       name: 'datatablecrud',
-      component: () => import('./views/datatable/DataTableCrudDemo.vue')
+      component: () => import('./views/datatable/Crud.vue')
     },
     {
       path: '/datatable/scroll',
@@ -296,7 +296,7 @@ export default new Router({
     {
       path: '/datatable/contextmenu',
       name: 'datatablecontextmenu',
-      component: () => import('./views/datatable/DataTableContextMenuDemo.vue')
+      component: () => import('./views/datatable/ContextMenu.vue')
     },
     {
       path: '/datatable/gridlines',

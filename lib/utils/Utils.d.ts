@@ -77,6 +77,7 @@ export declare class ObjectUtils {
     sourceArr: any[]
   ): void
   static removeAccents(str: any): string
+  static getVNodeProp(vnode: object, prop: string): string | null
 }
 
 export declare function UniqueComponentId(prefix?: string): string

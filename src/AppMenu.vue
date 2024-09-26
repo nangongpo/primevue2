@@ -80,7 +80,7 @@
                                 <ul>
                                     <li><router-link to="/datatable">Documentation</router-link></li>
                                     <li><router-link to="/datatable/basic">Basic</router-link></li>
-                                    <li><router-link to="/datatable/dynamiccolumns">Dynamic</router-link></li>
+                                    <li><router-link to="/datatable/dynamiccolumns">DynamicColumns</router-link></li>
                                     <li><router-link to="/datatable/templating">Templating</router-link></li>
                                     <li><router-link to="/datatable/size">Size</router-link></li>
                                     <li><router-link to="/datatable/gridlines">GridLines</router-link></li>

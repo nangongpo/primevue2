@@ -641,15 +641,12 @@
       directive accompanied by a template named "expansion". <i>row-expand</i> and <i>row-collapse</i> are optional
       callbacks that are invoked when a row is expanded or toggled.
     </p>
-    <DocSectionCode :code="rowExpansionCode" />
-    <DocSectionCode :code="rowExpansionCodeCode2" importCode />
-
     <p>
       The <i>dataKey</i> property identifies a unique value of a row in the dataset, it is not mandatory in row
       expansion functionality however being able to define it increases the performance of the table significantly.
     </p>
-    <DocSectionCode :code="scrollableRowGroupCode" />
-    <DocSectionCode :code="scrollableRowGroupCode2" importCode />
+    <DocSectionCode :code="rowExpansionCode" />
+    <DocSectionCode :code="rowExpansionCode2" importCode />
 
     <h5>InCell Editing</h5>
     <p>

@@ -177,8 +177,8 @@
 </template>
 
 <script>
-import FilterMatchMode from '../../../src/components/api/FilterMatchMode'
-import FilterOperator from '../../../src/components/api/FilterOperator'
+import FilterMatchMode from '../../components/api/FilterMatchMode'
+import FilterOperator from '../../components/api/FilterOperator'
 import CustomerService from '../../service/CustomerService'
 import DataTableDoc from '@/doc/datatable/index.vue'
 
