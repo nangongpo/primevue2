@@ -1,0 +1,2 @@
+System.register(["./index-legacy-DIReyog9.js","./app.component-legacy-DLkegMQb.js","./app.fullcalendar-legacy-BjBSiNq4.js","./preact-legacy-D7Jvwh8t.js","./app.core-legacy-DJ-X2bns.js"],(function(e,n){"use strict";var c,l;return{setters:[function(e){c=e.L},function(e){l=e.n},null,null,null],execute:function(){e("default",l({components:{LocaleDoc:c}},(function(){var e=this._self._c;return e("div",[e("LocaleDoc")],1)}),[],!1,null,null).exports)}}}));
+//# sourceMappingURL=index-legacy-CYicmNX_.js.map

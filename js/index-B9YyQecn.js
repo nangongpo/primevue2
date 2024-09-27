@@ -1,0 +1,2 @@
+import{L as r}from"./index-C7m8YGIC.js";import{n as e}from"./app.component-CzrFRIYs.js";import"./app.fullcalendar-CKwQu0km.js";import"./preact-CNwUjBXN.js";import"./app.core-fp3qH1H1.js";const t={components:{LocaleDoc:r}};var c=function(){var n=this,o=n._self._c;return o("div",[o("LocaleDoc")],1)},s=[],a=e(t,c,s,!1,null,null);const d=a.exports;export{d as default};
+//# sourceMappingURL=index-B9YyQecn.js.map
