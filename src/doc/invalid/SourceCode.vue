@@ -1,0 +1,191 @@
+<template>
+  <div>
+    <a
+      href="https://github.com/nangongpo/primevue2/tree/main/src/views/invalid"
+      class="btn-viewsource"
+      target="_blank"
+      rel="noopener noreferrer">
+      <span>View on GitHub</span>
+    </a>
+
+    <DocSectionCode :code="sourceCode1" />
+    <DocSectionCode :code="sourceCode2" importCode />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'SourceCode',
+  data() {
+    return {
+      sourceCode1: {
+        basic: `
+<div class="p-fluid grid">
+    <div class="field col-12 md:col-4">
+        <InputText id="inputtext" type="text" v-model="value1" placeholder="InputText" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <AutoComplete v-model="value2" :suggestions="filteredCountries" multiple @complete="searchCountry($event)" field="name" placeholder="AutoComplete" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <Calendar id="calendar" v-model="value3" placeholder="Calendar" class="p-invalid" :showIcon="true" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <Chips id="chips" v-model="value4" placeholder="Chips" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <InputMask id="inputmask" v-model="value5" mask="99/99/9999" slotChar="mm/dd/yyyy" placeholder="InputMask" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <InputNumber id="inputnumber" v-model="value6" placeholder="InputNumber" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <CascadeSelect v-model="selectedCity" :options="cascadeCountries" optionLabel="cname" optionGroupLabel="name"
+            :optionGroupChildren="['states', 'cities']" placeholder="CascadeSelect" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <Dropdown id="dropdown" v-model="value7" :options="cities" optionLabel="name" placeholder="Dropdown" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <MultiSelect id="multiselect" v-model="value8" :options="cities" optionLabel="name" placeholder="MultiSelect" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <Textarea id="textarea" v-model="value9" rows="3" placeholder="Textarea" class="p-invalid" />
+    </div>
+    <div class="field col-12 md:col-4">
+        <Password id="password" v-model="value10" placeholder="Password" class="p-invalid" />
+    </div>
+</div>
+        `
+      },
+      sourceCode2: {
+        basic: `
+import CountryService from '../../service/CountryService';
+
+export default {
+    data() {
+        return {
+            countries: null,
+            filteredCountries: null,
+            cities: [
+                {name: 'New York', code: 'NY'},
+                {name: 'Rome', code: 'RM'},
+                {name: 'London', code: 'LDN'},
+                {name: 'Istanbul', code: 'IST'},
+                {name: 'Paris', code: 'PRS'}
+            ],
+            value1: null,
+            value2: null,
+            value3: null,
+            value4: null,
+            value5: null,
+            value6: null,
+            value7: null,
+            value8: null,
+            value9: null,
+            value10: null,
+            selectedCity: null,
+            cascadeCountries: [
+                {
+                    name: 'Australia',
+                    code: 'AU',
+                    states: [
+                        {
+                            name: 'New South Wales',
+                            cities: [
+                                {cname: 'Sydney', code: 'A-SY'},
+                                {cname: 'Newcastle', code: 'A-NE'},
+                                {cname: 'Wollongong', code: 'A-WO'}
+                            ]
+                        },
+                        {
+                            name: 'Queensland',
+                            cities: [
+                                {cname: 'Brisbane', code: 'A-BR'},
+                                {cname: 'Townsville', code: 'A-TO'}
+                            ]
+                        },
+                    ]
+                },
+                {
+                    name: 'Canada',
+                    code: 'CA',
+                    states: [
+                        {
+                            name: 'Quebec',
+                            cities: [
+                                {cname: 'Montreal', code: 'C-MO'},
+                                {cname: 'Quebec City', code: 'C-QU'}
+                            ]
+                        },
+                        {
+                            name: 'Ontario',
+                            cities: [
+                                {cname: 'Ottawa', code: 'C-OT'},
+                                {cname: 'Toronto', code: 'C-TO'}
+                            ]
+                        },
+                    ]
+                },
+                {
+                    name: 'United States',
+                    code: 'US',
+                    states: [
+                        {
+                            name: 'California',
+                            cities: [
+                                {cname: 'Los Angeles', code: 'US-LA'},
+                                {cname: 'San Diego', code: 'US-SD'},
+                                {cname: 'San Francisco', code: 'US-SF'}
+                            ]
+                        },
+                        {
+                            name: 'Florida',
+                            cities: [
+                                {cname: 'Jacksonville', code: 'US-JA'},
+                                {cname: 'Miami', code: 'US-MI'},
+                                {cname: 'Tampa', code: 'US-TA'},
+                                {cname: 'Orlando', code: 'US-OR'}
+                            ]
+                        },
+                        {
+                            name: 'Texas',
+                            cities: [
+                                {cname: 'Austin', code: 'US-AU'},
+                                {cname: 'Dallas', code: 'US-DA'},
+                                {cname: 'Houston', code: 'US-HO'}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    countryService: null,
+    created() {
+        this.countryService = new CountryService();
+    },
+    mounted() {
+        this.countryService.getCountries().then(data => this.countries = data);
+    },
+    methods: {
+        searchCountry(event) {
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filteredCountries = [...this.countries];
+                }
+                else {
+                    this.filteredCountries = this.countries.filter((country) => {
+                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        }
+    }
+}
+        `
+      },
+    }
+  }
+}
+</script>

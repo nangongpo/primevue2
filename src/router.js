@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/setup',
       name: 'setup',
-      component: () => import('./views/setup/Setup.vue')
+      component: () => import('./views/setup/index.vue')
     },
     {
       path: '/accessibility',
@@ -46,7 +46,7 @@ export default new Router({
     {
       path: '/icons',
       name: 'icons',
-      component: () => import('./views/icons/Icons.vue')
+      component: () => import('./views/icons/index.vue')
     },
     {
       path: '/accordion',
@@ -341,67 +341,67 @@ export default new Router({
     {
       path: '/editor',
       name: 'editor',
-      component: () => import('./views/editor/EditorDemo.vue')
+      component: () => import('./views/editor/index.vue')
     },
     {
       path: '/fieldset',
       name: 'fieldset',
-      component: () => import('./views/fieldset/FieldsetDemo.vue')
+      component: () => import('./views/fieldset/index.vue')
     },
     {
       path: '/fileupload',
       name: 'fileupload',
-      component: () => import('./views/fileupload/FileUploadDemo.vue')
+      component: () => import('./views/fileupload/index.vue')
     },
     {
       path: '/filterservice',
       name: 'filterservice',
-      component: () => import('./views/filterservice/FilterServiceDemo.vue')
+      component: () => import('./views/filterservice/index.vue')
     },
     {
       path: '/fullcalendar',
       name: 'fullcalendar',
-      component: () => import('./views/fullcalendar/FullCalendarDemo.vue')
+      component: () => import('./views/fullcalendar/index.vue')
     },
     {
       path: '/imagePreview',
       name: 'imagePreview',
-      component: () => import('./views/imagepreview/ImagePreviewDemo.vue')
+      component: () => import('./views/imagepreview/index.vue')
     },
     {
       path: '/inplace',
       name: 'inplace',
-      component: () => import('./views/inplace/InplaceDemo.vue')
+      component: () => import('./views/inplace/index.vue')
     },
     {
       path: '/inputgroup',
       name: 'inputgroup',
-      component: () => import('./views/inputgroup/InputGroupDemo.vue')
+      component: () => import('./views/inputgroup/index.vue')
     },
     {
       path: '/inputswitch',
       name: 'inputswitch',
-      component: () => import('./views/inputswitch/InputSwitchDemo.vue')
+      component: () => import('./views/inputswitch/index.vue')
     },
     {
       path: '/inputtext',
       name: 'inputtext',
-      component: () => import('./views/inputtext/InputTextDemo.vue')
+      component: () => import('./views/inputtext/index.vue')
     },
     {
       path: '/inputmask',
       name: 'inputmask',
-      component: () => import('./views/inputmask/InputMaskDemo.vue')
+      component: () => import('./views/inputmask/index.vue')
     },
     {
       path: '/inputnumber',
       name: 'inputnumber',
-      component: () => import('./views/inputnumber/InputNumberDemo.vue')
+      component: () => import('./views/inputnumber/index.vue')
     },
     {
       path: '/invalid',
       name: 'invalid',
-      component: () => import('./views/invalid/InvalidDemo.vue')
+      component: () => import('./views/invalid/index.vue')
     },
     {
       path: '/scrolltop',
@@ -421,17 +421,17 @@ export default new Router({
     {
       path: '/knob',
       name: 'knob',
-      component: () => import('./views/knob/KnobDemo.vue')
+      component: () => import('./views/knob/index.vue')
     },
     {
       path: '/listbox',
       name: 'listbox',
-      component: () => import('./views/listbox/ListboxDemo.vue')
+      component: () => import('./views/listbox/index.vue')
     },
     {
       path: '/floatlabel',
       name: 'floatlabel',
-      component: () => import('./views/floatlabel/FloatLabelDemo.vue')
+      component: () => import('./views/floatlabel/index.vue')
     },
     {
       path: '/megamenu',
@@ -745,52 +745,52 @@ export default new Router({
     {
       path: '/galleria',
       name: 'galleria',
-      component: () => import('./views/galleria/GalleriaDemo.vue')
+      component: () => import('./views/galleria/Galleria.vue')
     },
     {
       path: '/galleria/programmatic',
       name: 'galleriaprogrammatic',
-      component: () => import('./views/galleria/GalleriaProgrammaticDemo.vue')
+      component: () => import('./views/galleria/Programmatic.vue')
     },
     {
       path: '/galleria/indicator',
       name: 'galleriaindicator',
-      component: () => import('./views/galleria/GalleriaIndicatorDemo.vue')
+      component: () => import('./views/galleria/Indicator.vue')
     },
     {
       path: '/galleria/thumbnail',
       name: 'galleriathumbnail',
-      component: () => import('./views/galleria/GalleriaThumbnailDemo.vue')
+      component: () => import('./views/galleria/Thumbnail.vue')
     },
     {
       path: '/galleria/navigator',
       name: 'gallerianavigator',
-      component: () => import('./views/galleria/GalleriaNavigatorDemo.vue')
+      component: () => import('./views/galleria/Navigator.vue')
     },
     {
       path: '/galleria/responsive',
       name: 'galleriaresponsive',
-      component: () => import('./views/galleria/GalleriaResponsiveDemo.vue')
+      component: () => import('./views/galleria/Responsive.vue')
     },
     {
       path: '/galleria/fullscreen',
       name: 'galleriafullscreen',
-      component: () => import('./views/galleria/GalleriaFullScreenDemo.vue')
+      component: () => import('./views/galleria/FullScreen.vue')
     },
     {
       path: '/galleria/autoplay',
       name: 'galleriaautoplay',
-      component: () => import('./views/galleria/GalleriaAutoPlayDemo.vue')
+      component: () => import('./views/galleria/AutoPlay.vue')
     },
     {
       path: '/galleria/caption',
       name: 'galleriacaption',
-      component: () => import('./views/galleria/GalleriaCaptionDemo.vue')
+      component: () => import('./views/galleria/Caption.vue')
     },
     {
       path: '/galleria/advanced',
       name: 'galleriaadvvanced',
-      component: () => import('./views/galleria/GalleriaAdvancedDemo.vue')
+      component: () => import('./views/galleria/Advanced.vue')
     }
   ]
 })

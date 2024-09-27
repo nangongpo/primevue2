@@ -1,0 +1,518 @@
+<template>
+  <div>
+    <h5>Import</h5>
+    <DocSectionCode :code="importCode" importCode />
+
+    <h5>Getting Started</h5>
+    <p>Galleria requires item template and a value as an array of objects.</p>
+    <DocSectionCode :code="baseCode" />
+
+    <p>
+      For the rest of the documentation, sample data below would be return from an example service e.g. PhotoService.
+    </p>
+    <div style="overflow: auto; height: 400px">
+      <DocSectionCode :code="baseCode2" importCode />
+    </div>
+    <DocSectionCode :code="baseCode3" importCode />
+    <DocSectionCode :code="baseCode4" importCode />
+
+    <h5>Items per page</h5>
+    <p>Number of items per page is defined using the <i>numVisible</i> property.</p>
+    <DocSectionCode :code="itemsPerPageCode" />
+
+    <h5>Responsive</h5>
+    <p>
+      For responsive design, <i>numVisible</i> can be defined using the <i>responsiveOptions</i> property which
+      references an array of objects whose breakpoint defines the max-width to apply the settings.
+    </p>
+    <DocSectionCode :code="responsiveCode" />
+    <DocSectionCode :code="responsiveCode2" importCode />
+
+    <h5>Header and Footer</h5>
+    <p>Custom content projection is available using the <i>header</i> and <i>footer</i> properties.</p>
+    <DocSectionCode :code="headerAndFooterCode" />
+
+    <h5>Indicators</h5>
+    <p>
+      Indicators allow quick navigation between the items. Set <i>showIndicators</i> to display indicators which can be
+      customized further with the <i>changeItemOnIndicatorHover</i>, <i>showIndicatorsOnItem</i> and
+      <i>indicatorsPosition</i> properties.
+    </p>
+    <DocSectionCode :code="indicatorsCode" />
+
+    <h5>Properties</h5>
+    <p>
+      Any property as style and class are passed to the main container element. Following are the additional properties
+      to configure the component.
+    </p>
+    <div class="doc-tablewrapper">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Unique identifier of the element.</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>array</td>
+            <td>null</td>
+            <td>An array of objects to display.</td>
+          </tr>
+          <tr>
+            <td>activeIndex</td>
+            <td>number</td>
+            <td>0</td>
+            <td>Index of the first item.</td>
+          </tr>
+          <tr>
+            <td>fullScreen</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether to display the component on fullscreen.</td>
+          </tr>
+          <tr>
+            <td>visible</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Specifies the visibility of the mask on fullscreen mode.</td>
+          </tr>
+          <tr>
+            <td>numVisible</td>
+            <td>number</td>
+            <td>3</td>
+            <td>Number of items per page.</td>
+          </tr>
+          <tr>
+            <td>responsiveOptions</td>
+            <td>any</td>
+            <td>null</td>
+            <td>An array of options for responsive design.</td>
+          </tr>
+          <tr>
+            <td>showItemNavigators</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether to display navigation buttons in item section.</td>
+          </tr>
+          <tr>
+            <td>showThumbnailNavigators</td>
+            <td>boolean</td>
+            <td>true</td>
+            <td>Whether to display navigation buttons in thumbnail container.</td>
+          </tr>
+          <tr>
+            <td>showItemNavigatorsOnHover</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether to display navigation buttons on item hover.</td>
+          </tr>
+          <tr>
+            <td>changeItemOnIndicatorHover</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>When enabled, item is changed on indicator hover.</td>
+          </tr>
+          <tr>
+            <td>circular</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Defines if scrolling would be infinite.</td>
+          </tr>
+          <tr>
+            <td>autoPlay</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Items are displayed with a slideshow in autoPlay mode.</td>
+          </tr>
+          <tr>
+            <td>transitionInterval</td>
+            <td>number</td>
+            <td>4000</td>
+            <td>Time in milliseconds to scroll items.</td>
+          </tr>
+          <tr>
+            <td>showThumbnails</td>
+            <td>boolean</td>
+            <td>true</td>
+            <td>Whether to display thumbnail container.</td>
+          </tr>
+          <tr>
+            <td>thumbnailsPosition</td>
+            <td>string</td>
+            <td>bottom</td>
+            <td>Position of thumbnails. Valid values are "bottom", "top", "left" and "right".</td>
+          </tr>
+          <tr>
+            <td>verticalThumbnailViewPortHeight</td>
+            <td>string</td>
+            <td>300px</td>
+            <td>Height of the viewport in vertical thumbnail.</td>
+          </tr>
+          <tr>
+            <td>showIndicators</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether to display indicator container.</td>
+          </tr>
+          <tr>
+            <td>showIndicatorsOnItem</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>When enabled, indicator container is displayed on item container.</td>
+          </tr>
+          <tr>
+            <td>indicatorsPosition</td>
+            <td>string</td>
+            <td>bottom</td>
+            <td>Position of indicators. Valid values are "bottom", "top", "left" and "right".</td>
+          </tr>
+          <tr>
+            <td>baseZIndex</td>
+            <td>number</td>
+            <td>0</td>
+            <td>Base zIndex value to use in layering.</td>
+          </tr>
+          <tr>
+            <td>maskClass</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Style class of the mask on fullscreen mode.</td>
+          </tr>
+          <tr>
+            <td>containerStyle</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Inline style of the component on fullscreen mode. Otherwise, the 'style' property can be used.</td>
+          </tr>
+          <tr>
+            <td>galleriaClass</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Style class of the component on fullscreen mode. Otherwise, the 'class' property can be used.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h5>Slots</h5>
+    <div class="doc-tablewrapper">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Parameters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>header</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>footer</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>item</td>
+            <td>item: Item instance</td>
+          </tr>
+          <tr>
+            <td>caption</td>
+            <td>item: Item instance</td>
+          </tr>
+          <tr>
+            <td>thumbnail</td>
+            <td>item: Item instance</td>
+          </tr>
+          <tr>
+            <td>indicator</td>
+            <td>index: Index of the indicator item</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h5>Styling</h5>
+    <p>
+      Following is the list of structural style classes, for theming classes visit
+      <router-link to="/theming">theming</router-link> page.
+    </p>
+    <div class="doc-tablewrapper">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Element</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>p-galleria</td>
+            <td>Container element.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-header</td>
+            <td>Header section.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-footer</td>
+            <td>Footer section.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-item-wrapper</td>
+            <td>Item wrapper element. It contains item container and indicators.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-item-container</td>
+            <td>Container of the item wrapper. It contains navigation buttons, items and caption content.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-indicators</td>
+            <td>Container of the indicators. It contains indicator items.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-thumbnail-content</td>
+            <td>Thumbnail content element.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-thumbnail-container</td>
+            <td>Container of the thumbnail content. It contains navigation buttons and thumbnail items.</td>
+          </tr>
+          <tr>
+            <td>p-galleria-caption</td>
+            <td>Content of the item caption.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h5>Dependencies</h5>
+    <p>None.</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Documentation',
+  data() {
+    return {
+      importCode: {
+        basic: `
+import Galleria from 'primevue2/galleria';
+        `
+      },
+      baseCode: {
+        basic: `
+<Galleria :value="images">
+    <template #item="slotProps">
+        <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" />
+    </template>
+</Galleria>
+        `
+      },
+      baseCode2: {
+        basic: `
+{
+    "data":[
+        {
+            "itemImageSrc": "demo/images/galleria/galleria1.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria1s.jpg",
+            "alt": "Description for Image 1",
+            "title": "Title 1"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria2.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria2s.jpg",
+            "alt": "Description for Image 2",
+            "title": "Title 2"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria3.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria3s.jpg",
+            "alt": "Description for Image 3",
+            "title": "Title 3"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria4.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria4s.jpg",
+            "alt": "Description for Image 4",
+            "title": "Title 4"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria5.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria5s.jpg",
+            "alt": "Description for Image 5",
+            "title": "Title 5"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria6.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria6s.jpg",
+            "alt": "Description for Image 6",
+            "title": "Title 6"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria7.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria7s.jpg",
+            "alt": "Description for Image 7",
+            "title": "Title 7"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria8.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria8s.jpg",
+            "alt": "Description for Image 8",
+            "title": "Title 8"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria9.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria9s.jpg",
+            "alt": "Description for Image 9",
+            "title": "Title 9"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria10.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria10s.jpg",
+            "alt": "Description for Image 10",
+            "title": "Title 10"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria11.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria11s.jpg",
+            "alt": "Description for Image 11",
+            "title": "Title 11"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria12.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria12s.jpg",
+            "alt": "Description for Image 12",
+            "title": "Title 12"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria13.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria13s.jpg",
+            "alt": "Description for Image 13",
+            "title": "Title 13"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria14.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria14s.jpg",
+            "alt": "Description for Image 14",
+            "title": "Title 14"
+        },
+        {
+            "itemImageSrc": "demo/images/galleria/galleria15.jpg",
+            "thumbnailImageSrc": "demo/images/galleria/galleria15s.jpg",
+            "alt": "Description for Image 15",
+            "title": "Title 15"
+        }
+    ]
+}
+        `
+      },
+      baseCode3: {
+        basic: `
+export default class PhotoService {
+
+	getImages() {
+        return fetch('demo/data/photos.json').then(res => res.json()).then(d => d.data);
+    }
+}
+        `
+      },
+      baseCode4: {
+        basic: `
+export default {
+    data() {
+        return {
+            images: null
+        }
+    },
+    galleriaService: null,
+	created() {
+		this.galleriaService = new PhotoService();
+	},
+	mounted() {
+        this.galleriaService.getImages().then(data => this.images = data);
+    }
+}
+        `
+      },
+      itemsPerPageCode: {
+        basic: `
+<Galleria :value="images" :numVisible="5">
+    <template #item="slotProps">
+        <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" style="width: 100%" />
+    </template>
+    <template #thumbnail="slotProps">
+        <img :src="slotProps.item.thumbnailImageSrc" :alt="slotProps.item.alt" />
+    </template>
+</Galleria>
+        `
+      },
+      responsiveCode: {
+        basic: `
+<Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5">
+    <template #item="slotProps">
+        <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" style="width: 100%" />
+    </template>
+    <template #thumbnail="slotProps">
+        <img :src="slotProps.item.thumbnailImageSrc" :alt="slotProps.item.alt" />
+    </template>
+</Galleria>
+        `
+      },
+      responsiveCode2: {
+        basic: `
+responsiveOptions: [
+    {
+        breakpoint: '1024px',
+        numVisible: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 1
+    }
+]
+        `
+      },
+      headerAndFooterCode: {
+        basic: `
+<Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5" style="max-width: 640px">
+    <template #header>
+        <h1>Header</h1>
+    </template>
+    <template #item="slotProps">
+        <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" style="width: 100%" />
+    </template>
+    <template #footer>
+        <h1>Footer</h1>
+    </template>
+</Galleria>
+        `
+      },
+      indicatorsCode: {
+        basic: `
+<Galleria :value="images" :showIndicators="true">
+    <template #item="slotProps">
+        <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" />
+    </template>
+</Galleria>
+        `
+      }
+    }
+  }
+}
+</script>
