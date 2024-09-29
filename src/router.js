@@ -436,17 +436,17 @@ export default new Router({
     {
       path: '/megamenu',
       name: 'megamenu',
-      component: () => import('./views/megamenu/MegaMenuDemo.vue')
+      component: () => import('./views/megamenu/index.vue')
     },
     {
       path: '/menu',
       name: 'menu',
-      component: () => import('./views/menu/MenuDemo.vue')
+      component: () => import('./views/menu/index.vue')
     },
     {
       path: '/menubar',
       name: 'menubar',
-      component: () => import('./views/menubar/MenubarDemo.vue')
+      component: () => import('./views/menubar/index.vue')
     },
     {
       path: '/menumodel',
@@ -456,27 +456,27 @@ export default new Router({
     {
       path: '/message',
       name: 'message',
-      component: () => import('./views/message/MessageDemo.vue')
+      component: () => import('./views/message/index.vue')
     },
     {
       path: '/multiselect',
       name: 'multiselect',
-      component: () => import('./views/multiselect/MultiSelectDemo.vue')
+      component: () => import('./views/multiselect/index.vue')
     },
     {
       path: '/orderlist',
       name: 'orderlist',
-      component: () => import('./views/orderlist/OrderListDemo.vue')
+      component: () => import('./views/orderlist/index.vue')
     },
     {
       path: '/organizationchart',
       name: 'organizationchart',
-      component: () => import('./views/organizationchart/OrganizationChartDemo.vue')
+      component: () => import('./views/organizationchart/index.vue')
     },
     {
       path: '/overlaypanel',
       name: 'overlaypanel',
-      component: () => import('./views/overlaypanel/OverlayPanelDemo.vue')
+      component: () => import('./views/overlaypanel/index.vue')
     },
     {
       path: '/paginator',
