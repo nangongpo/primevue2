@@ -26,9 +26,6 @@ pre[class*="language-"] {
   background: transparent;
   margin: 0;
   padding: 0;
-  // max-height: 40rem;
-  // overflow: auto;
-  color-scheme: dark;
 
   &:before,
   &:after {
@@ -36,7 +33,6 @@ pre[class*="language-"] {
   }
 
   code {
-    border-left: 1rem solid transparent;
     box-shadow: none;
     margin: 0;
     font-size: 14px;
@@ -44,7 +40,7 @@ pre[class*="language-"] {
     color: #ffffff;
     max-height: inherit;
     height: inherit;
-    padding: 0 1rem;
+    padding: 0 1rem 0 2rem;
     display: block;
     overflow: auto;
 
@@ -259,7 +255,6 @@ pre[class*="language-"] {
   }
 
   code {
-    border-left: 1rem solid transparent !important;
     box-shadow: none !important;
     background: var(--surface-card) !important;
     margin: 0;

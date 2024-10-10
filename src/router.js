@@ -481,37 +481,37 @@ export default new Router({
     {
       path: '/paginator',
       name: 'paginator',
-      component: () => import('./views/paginator/PaginatorDemo.vue')
+      component: () => import('./views/paginator/index.vue')
     },
     {
       path: '/panel',
       name: 'panel',
-      component: () => import('./views/panel/PanelDemo.vue')
+      component: () => import('./views/panel/index.vue')
     },
     {
       path: '/panelmenu',
       name: 'panelmenu',
-      component: () => import('./views/panelmenu/PanelMenuDemo.vue')
+      component: () => import('./views/panelmenu/index.vue')
     },
     {
       path: '/picklist',
       name: 'picklist',
-      component: () => import('./views/picklist/PickListDemo.vue')
+      component: () => import('./views/picklist/index.vue')
     },
     {
       path: '/password',
       name: 'password',
-      component: () => import('./views/password/PasswordDemo.vue')
+      component: () => import('./views/password/index.vue')
     },
     {
       path: '/progressbar',
       name: 'progressbar',
-      component: () => import('./views/progressbar/ProgressBarDemo.vue')
+      component: () => import('./views/progressbar/index.vue')
     },
     {
       path: '/progressspinner',
       name: 'progressspinner',
-      component: () => import('./views/progressspinner/ProgressSpinnerDemo.vue')
+      component: () => import('./views/progressspinner/index.vue')
     },
     {
       path: '/radiobutton',
