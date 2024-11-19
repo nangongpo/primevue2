@@ -213,6 +213,7 @@
                 <router-link to="/chart/polararea">PolarArea</router-link>
                 <router-link to="/chart/radar">Radar</router-link>
                 <router-link to="/chart/combo">Combo</router-link>
+                <router-link to="/chart/apexchart">ApexChart</router-link>
             </div>
 
             <div class="menu-category">Messages</div>

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import SidebarDoc from './SidebarDoc.vue'
+import SidebarDoc from '@/doc/sidebar/index.vue'
 
 export default {
   data() {

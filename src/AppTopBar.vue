@@ -110,14 +110,14 @@
                 </transition>
             </li>
             <li class="topbar-submenu topbar-resources-submenu">
-                <a href="https://www.primefaces.org/primeblocks-vue/#/" target="_blank"><span>Blocks</span></a>
+                <a href="https://primeblocks.org/" target="_blank"><span>Blocks</span></a>
             </li>
             <li class="topbar-submenu">
                 <a tabindex="0" @click="toggleMenu($event, 3)">v2.10.4</a>
                 <transition name="p-connected-overlay" @enter="onMenuEnter">
                     <ul v-show="activeMenuIndex === 3" style="width: 100%">
                         <li><router-link to="/"><span class="m-0">v2.10.4</span></router-link></li>
-                        <li><a href="https://www.primefaces.org/primevue"><span class="m-0">v3</span></a></li>
+                        <li><a href="https://v3.primevue.org"><span class="m-0">v3</span></a></li>
                     </ul>
                 </transition>
             </li>

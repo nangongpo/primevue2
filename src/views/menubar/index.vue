@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import MenubarDoc from './MenubarDoc.vue'
+import MenubarDoc from '@/doc/menubar/index.vue'
 
 export default {
   data() {

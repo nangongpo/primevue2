@@ -39,7 +39,7 @@
 
 <script>
 import ProductService from '../../service/ProductService'
-import OrderListDoc from '@/doc/orderlist/index'
+import OrderListDoc from '@/doc/orderlist/index.vue'
 
 export default {
   data() {

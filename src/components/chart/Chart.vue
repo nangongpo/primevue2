@@ -66,7 +66,7 @@ export default {
       })
     },
     getCanvas() {
-      return this.$canvas
+      return this.$refs.canvas
     },
     getChart() {
       return this.chart

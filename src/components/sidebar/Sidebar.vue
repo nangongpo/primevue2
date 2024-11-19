@@ -78,14 +78,14 @@ export default {
         this.$refs.container.style.zIndex = String(this.baseZIndex + DomHandler.generateZIndex())
       }
       this.focus()
-      if (this.modal && !this.fullScreen) {
+      if (this.modal) {
         this.enableModality()
       }
     },
     onLeave() {
       this.$emit('hide')
 
-      if (this.modal && !this.fullScreen) {
+      if (this.modal) {
         this.disableModality()
       }
     },
@@ -143,9 +143,6 @@ export default {
       return ['p-sidebar p-component p-sidebar-' + this.position, {
         'p-sidebar-active': this.visible
       }]
-    },
-    fullScreen() {
-      return this.position === 'full'
     }
   },
   directives: {

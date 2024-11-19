@@ -9,7 +9,10 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const resolveAlias = [{ find: '@', replacement: resolve('src') }]
+const resolveAlias = [
+  { find: '@', replacement: resolve('src') },
+  { find: 'lib', replacement: resolve('lib') }
+]
 // src/components中使用了 'primevue2/xx'，需要设置别名
 const componentDir = normalizePath('src/components')
 fs.readdirSync(componentDir, { withFileTypes: true })

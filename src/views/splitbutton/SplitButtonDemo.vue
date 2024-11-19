@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import SplitButtonDoc from './SplitButtonDoc.vue'
+import SplitButtonDoc from '@/doc/splitbutton/index.vue'
 
 export default {
   data() {

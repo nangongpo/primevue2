@@ -1,3 +1,5 @@
+import './utils/polyfill'
+
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -8,8 +10,7 @@ import DocSectionCode from './docComponents/DocSectionCode.vue'
 import CodeHighlight from './docComponents/CodeHighlight.vue'
 
 // 生产
-// import PrimeVue from '../lib/index.js'
-// import '../lib/resources/primevue.min.css'
+// import PrimeVue from './primevue.lib'
 
 // 开发
 import PrimeVue from './primevue.js'

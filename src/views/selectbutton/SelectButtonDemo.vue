@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import SelectButtonDoc from './SelectButtonDoc.vue'
+import SelectButtonDoc from '@/doc/selectbutton/index.vue'
 
 export default {
   data() {

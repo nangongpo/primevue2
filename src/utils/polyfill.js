@@ -1,6 +1,6 @@
 // polyfill fetch、ResizeObserver
 
-import 'whatwg-fetch'
+// import 'whatwg-fetch'
 import ResizeObserver from 'resize-observer-polyfill'
 
 if (typeof window !== 'undefined') {

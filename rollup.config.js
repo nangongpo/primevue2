@@ -64,7 +64,7 @@ const GLOBAL_COMPONENT_DEPENDENCIES = {
 }
 
 // externals
-const EXTERNAL = ['vue', 'chart.js/auto', 'quill', '@fullcalendar/core', '@fullcalendar/core/vdom.js']
+const EXTERNAL = ['vue', 'chart.js', 'quill', '@fullcalendar/core', '@fullcalendar/core/vdom.js']
 
 const EXTERNAL_COMPONENT = [...EXTERNAL, ...Object.keys(CORE_DEPENDENCIES)]
 
