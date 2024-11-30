@@ -1,2 +1,0 @@
-import{n as o}from"./app.component-CxwrbeA3.js";import"./resize-observer-polyfill-B1PUzC5B.js";import"./app.fullcalendar-DqAsc8Hg.js";import"./preact-CNwUjBXN.js";import"./app.core-fp3qH1H1.js";const e={};var r=function(){var n=this;return n._self._c,n._m(0)},m=[function(){var t=this,n=t._self._c;return n("div",{staticClass:"tabmenudemo-content"},[n("h5",[t._v("Documentation Component Content")])])}],_=o(e,r,m,!1,null,null);const l=_.exports;export{l as default};
-//# sourceMappingURL=DocumentationDemo-BtB_uMp4.js.map

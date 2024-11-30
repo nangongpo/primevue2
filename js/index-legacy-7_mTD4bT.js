@@ -1,2 +1,0 @@
-System.register(["./index-legacy-G7FdWfp8.js","./app.component-legacy-7lS-4wLG.js","./resize-observer-polyfill-legacy-0iJwNYH9.js","./app.fullcalendar-legacy-DHW3cqgj.js","./preact-legacy-D7Jvwh8t.js","./app.core-legacy-DJ-X2bns.js"],(function(e,l){"use strict";var n,t;return{setters:[function(e){n=e.L},function(e){t=e.n},null,null,null,null],execute:function(){e("default",t({components:{SetupDoc:n}},(function(){var e=this._self._c;return e("div",[e("SetupDoc")],1)}),[],!1,null,null).exports)}}}));
-//# sourceMappingURL=index-legacy-7_mTD4bT.js.map
