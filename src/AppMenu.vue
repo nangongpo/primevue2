@@ -150,7 +150,7 @@
                                     <li><router-link to="/treetable/selection">Selection</router-link></li>
                                     <li><router-link to="/treetable/lazy">Lazy</router-link></li>
                                     <li><router-link to="/treetable/coltoggle">ColToggle</router-link></li>
-                                    <li><router-link to="/treetable/colresize">Resize</router-link></li>
+                                    <li><router-link to="/treetable/colresize">ColResize</router-link></li>
                                     <li><router-link to="/treetable/responsive">Responsive</router-link></li>
                                 </ul>
                             </div>
@@ -213,7 +213,6 @@
                 <router-link to="/chart/polararea">PolarArea</router-link>
                 <router-link to="/chart/radar">Radar</router-link>
                 <router-link to="/chart/combo">Combo</router-link>
-                <router-link to="/chart/apexchart">ApexChart</router-link>
             </div>
 
             <div class="menu-category">Messages</div>

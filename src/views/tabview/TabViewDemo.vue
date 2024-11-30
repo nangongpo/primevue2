@@ -190,7 +190,7 @@
 </template>
 
 <script>
-import TabViewDoc from './TabViewDoc.vue'
+import TabViewDoc from '@/doc/tabview/index.vue'
 import EventBus from '@/EventBus'
 
 export default {

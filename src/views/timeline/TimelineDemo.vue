@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import TimelineDoc from './TimelineDoc.vue'
+import TimelineDoc from '@/doc/timeline/index.vue'
 
 export default {
   data() {

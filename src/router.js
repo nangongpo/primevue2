@@ -144,11 +144,6 @@ export default new Router({
       component: () => import('./views/chart/Radar.vue')
     },
     {
-      path: '/chart/apexchart',
-      name: 'apexchart',
-      component: () => import('./views/chart/ApexChart.vue')
-    },
-    {
       path: '/checkbox',
       name: 'checkbox',
       component: () => import('./views/checkbox/index.vue')

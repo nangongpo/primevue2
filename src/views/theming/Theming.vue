@@ -5,10 +5,7 @@
       <p>Choose from a variety of themes or develop your own theme easily.</p>
 
       <h5>Architecture</h5>
-      <img
-        alt="Architecture"
-        src="../../assets/images/architecture.jpg"
-        class="architecture-image" />
+      <img alt="Architecture" src="../../assets/images/architecture.jpg" class="architecture-image" />
       <p>
         PrimeVue is a design agnostic library so unlike other UI libraries it
         does not enforce a certain styling such as material or bootstrap. In
@@ -23,9 +20,7 @@
         PrimeVue offers various free themes and premium themes along with
         premium templates that provide an application layout as well. All the
         free themes are built with the
-        <a href="https://www.primefaces.org/designer/primevue"
-          >Theme Designer</a
-        >
+        <a href="https://www.primefaces.org/designer/primevue">Theme Designer</a>
         and the npm package brings the CSS output of the theme whereas SCSS is
         kept as a premium feature in the designer. This means free themes are
         open source and for customization with SASS, a designer license needs to
@@ -40,9 +35,7 @@
         even to change a primary color, since there is no variable a find and
         replace should be performed various times. On the other hand, this can
         be achieved by changing a single variable e.g. $primaryColor. Visit the
-        <a href="https://www.primefaces.org/designer/api/primevue2/2.0.0"
-          >SASS API</a
-        >
+        <a href="https://www.primefaces.org/designer/api/primevue2/2.0.0">SASS API</a>
         for the documentation of available customization options.
       </p>
 
@@ -63,18 +56,11 @@
 
       <p>
         Visit
-        <a href="https://www.primefaces.org/designer/primevue"
-          >Designer API HomePage</a
-        >
+        <a href="https://www.primefaces.org/designer/primevue">Designer API HomePage</a>
         for more information and live demos.
       </p>
-      <a
-        href="http://www.primefaces.org/designer/primevue"
-        class="designer-image">
-        <img
-          alt="PrimeVue Designer"
-          src="../../assets/images/primevue-designer.jpg"
-          style="width: 100%" />
+      <a href="http://www.primefaces.org/designer/primevue" class="designer-image">
+        <img alt="PrimeVue Designer" src="../../assets/images/primevue-designer.jpg" style="width: 100%" />
       </a>
 
       <h5>Scaling</h5>
@@ -223,6 +209,7 @@ html {
 }
 
 @media screen and (max-width: 960px) {
+
   .designer-image,
   .architecture-image {
     width: 100%;

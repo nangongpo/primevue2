@@ -1,25 +1,25 @@
 <template>
-    <div>
-        <div class="content-section introduction">
-            <div class="feature-intro">
-                <h1>Terminal</h1>
-                <p>Terminal is a text based user interface.</p>
-            </div>
-        </div>
-
-        <div class="content-section implementation">
-            <div class="card">
-                <p>Enter "date" to display the current date, "greet {0}" for a message and "random" to get a random number.</p>
-                <Terminal welcomeMessage="Welcome to PrimeVue" prompt="primevue $" class="dark-demo-terminal" />
-            </div>
-        </div>
-
-        <TerminalDoc />
+  <div>
+    <div class="content-section introduction">
+      <div class="feature-intro">
+        <h1>Terminal</h1>
+        <p>Terminal is a text based user interface.</p>
+      </div>
     </div>
+
+    <div class="content-section implementation">
+      <div class="card">
+        <p>Enter "date" to display the current date, "greet {0}" for a message and "random" to get a random number.</p>
+        <Terminal welcomeMessage="Welcome to PrimeVue" prompt="primevue $" class="dark-demo-terminal" />
+      </div>
+    </div>
+
+    <TerminalDoc />
+  </div>
 </template>
 
 <script>
-import TerminalDoc from './TerminalDoc.vue'
+import TerminalDoc from '@/doc/terminal/index.vue'
 import TerminalService from 'primevue2/terminalservice'
 
 
@@ -30,7 +30,7 @@ export default {
       let argsIndex = text.indexOf(' ')
       let command = argsIndex !== -1 ? text.substring(0, argsIndex) : text
 
-      switch(command) {
+      switch (command) {
       case 'date':
         response = 'Today is ' + new Date().toDateString()
         break
@@ -64,23 +64,23 @@ export default {
 
 <style lang="scss" scoped>
 p {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 :deep(.dark-demo-terminal) {
-    background-color: #212121;
-    color: #ffffff;
+  background-color: #212121;
+  color: #ffffff;
 
-    .p-terminal-command {
-        color: #80CBC4;
-    }
+  .p-terminal-command {
+    color: #80CBC4;
+  }
 
-    .p-terminal-prompt {
-        color: #FFD54F;
-    }
+  .p-terminal-prompt {
+    color: #FFD54F;
+  }
 
-    .p-terminal-response {
-        color: #9FA8DA;
-    }
+  .p-terminal-response {
+    color: #9FA8DA;
+  }
 }
 </style>

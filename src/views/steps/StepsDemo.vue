@@ -1,28 +1,32 @@
 <template>
-    <div>
-        <div class="content-section introduction">
-            <div class="feature-intro">
-                <h1>Steps</h1>
-                <p>Steps components is an indicator for the steps in a wizard workflow. Example below uses nested routes with Steps.</p>
-            </div>
-        </div>
-
-        <div class="content-section implementation">
-            <div class="card">
-                <Steps :model="items" :readonly="true" />
-            </div>
-
-            <keep-alive>
-                <router-view :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete" />
-            </keep-alive>
-        </div>
-
-        <StepsDoc />
+  <div>
+    <div class="content-section introduction">
+      <div class="feature-intro">
+        <h1>Steps</h1>
+        <p>
+          Steps components is an indicator for the steps in a wizard workflow.
+          Example below uses nested routes with Steps.
+        </p>
+      </div>
     </div>
+
+    <div class="content-section implementation">
+      <div class="card">
+        <Steps :model="items" :readonly="true" />
+      </div>
+
+      <keep-alive>
+        <router-view :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)"
+          @complete="complete" />
+      </keep-alive>
+    </div>
+
+    <StepsDoc />
+  </div>
 </template>
 
 <script>
-import StepsDoc from './StepsDoc.vue'
+import StepsDoc from '@/doc/steps/index.vue'
 
 export default {
   data() {
@@ -30,26 +34,26 @@ export default {
       items: [
         {
           label: 'Personal',
-          to: '/steps',
+          to: '/steps'
         },
         {
           label: 'Seat',
-          to: '/steps/seat',
+          to: '/steps/seat'
         },
         {
           label: 'Payment',
-          to: '/steps/payment',
+          to: '/steps/payment'
         },
         {
           label: 'Confirmation',
-          to: '/steps/confirmation',
+          to: '/steps/confirmation'
         }
       ],
       formObject: {}
     }
   },
   components: {
-    'StepsDoc': StepsDoc,
+    StepsDoc: StepsDoc
   },
   methods: {
     nextPage(event) {
@@ -61,18 +65,27 @@ export default {
       this.$router.push(this.items[event.pageIndex - 1].to)
     },
     complete() {
-      this.$toast.add({severity: 'success', summary: 'Order submitted', detail: 'Dear, ' + this.formObject.firstname + ' ' + this.formObject.lastname + ' your order completed.'})
-    },
-  },
+      this.$toast.add({
+        severity: 'success',
+        summary: 'Order submitted',
+        detail:
+          'Dear, ' +
+          this.formObject.firstname +
+          ' ' +
+          this.formObject.lastname +
+          ' your order completed.'
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 :deep(b) {
-    display: block;
+  display: block;
 }
 
 :deep(.p-card-body) {
-    padding: 2rem;
+  padding: 2rem;
 }
 </style>
