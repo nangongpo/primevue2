@@ -1,0 +1,1 @@
+{"version":3,"file":"index-legacy-C4RyGDeh.js","sources":["../../src/views/locale/index.vue"],"sourcesContent":["<template>\n  <div>\n    <LocaleDoc />\n  </div>\n</template>\n\n<script>\nimport LocaleDoc from '@/doc/locale/index.vue'\nexport default {\n  components: { LocaleDoc }\n}\n</script>\n\n\n"],"names":["components","LocaleDoc"],"mappings":"0XAQA,CACAA,WAAA,CAAAC,UAAAA"}

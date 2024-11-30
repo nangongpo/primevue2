@@ -1,6 +1,0 @@
-{
-    "main": "./nuxt.cjs.js",
-    "module": "./nuxt.esm.js",
-    "unpkg": "./nuxt.min.js",
-    "types": "./Nuxt.d.ts"
-}

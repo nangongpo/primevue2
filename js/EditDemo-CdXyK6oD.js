@@ -1,0 +1,2 @@
+import{n as e}from"./app.component-CxwrbeA3.js";import"./resize-observer-polyfill-B1PUzC5B.js";import"./app.fullcalendar-DqAsc8Hg.js";import"./preact-CNwUjBXN.js";import"./app.core-fp3qH1H1.js";const o={};var r=function(){var t=this;return t._self._c,t._m(0)},_=[function(){var n=this,t=n._self._c;return t("div",{staticClass:"tabmenudemo-content"},[t("h5",[n._v("Edit Component Content")])])}],s=e(o,r,_,!1,null,null);const l=s.exports;export{l as default};
+//# sourceMappingURL=EditDemo-CdXyK6oD.js.map
