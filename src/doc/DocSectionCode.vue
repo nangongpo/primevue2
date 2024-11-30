@@ -49,8 +49,6 @@
 </template>
 
 <script>
-import { escapeHtml } from '@/utils'
-
 export default {
   inheritAttrs: false,
   props: {
@@ -74,14 +72,6 @@ export default {
   data() {
     return {
       codeMode: 'basic'
-    }
-  },
-  computed: {
-    processedCode({ code, codeMode, importCode }) {
-      if (codeMode === 'basic' && !importCode) {
-        return escapeHtml(code[codeMode])
-      }
-      return code[codeMode]
     }
   },
   methods: {

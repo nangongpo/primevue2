@@ -186,20 +186,11 @@ import ImagePreview from 'primevue2/imagepreview';
       },
       indicatorTemplatingCode: {
         basic: `
-export default {
-    data() {
-        return {
-            home: {icon: 'pi pi-home', to: '/'},
-            items: [
-                {label: 'Computer'},
-                {label: 'Notebook'},
-                {label: 'Accessories'},
-                {label: 'Backpacks'},
-                {label: 'Item'}
-            ]
-        }
-    }
-}
+<ImagePreview src="image1.png" alt="Image Text">
+    <template #indicator>
+        Preview Content
+    </template>
+</ImagePreview>
         `
       },
     }

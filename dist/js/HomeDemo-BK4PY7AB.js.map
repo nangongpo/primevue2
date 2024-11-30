@@ -1,1 +1,0 @@
-{"version":3,"file":"HomeDemo-BK4PY7AB.js","sources":["../../src/views/tabmenu/HomeDemo.vue"],"sourcesContent":["<template>\n  <div class=\"tabmenudemo-content\">\n    <h5>Home Component Content</h5>\n  </div>\n</template>\n\n<script>\nexport default {}\n</script>\n"],"names":["_sfc_main"],"mappings":"kMAOA,MAAAA,EAAA,CAAA"}

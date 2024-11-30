@@ -6,8 +6,7 @@ import router from './router'
 
 import Code from './directives/CodeHighlight'
 import AppInputStyleSwitch from './AppInputStyleSwitch.vue'
-import DocSectionCode from './docComponents/DocSectionCode.vue'
-import CodeHighlight from './docComponents/CodeHighlight.vue'
+import DocSectionCode from './doc/DocSectionCode.vue'
 
 // 生产
 // import PrimeVue from './primevue.lib'
@@ -119,12 +118,6 @@ Vue.config.productionTip = false
 Vue.directive('code', Code)
 Vue.component('AppInputStyleSwitch', AppInputStyleSwitch)
 Vue.component('DocSectionCode', DocSectionCode)
-Vue.component('CodeHighlight', CodeHighlight)
-
-router.beforeEach(function (to, from, next) {
-  window.scrollTo(0, 0)
-  next()
-})
 
 new Vue({
   router,

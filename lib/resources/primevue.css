@@ -229,6 +229,7 @@ button {
 
 .p-button-label {
     flex: 1 1 auto;
+    line-height: 1;
 }
 
 .p-button-icon-right {
@@ -283,6 +284,7 @@ button {
     position: relative;
     z-index: 1;
 }
+
 .p-checkbox {
   display: inline-flex;
   cursor: pointer;

@@ -1,41 +1,35 @@
 <template>
   <span ref="container" :class="containerClass" :style="styles">
-    <img v-bind="$attrs" :style="imageStyle" :class="imageClass" />
-    <div class="p-image-preview-indicator" v-if="preview" @click="onImageClick">
-      <slot name="indicator">
-        <i class="p-image-preview-icon pi pi-eye"></i>
-      </slot>
-    </div>
-    <div ref="mask" :class="maskClass" v-if="maskVisible" @click="onMaskClick">
-      <div class="p-image-toolbar">
-        <button class="p-image-action p-link" @click="rotateRight" type="button">
-          <i class="pi pi-refresh"></i>
-        </button>
-        <button class="p-image-action p-link" @click="rotateLeft" type="button">
-          <i class="pi pi-undo"></i>
-        </button>
-        <button class="p-image-action p-link" @click="zoomOut" type="button" :disabled="zoomDisabled">
-          <i class="pi pi-search-minus"></i>
-        </button>
-        <button class="p-image-action p-link" @click="zoomIn" type="button" :disabled="zoomDisabled">
-          <i class="pi pi-search-plus"></i>
-        </button>
-        <button class="p-image-action p-link" type="button">
-          <i class="pi pi-times"></i>
-        </button>
+      <img v-bind="$attrs" :style="imageStyle" :class="imageClass" />
+      <div class="p-image-preview-indicator" v-if="preview" @click="onImageClick">
+          <slot name="indicator">
+              <i class="p-image-preview-icon pi pi-eye"></i>
+          </slot>
       </div>
-      <transition
-        name="p-image-preview"
-        @before-enter="onBeforeEnter"
-        @enter="onEnter"
-        @leave="onLeave"
-        @before-leave="onBeforeLeave"
-        @after-leave="onAfterLeave">
-        <div v-if="previewVisible">
-          <img :src="$attrs.src" class="p-image-preview" :style="imagePreviewStyle" @click="onPreviewImageClick" />
-        </div>
-      </transition>
-    </div>
+      <div ref="mask" :class="maskClass" v-if="maskVisible" @click="onMaskClick">
+          <div class="p-image-toolbar">
+              <button class="p-image-action p-link" @click="rotateRight" type="button">
+                  <i class="pi pi-refresh"></i>
+              </button>
+              <button class="p-image-action p-link" @click="rotateLeft" type="button">
+                  <i class="pi pi-undo"></i>
+              </button>
+              <button class="p-image-action p-link" @click="zoomOut" type="button" :disabled="zoomDisabled">
+                  <i class="pi pi-search-minus"></i>
+              </button>
+              <button class="p-image-action p-link" @click="zoomIn" type="button" :disabled="zoomDisabled">
+                  <i class="pi pi-search-plus"></i>
+              </button>
+              <button class="p-image-action p-link" type="button">
+                  <i class="pi pi-times"></i>
+              </button>
+          </div>
+          <transition name="p-image-preview" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave" @before-leave="onBeforeLeave" @after-leave="onAfterLeave">
+              <div v-if="previewVisible">
+                  <img :src="$attrs.src" class="p-image-preview" :style="imagePreviewStyle" @click="onPreviewImageClick"/>
+              </div>
+          </transition>
+      </div>
   </span>
 </template>
 
@@ -85,7 +79,6 @@ export default {
         this.scale = 1
       }
       this.previewClick = false
-      this.restoreAppend()
     },
     rotateRight() {
       this.rotate += 90
@@ -107,6 +100,7 @@ export default {
       this.$refs.mask.style.zIndex = String(DomHandler.generateZIndex())
     },
     onEnter() {
+      DomHandler.addClass(document.body, 'p-overflow-hidden')
       this.appendContainer()
       this.$emit('show')
     },
@@ -114,6 +108,7 @@ export default {
       DomHandler.addClass(this.$refs.mask, 'p-component-overlay-leave')
     },
     onLeave() {
+      DomHandler.removeClass(document.body, 'p-overflow-hidden')
       this.$emit('hide')
     },
     onAfterLeave() {
@@ -121,12 +116,10 @@ export default {
     },
     appendContainer() {
       document.body.appendChild(this.$refs.mask)
-      DomHandler.addClass(document.body, 'p-overflow-hidden')
     },
     restoreAppend() {
       if (this.$refs.mask) {
         document.body.removeChild(this.$refs.mask)
-        DomHandler.removeClass(document.body, 'p-overflow-hidden')
       }
     }
   },
@@ -143,7 +136,7 @@ export default {
       return 'p-image-preview-rotate-' + this.rotate
     },
     imagePreviewStyle() {
-      return { transform: 'rotate(' + this.rotate + 'deg) scale(' + this.scale + ')' }
+      return {transform: 'rotate(' + this.rotate + 'deg) scale(' + this.scale + ')'}
     },
     zoomDisabled() {
       return this.scale <= 0.5 || this.scale >= 1.5
@@ -172,7 +165,7 @@ export default {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity .3s;
 }
 .p-image-preview-icon {
   font-size: 1.5rem;
@@ -196,7 +189,7 @@ export default {
   align-items: center;
 }
 .p-image-preview {
-  transition: transform 0.15s;
+  transition: transform .15s;
   max-width: 100vw;
   max-height: 100vh;
 }
@@ -204,7 +197,7 @@ export default {
   transition: all 150ms cubic-bezier(0, 0, 0.2, 1);
 }
 .p-image-preview-leave-active {
-  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 150ms cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 .p-image-preview-enter,
 .p-image-preview-leave-to {
