@@ -1,0 +1,2 @@
+System.register(["./index-legacy-ClYqOwWl.js","./app.component-legacy-cLUjg6K2.js","./resize-observer-polyfill-legacy-0iJwNYH9.js","./app.fullcalendar-legacy-DHW3cqgj.js","./preact-legacy-D7Jvwh8t.js","./app.core-legacy-DJ-X2bns.js"],(function(e,l){"use strict";var n,c;return{setters:[function(e){n=e.L},function(e){c=e.n},null,null,null,null],execute:function(){e("default",c({components:{LocaleDoc:n}},(function(){var e=this._self._c;return e("div",[e("LocaleDoc")],1)}),[],!1,null,null).exports)}}}));
+//# sourceMappingURL=index-legacy-BPcuPPED.js.map

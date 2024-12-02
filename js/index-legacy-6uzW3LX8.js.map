@@ -1,0 +1,1 @@
+{"version":3,"file":"index-legacy-6uzW3LX8.js","sources":["../../src/views/setup/index.vue"],"sourcesContent":["<template>\n  <div>\n    <SetupDoc />\n  </div>\n</template>\n\n<script>\nimport SetupDoc from '@/doc/locale/index.vue'\nexport default {\n  components: { SetupDoc }\n}\n</script>\n"],"names":["components","SetupDoc"],"mappings":"0XAQA,CACAA,WAAA,CAAAC,SAAAA"}
