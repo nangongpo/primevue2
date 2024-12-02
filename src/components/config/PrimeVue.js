@@ -1,4 +1,7 @@
 import { FilterMatchMode } from 'primevue2/api'
+import { ObjectUtils } from 'primevue2/utils'
+
+const { deepMerge } = ObjectUtils
 
 const defaultOptions = {
   ripple: false,
@@ -74,7 +77,7 @@ const defaultOptions = {
 
 export default {
   install: (Vue, options) => {
-    let configOptions = options ? { ...defaultOptions, ...options } : { ...defaultOptions }
+    let configOptions = options ? deepMerge(defaultOptions, options) : { ...defaultOptions }
     Vue.prototype.$primevue = Vue.observable({ config: configOptions })
   }
 }

@@ -14,7 +14,7 @@
           </template>
           <span class="p-cascadeselect-group-icon pi pi-angle-right" v-if="isOptionGroup(option)"></span>
         </div>
-        <cascadeselect-sub
+        <CascadeSelectSub
           v-if="isOptionGroup(option) && isOptionActive(option)"
           class="p-cascadeselect-sublist"
           :selectionPath="selectionPath"

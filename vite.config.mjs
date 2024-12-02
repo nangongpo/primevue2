@@ -59,6 +59,9 @@ export default defineConfig(({ mode }) => {
       // 服务启动时是否自动打开浏览器
       open: true,
       cors: false,
+      proxy: {
+        '/primevue2/data/customers': 'https://www.primefaces.org/data/customers'
+      }
     },
     build: {
       outDir: env.VITE_OUTDIR,

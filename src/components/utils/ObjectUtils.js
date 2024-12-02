@@ -201,5 +201,45 @@ export default {
     }
 
     return null
+  },
+
+  deepMerge(target, ...sources) {
+    // 如果目标对象是 null 或 undefined，则返回一个空对象
+    if (target == null) return {}
+
+    // 合并操作的递归函数
+    const merge = (target, source) => {
+      // 创建一个新的目标对象，以避免修改原始对象
+      const result = { ...target }
+
+      Object.keys(source).forEach(key => {
+        const targetValue = target[key]
+        const sourceValue = source[key]
+
+        // 如果源值是对象且目标值也是对象，则递归合并
+        if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue) &&
+            targetValue && typeof targetValue === 'object' && !Array.isArray(targetValue)) {
+          result[key] = merge(targetValue, sourceValue) // 递归合并
+        }
+        // 如果源值是数组，则合并数组（这里是简单的替换，可根据需求修改）
+        else if (Array.isArray(sourceValue)) {
+          result[key] = [...sourceValue]  // 使用新数组替换
+        }
+        // 否则直接覆盖目标值
+        else {
+          result[key] = sourceValue
+        }
+      })
+
+      return result
+    }
+
+    // 合并所有源对象，返回新的目标对象
+    return sources.reduce((accumulated, source) => {
+      if (source != null) {
+        return merge(accumulated, source)
+      }
+      return accumulated
+    }, { ...target })  // 使用一个新的目标对象来避免修改原始目标
   }
 }

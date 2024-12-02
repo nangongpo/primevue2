@@ -11,7 +11,7 @@
 
     <div class="content-section implementation">
       <div class="card">
-        <DataTable :value="products" responsiveLayout="scroll">
+        <DataTable :value="products" responsiveLayout="scroll" @page="onPage($event)">
           <Column field="code" header="Code"></Column>
           <Column field="name" header="Name"></Column>
           <Column field="category" header="Category"></Column>

@@ -65,7 +65,7 @@ export default {
   name: 'Documentation',
   data() {
     return {
-      importCode: {
+      baseCode: {
         basic: `
 import PrimeVue from 'primevue2/config';
 

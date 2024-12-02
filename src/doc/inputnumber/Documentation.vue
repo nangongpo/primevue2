@@ -398,7 +398,7 @@ Vertical
 <InputNumber v-model="value" :step="0.25" />
         `
       },
-      minAndMaxBoundaries: {
+      minAndMaxBoundariesCode: {
         basic: `
 <InputNumber v-model="value" :min="0" :max="100" />
         `

@@ -85,7 +85,7 @@
                         :href="item.url"
                         :class="linkClass(item)"
                         :target="item.target"
-                        @click="onLeafClick($event, item, navigate)"
+                        @click="onLeafClick($event, item)"
                         role="menuitem"
                         :tabindex="disabled(item) ? null : '0'"
                         v-ripple>

@@ -35,7 +35,7 @@ export default {
     value: String,
     promptLabel: {
       type: String,
-      default: 'Enter a password'
+      default: null
     },
     mediumRegex: {
       type: String,
