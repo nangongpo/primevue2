@@ -3,7 +3,7 @@ import { ObjectUtils } from 'primevue2/utils'
 
 const { deepMerge } = ObjectUtils
 
-const defaultOptions = {
+export const defaultOptions = {
   ripple: false,
   inputStyle: 'outlined',
   locale: {

@@ -2,7 +2,7 @@
     <div class="home">
         <div :class="introductionClass">
             <div class="introduction-title">The Ultimate UI Component Library</div>
-            <div class="introduction-subtitle">for Vue</div>
+            <div class="introduction-subtitle">for Vue2</div>
 
             <router-link to="/setup" class="action-button">GET STARTED</router-link>
             <img alt="devices" class="introduction-devices" src="../assets/images/home/intro-devices.png" />

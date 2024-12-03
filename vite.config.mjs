@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv, normalizePath } from 'vite'
 import path from 'node:path'
 import fs from 'node:fs'
+
 import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
 import vue2Jsx from '@vitejs/plugin-vue2-jsx'
@@ -9,10 +10,11 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const resolveAlias = [
-  { find: '@', replacement: resolve('src') },
-  { find: 'lib', replacement: resolve('lib') }
-]
+const alias = {
+  '@': resolve('src'),
+  'lib': resolve('lib')
+}
+
 // src/components中使用了 'primevue2/xx'，需要设置别名
 const componentDir = normalizePath('src/components')
 fs.readdirSync(componentDir, { withFileTypes: true })
@@ -22,10 +24,7 @@ fs.readdirSync(componentDir, { withFileTypes: true })
       let name = file.split(/(.vue)$|(.js)$/)[0].toLowerCase()
 
       if (name === 'primevue' || name === folderName) {
-        resolveAlias.push({
-          find: path.join('primevue2', folderName),
-          replacement: resolve(path.join(componentDir, folderName, file))
-        })
+        alias[path.join('primevue2', folderName)] = resolve(path.join(componentDir, folderName, file))
       }
     })
   })
@@ -40,7 +39,7 @@ export default defineConfig(({ mode }) => {
       'process.env': JSON.stringify(process.env),
     },
     resolve: {
-      alias: resolveAlias
+      alias: alias
     },
     plugins: [
       legacy({

@@ -1,11 +1,10 @@
 # primevue2
-  - rollup2 重新打包primevue2.10.4，支持es
+  - rollup2 重新打包primevue2.10.4，支持esm
   - vite5 文档网站
   - vitest 测试, 待编写测试用例
 
 ## 代办事项
-  - [ ] 使用vite-plugin-html-config配置meta
-  - [ ] 重写代码高亮，支持复制， 目前文档中代码示例换行失效
+  - [x] 重写代码高亮，支持复制， 目前文档中代码示例换行失效
   - [ ] 迁移primevue3中的VirtualScroller、InputOpt、MeterGroup、AnimateOnScroll、FocusTrap
   - [ ] ImagePreview组件更名为Image
   - [ ] 内置一个primevue2的resolver(unplugin-vue-components)
