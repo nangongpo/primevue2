@@ -82,199 +82,306 @@ export default {
   },
 
   getOffset(el) {
-    var rect = el.getBoundingClientRect()
+    if (el) {
+      let rect = el.getBoundingClientRect()
+
+      return {
+        top: rect.top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
+        left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0)
+      }
+    }
 
     return {
-      top:
-        rect.top +
-        (window.pageYOffset ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop ||
-          0),
-      left:
-        rect.left +
-        (window.pageXOffset ||
-          document.documentElement.scrollLeft ||
-          document.body.scrollLeft ||
-          0)
+      top: 'auto',
+      left: 'auto'
     }
-  },
-
-  generateZIndex() {
-    this.zindex = this.zindex || 999
-    return ++this.zindex
-  },
-
-  getCurrentZIndex() {
-    return this.zindex
   },
 
   index(element) {
-    let children = element.parentNode.childNodes
-    let num = 0
-    for (var i = 0; i < children.length; i++) {
-      if (children[i] === element) return num
-      if (children[i].nodeType === 1) num++
+    if (element) {
+      let children = this.getParentNode(element)?.childNodes
+      let num = 0
+
+      for (let i = 0; i < children.length; i++) {
+        if (children[i] === element) return num
+        if (children[i].nodeType === 1) num++
+      }
     }
+
     return -1
   },
 
-  addMultipleClasses(element, className) {
-    if (element.classList) {
-      let styles = className.split(' ')
-      for (let i = 0; i < styles.length; i++) {
-        element.classList.add(styles[i])
-      }
-    } else {
-      let styles = className.split(' ')
-      for (let i = 0; i < styles.length; i++) {
-        element.className += ' ' + styles[i]
-      }
+  addMultipleClasses(element, classNames) {
+    if (element && classNames) {
+      [classNames]
+        .flat()
+        .filter(Boolean)
+        .forEach((cNames) => cNames.split(' ').forEach((className) => this.addClass(element, className)))
+    }
+  },
+
+  removeMultipleClasses(element, classNames) {
+    if (element && classNames) {
+      [classNames]
+        .flat()
+        .filter(Boolean)
+        .forEach((cNames) => cNames.split(' ').forEach((className) => this.removeClass(element, className)))
     }
   },
 
   addClass(element, className) {
-    if (element.classList) element.classList.add(className)
-    else element.className += ' ' + className
+    if (element && className && !this.hasClass(element, className)) {
+      if (element.classList) element.classList.add(className)
+      else element.className += ' ' + className
+    }
   },
 
   removeClass(element, className) {
-    if (element.classList) element.classList.remove(className)
-    else
-      element.className = element.className.replace(
-        new RegExp(
-          '(^|\\b)' + className.split(' ').join('|') + '(\\b|$)',
-          'gi'
-        ),
-        ' '
-      )
+    if (element && className) {
+      if (element.classList) element.classList.remove(className)
+      else element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ')
+    }
   },
 
   hasClass(element, className) {
     if (element) {
       if (element.classList) return element.classList.contains(className)
       else
-        return new RegExp('(^| )' + className + '( |$)', 'gi').test(
-          element.className
-        )
+        return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className)
     }
 
     return false
   },
 
+  addStyles(element, styles = {}) {
+    if (element) {
+      Object.entries(styles).forEach(([key, value]) => (element.style[key] = value))
+    }
+  },
+
   find(element, selector) {
-    return element.querySelectorAll(selector)
+    return this.isElement(element) ? element.querySelectorAll(selector) : []
   },
 
   findSingle(element, selector) {
-    return element.querySelector(selector)
+    return this.isElement(element) ? element.querySelector(selector) : null
+  },
+
+  createElement(type, attributes = {}, ...children) {
+    if (type) {
+      const element = document.createElement(type)
+
+      this.setAttributes(element, attributes)
+      element.append(...children)
+
+      return element
+    }
+
+    return undefined
+  },
+
+  setAttribute(element, attribute = '', value) {
+    if (this.isElement(element) && value !== null && value !== undefined) {
+      element.setAttribute(attribute, value)
+    }
+  },
+
+  setAttributes(element, attributes = {}) {
+    if (this.isElement(element)) {
+      const computedStyles = (rule, value) => {
+        const styles = element?.$attrs?.[rule] ? [element?.$attrs?.[rule]] : []
+
+        return [value].flat().reduce((cv, v) => {
+          if (v !== null && v !== undefined) {
+            const type = typeof v
+
+            if (type === 'string' || type === 'number') {
+              cv.push(v)
+            } else if (type === 'object') {
+              const _cv = Array.isArray(v)
+                ? computedStyles(rule, v)
+                : Object.entries(v).map(([_k, _v]) => (rule === 'style' && (!!_v || _v === 0) ? `${_k.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}:${_v}` : _v ? _k : undefined))
+
+              cv = _cv.length ? cv.concat(_cv.filter((c) => !!c)) : cv
+            }
+          }
+
+          return cv
+        }, styles)
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          const matchedEvent = key.match(/^on(.+)/)
+
+          if (matchedEvent) {
+            element.addEventListener(matchedEvent[1].toLowerCase(), value)
+          } else if (key === 'p-bind') {
+            this.setAttributes(element, value)
+          } else {
+            value = key === 'class' ? [...new Set(computedStyles('class', value))].join(' ').trim() : key === 'style' ? computedStyles('style', value).join(';').trim() : value;
+            (element.$attrs = element.$attrs || {}) && (element.$attrs[key] = value)
+            element.setAttribute(key, value)
+          }
+        }
+      })
+    }
+  },
+
+  getAttribute(element, name) {
+    if (this.isElement(element)) {
+      const value = element.getAttribute(name)
+
+      if (!isNaN(value)) {
+        return +value
+      }
+
+      if (value === 'true' || value === 'false') {
+        return value === 'true'
+      }
+
+      return value
+    }
+
+    return undefined
+  },
+
+  isAttributeEquals(element, name, value) {
+    return this.isElement(element) ? this.getAttribute(element, name) === value : false
+  },
+
+  isAttributeNotEquals(element, name, value) {
+    return !this.isAttributeEquals(element, name, value)
   },
 
   getHeight(el) {
-    let height = el.offsetHeight
-    let style = getComputedStyle(el)
+    if (el) {
+      let height = el.offsetHeight
+      let style = getComputedStyle(el)
 
-    height -=
-      parseFloat(style.paddingTop) +
-      parseFloat(style.paddingBottom) +
-      parseFloat(style.borderTopWidth) +
-      parseFloat(style.borderBottomWidth)
+      height -= parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth)
 
-    return height
+      return height
+    }
+
+    return 0
   },
 
   getWidth(el) {
-    let width = el.offsetWidth
-    let style = getComputedStyle(el)
+    if (el) {
+      let width = el.offsetWidth
+      let style = getComputedStyle(el)
 
-    width -=
-      parseFloat(style.paddingLeft) +
-      parseFloat(style.paddingRight) +
-      parseFloat(style.borderLeftWidth) +
-      parseFloat(style.borderRightWidth)
+      width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth)
 
-    return width
+      return width
+    }
+
+    return 0
   },
 
-  absolutePosition(element, target) {
-    let elementDimensions = element.offsetParent
-      ? { width: element.offsetWidth, height: element.offsetHeight }
-      : this.getHiddenElementDimensions(element)
-    let elementOuterHeight = elementDimensions.height
-    let elementOuterWidth = elementDimensions.width
-    let targetOuterHeight = target.offsetHeight
-    let targetOuterWidth = target.offsetWidth
-    let targetOffset = target.getBoundingClientRect()
-    let windowScrollTop = this.getWindowScrollTop()
-    let windowScrollLeft = this.getWindowScrollLeft()
-    let viewport = this.getViewport()
-    let top, left
+  absolutePosition(element, target, gutter = true) {
+    if (element) {
+      const elementDimensions = element.offsetParent ? { width: element.offsetWidth, height: element.offsetHeight } : this.getHiddenElementDimensions(element)
+      const elementOuterHeight = elementDimensions.height
+      const elementOuterWidth = elementDimensions.width
+      const targetOuterHeight = target.offsetHeight
+      const targetOuterWidth = target.offsetWidth
+      const targetOffset = target.getBoundingClientRect()
+      const windowScrollTop = this.getWindowScrollTop()
+      const windowScrollLeft = this.getWindowScrollLeft()
+      const viewport = this.getViewport()
+      let top,
+        left,
+        origin = 'top'
 
-    if (
-      targetOffset.top + targetOuterHeight + elementOuterHeight >
-      viewport.height
-    ) {
-      top = targetOffset.top + windowScrollTop - elementOuterHeight
-      element.style.transformOrigin = 'bottom'
+      if (targetOffset.top + targetOuterHeight + elementOuterHeight > viewport.height) {
+        top = targetOffset.top + windowScrollTop - elementOuterHeight
+        origin = 'bottom'
 
-      if (top < 0) {
-        top = windowScrollTop
+        if (top < 0) {
+          top = windowScrollTop
+        }
+      } else {
+        top = targetOuterHeight + targetOffset.top + windowScrollTop
       }
-    } else {
-      top = targetOuterHeight + targetOffset.top + windowScrollTop
-      element.style.transformOrigin = 'top'
+
+      if (targetOffset.left + elementOuterWidth > viewport.width) left = Math.max(0, targetOffset.left + windowScrollLeft + targetOuterWidth - elementOuterWidth)
+      else left = targetOffset.left + windowScrollLeft
+
+      element.style.top = top + 'px'
+      element.style.left = left + 'px'
+      element.style.transformOrigin = origin
+      gutter && (element.style.marginTop = origin === 'bottom' ? 'calc(var(--p-anchor-gutter) * -1)' : 'calc(var(--p-anchor-gutter))')
     }
-
-    if (targetOffset.left + elementOuterWidth > viewport.width)
-      left = Math.max(
-        0,
-        targetOffset.left +
-          windowScrollLeft +
-          targetOuterWidth -
-          elementOuterWidth
-      )
-    else left = targetOffset.left + windowScrollLeft
-
-    element.style.top = top + 'px'
-    element.style.left = left + 'px'
   },
 
-  relativePosition(element, target) {
-    let elementDimensions = element.offsetParent
-      ? { width: element.offsetWidth, height: element.offsetHeight }
-      : this.getHiddenElementDimensions(element)
-    const targetHeight = target.offsetHeight
-    const targetOffset = target.getBoundingClientRect()
-    const viewport = this.getViewport()
-    let top, left
+  relativePosition(element, target, gutter = true) {
+    if (element) {
+      const elementDimensions = element.offsetParent ? { width: element.offsetWidth, height: element.offsetHeight } : this.getHiddenElementDimensions(element)
+      const targetHeight = target.offsetHeight
+      const targetOffset = target.getBoundingClientRect()
+      const viewport = this.getViewport()
+      let top,
+        left,
+        origin = 'top'
 
-    if (
-      targetOffset.top + targetHeight + elementDimensions.height >
-      viewport.height
-    ) {
-      top = -1 * elementDimensions.height
-      element.style.transformOrigin = 'bottom'
-      if (targetOffset.top + top < 0) {
-        top = -1 * targetOffset.top
+      if (targetOffset.top + targetHeight + elementDimensions.height > viewport.height) {
+        top = -1 * elementDimensions.height
+        origin = 'bottom'
+
+        if (targetOffset.top + top < 0) {
+          top = -1 * targetOffset.top
+        }
+      } else {
+        top = targetHeight
       }
-    } else {
-      top = targetHeight
-      element.style.transformOrigin = 'top'
-    }
 
-    if (elementDimensions.width > viewport.width) {
-      // element wider then viewport and cannot fit on screen (align at left side of viewport)
-      left = targetOffset.left * -1
-    } else if (targetOffset.left + elementDimensions.width > viewport.width) {
-      // element wider then viewport but can be fit on screen (align at right side of viewport)
-      left = (targetOffset.left + elementDimensions.width - viewport.width) * -1
-    } else {
-      // element fits on screen (align with target)
-      left = 0
-    }
+      if (elementDimensions.width > viewport.width) {
+        // element wider then viewport and cannot fit on screen (align at left side of viewport)
+        left = targetOffset.left * -1
+      } else if (targetOffset.left + elementDimensions.width > viewport.width) {
+        // element wider then viewport but can be fit on screen (align at right side of viewport)
+        left = (targetOffset.left + elementDimensions.width - viewport.width) * -1
+      } else {
+        // element fits on screen (align with target)
+        left = 0
+      }
 
-    element.style.top = top + 'px'
-    element.style.left = left + 'px'
+      element.style.top = top + 'px'
+      element.style.left = left + 'px'
+      element.style.transformOrigin = origin
+      gutter && (element.style.marginTop = origin === 'bottom' ? 'calc(var(--p-anchor-gutter) * -1)' : 'calc(var(--p-anchor-gutter))')
+    }
+  },
+
+  nestedPosition(element, level) {
+    if (element) {
+      const parentItem = element.parentElement
+      const elementOffset = this.getOffset(parentItem)
+      const viewport = this.getViewport()
+      const sublistWidth = element.offsetParent ? element.offsetWidth : this.getHiddenElementOuterWidth(element)
+      const itemOuterWidth = this.getOuterWidth(parentItem.children[0])
+      let left
+
+      if (parseInt(elementOffset.left, 10) + itemOuterWidth + sublistWidth > viewport.width - this.calculateScrollbarWidth()) {
+        if (parseInt(elementOffset.left, 10) < sublistWidth) {
+          // for too small screens
+          if (level % 2 === 1) {
+            left = parseInt(elementOffset.left, 10) ? '-' + parseInt(elementOffset.left, 10) + 'px' : '100%'
+          } else if (level % 2 === 0) {
+            left = viewport.width - sublistWidth - this.calculateScrollbarWidth() + 'px'
+          }
+        } else {
+          left = '-100%'
+        }
+      } else {
+        left = '100%'
+      }
+
+      element.style.top = '0px'
+      element.style.left = left
+    }
   },
 
   getParentNode(element) {
@@ -288,12 +395,9 @@ export default {
   },
 
   getParents(element, parents = []) {
-    return element['parentNode'] === null
-      ? parents
-      : this.getParents(
-        element.parentNode,
-        parents.concat([element.parentNode])
-      )
+    const parent = this.getParentNode(element)
+
+    return parent === null ? parents : this.getParents(parent, parents.concat([parent]))
   },
 
   getScrollableParents(element) {
@@ -302,26 +406,34 @@ export default {
     if (element) {
       let parents = this.getParents(element)
       const overflowRegex = /(auto|scroll)/
+
       const overflowCheck = (node) => {
-        let styleDeclaration = window['getComputedStyle'](node, null)
-        return (
-          overflowRegex.test(styleDeclaration.getPropertyValue('overflow')) ||
-          overflowRegex.test(styleDeclaration.getPropertyValue('overflowX')) ||
-          overflowRegex.test(styleDeclaration.getPropertyValue('overflowY'))
-        )
+        try {
+          let styleDeclaration = window['getComputedStyle'](node, null)
+
+          return overflowRegex.test(styleDeclaration.getPropertyValue('overflow')) || overflowRegex.test(styleDeclaration.getPropertyValue('overflowX')) || overflowRegex.test(styleDeclaration.getPropertyValue('overflowY'))
+        } catch (err) {
+          return false
+        }
       }
 
       for (let parent of parents) {
-        let scrollSelectors =
-          parent.nodeType === 1 && parent.dataset['scrollselectors']
+        let scrollSelectors = parent.nodeType === 1 && parent.dataset['scrollselectors']
+
         if (scrollSelectors) {
           let selectors = scrollSelectors.split(',')
+
           for (let selector of selectors) {
             let el = this.findSingle(parent, selector)
+
             if (el && overflowCheck(el)) {
               scrollableParents.push(el)
             }
           }
+        }
+
+        if (parent.nodeType !== 9 && overflowCheck(parent)) {
+          scrollableParents.push(parent)
         }
       }
     }
@@ -330,73 +442,91 @@ export default {
   },
 
   getHiddenElementOuterHeight(element) {
-    element.style.visibility = 'hidden'
-    element.style.display = 'block'
-    let elementHeight = element.offsetHeight
-    element.style.display = 'none'
-    element.style.visibility = 'visible'
+    if (element) {
+      element.style.visibility = 'hidden'
+      element.style.display = 'block'
+      let elementHeight = element.offsetHeight
 
-    return elementHeight
+      element.style.display = 'none'
+      element.style.visibility = 'visible'
+
+      return elementHeight
+    }
+
+    return 0
   },
 
   getHiddenElementOuterWidth(element) {
-    element.style.visibility = 'hidden'
-    element.style.display = 'block'
-    let elementWidth = element.offsetWidth
-    element.style.display = 'none'
-    element.style.visibility = 'visible'
+    if (element) {
+      element.style.visibility = 'hidden'
+      element.style.display = 'block'
+      let elementWidth = element.offsetWidth
 
-    return elementWidth
+      element.style.display = 'none'
+      element.style.visibility = 'visible'
+
+      return elementWidth
+    }
+
+    return 0
   },
 
   getHiddenElementDimensions(element) {
-    var dimensions = {}
-    element.style.visibility = 'hidden'
-    element.style.display = 'block'
-    dimensions.width = element.offsetWidth
-    dimensions.height = element.offsetHeight
-    element.style.display = 'none'
-    element.style.visibility = 'visible'
+    if (element) {
+      let dimensions = {}
 
-    return dimensions
+      element.style.visibility = 'hidden'
+      element.style.display = 'block'
+      dimensions.width = element.offsetWidth
+      dimensions.height = element.offsetHeight
+      element.style.display = 'none'
+      element.style.visibility = 'visible'
+
+      return dimensions
+    }
+
+    return 0
   },
 
   fadeIn(element, duration) {
-    element.style.opacity = 0
+    if (element) {
+      element.style.opacity = 0
 
-    var last = +new Date()
-    var opacity = 0
-    var tick = function () {
-      opacity =
-        +element.style.opacity + (new Date().getTime() - last) / duration
-      element.style.opacity = opacity
-      last = +new Date()
+      let last = +new Date()
+      let opacity = 0
 
-      if (+opacity < 1) {
-        (window.requestAnimationFrame && requestAnimationFrame(tick)) ||
-          setTimeout(tick, 16)
+      let tick = function () {
+        opacity = +element.style.opacity + (new Date().getTime() - last) / duration
+        element.style.opacity = opacity
+        last = +new Date()
+
+        if (+opacity < 1) {
+          (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
+        }
       }
-    }
 
-    tick()
+      tick()
+    }
   },
 
   fadeOut(element, ms) {
-    var opacity = 1,
-      interval = 50,
-      duration = ms,
-      gap = interval / duration
+    if (element) {
+      let opacity = 1,
+        interval = 50,
+        duration = ms,
+        gap = interval / duration
 
-    let fading = setInterval(() => {
-      opacity -= gap
+      let fading = setInterval(() => {
+        opacity -= gap
 
-      if (opacity <= 0) {
-        opacity = 0
-        clearInterval(fading)
-      }
+        if (opacity <= 0) {
+          opacity = 0
+          clearInterval(fading)
+        }
 
-      element.style.opacity = opacity
-    }, interval)
+        element.style.opacity = opacity
+      }, interval)
+    }
   },
 
   getUserAgent() {
@@ -408,6 +538,10 @@ export default {
     else if (target.el && target.el.nativeElement)
       target.el.nativeElement.appendChild(element)
     else throw new Error('Cannot append ' + target + ' to ' + element)
+  },
+
+  isElement(obj) {
+    return typeof HTMLElement === 'object' ? obj instanceof HTMLElement : obj && typeof obj === 'object' && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === 'string'
   },
 
   scrollInView(container, item) {
@@ -456,20 +590,39 @@ export default {
     }
   },
 
+  getSelection() {
+    if (window.getSelection) return window.getSelection().toString()
+    else if (document.getSelection) return document.getSelection().toString()
+    else if (document['selection']) return document['selection'].createRange().text
+
+    return null
+  },
+
   calculateScrollbarWidth() {
-    if (this.calculatedScrollbarWidth != null)
-      return this.calculatedScrollbarWidth
+    if (this.calculatedScrollbarWidth != null) return this.calculatedScrollbarWidth
 
     let scrollDiv = document.createElement('div')
-    scrollDiv.className = 'p-scrollbar-measure'
+
+    this.addStyles(scrollDiv, {
+      width: '100px',
+      height: '100px',
+      overflow: 'scroll',
+      position: 'absolute',
+      top: '-9999px'
+    })
     document.body.appendChild(scrollDiv)
 
     let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+
     document.body.removeChild(scrollDiv)
 
     this.calculatedScrollbarWidth = scrollbarWidth
 
     return scrollbarWidth
+  },
+
+  calculateBodyScrollbarWidth() {
+    return window.innerWidth - document.documentElement.offsetWidth
   },
 
   getBrowser() {
@@ -510,7 +663,7 @@ export default {
   },
 
   isVisible(element) {
-    return element.offsetParent != null
+    return element && element.offsetParent != null
   },
 
   invokeElementMethod(element, methodName, args) {
@@ -526,31 +679,65 @@ export default {
     )
   },
 
-  getFocusableElements(element) {
+  isClient() {
+    return !!(typeof window !== 'undefined' && window.document && window.document.createElement)
+  },
+
+  focus(el, options) {
+    el && document.activeElement !== el && el.focus(options)
+  },
+
+  isFocusableElement(element, selector = '') {
+    return this.isElement(element)
+      ? element.matches(`button:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [href][clientHeight][clientWidth]:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            input:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            select:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            textarea:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [tabIndex]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [contenteditable]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector}`)
+      : false
+  },
+
+  getFocusableElements(element, selector = '') {
     let focusableElements = this.find(
       element,
-      `button:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden]),
-                [href][clientHeight][clientWidth]:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden]),
-                input:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden]), select:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden]),
-                textarea:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden]), [tabIndex]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden]),
-                [contenteditable]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])`
+      `button:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [href][clientHeight][clientWidth]:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            input:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            select:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            textarea:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [tabIndex]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [contenteditable]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector}`
     )
 
     let visibleFocusableElements = []
+
     for (let focusableElement of focusableElements) {
-      if (
-        getComputedStyle(focusableElement).display != 'none' &&
-        getComputedStyle(focusableElement).visibility != 'hidden'
-      )
-        visibleFocusableElements.push(focusableElement)
+      if (getComputedStyle(focusableElement).display != 'none' && getComputedStyle(focusableElement).visibility != 'hidden') visibleFocusableElements.push(focusableElement)
     }
 
     return visibleFocusableElements
   },
 
-  getFirstFocusableElement(element) {
-    const focusableElements = this.getFocusableElements(element)
+  getFirstFocusableElement(element, selector) {
+    const focusableElements = this.getFocusableElements(element, selector)
+
     return focusableElements.length > 0 ? focusableElements[0] : null
+  },
+
+  getLastFocusableElement(element, selector) {
+    const focusableElements = this.getFocusableElements(element, selector)
+
+    return focusableElements.length > 0 ? focusableElements[focusableElements.length - 1] : null
+  },
+
+  getNextFocusableElement(container, element, selector) {
+    const focusableElements = this.getFocusableElements(container, selector)
+    const index = focusableElements.length > 0 ? focusableElements.findIndex((el) => el === element) : -1
+    const nextIndex = index > -1 && focusableElements.length >= index + 1 ? index + 1 : -1
+
+    return nextIndex > -1 ? focusableElements[nextIndex] : null
   },
 
   getPreviousElementSibling(element, selector) {
@@ -612,6 +799,7 @@ export default {
   isIOS() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window['MSStream']
   },
+
   isAndroid() {
     return /(android)/i.test(navigator.userAgent)
   },
@@ -624,7 +812,68 @@ export default {
     )
   },
 
-  isClient() {
-    return !!(typeof window !== 'undefined' && window.document && window.document.createElement)
+  hasCSSAnimation(element) {
+    if (element) {
+      const style = getComputedStyle(element)
+      const animationDuration = parseFloat(style.getPropertyValue('animation-duration') || '0')
+
+      return animationDuration > 0
+    }
+
+    return false
+  },
+
+  hasCSSTransition(element) {
+    if (element) {
+      const style = getComputedStyle(element)
+      const transitionDuration = parseFloat(style.getPropertyValue('transition-duration') || '0')
+
+      return transitionDuration > 0
+    }
+
+    return false
+  },
+
+  exportCSV(csv, filename) {
+    let blob = new Blob([csv], {
+      type: 'application/csv;charset=utf-8;'
+    })
+
+    if (window.navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(blob, filename + '.csv')
+    } else {
+      let link = document.createElement('a')
+
+      if (link.download !== undefined) {
+        link.setAttribute('href', URL.createObjectURL(blob))
+        link.setAttribute('download', filename + '.csv')
+        link.style.display = 'none'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      } else {
+        csv = 'data:text/csv;charset=utf-8,' + csv
+        window.open(encodeURI(csv))
+      }
+    }
+  },
+
+  blockBodyScroll(className = 'p-overflow-hidden') {
+    document.body.style.setProperty('--scrollbar-width', this.calculateBodyScrollbarWidth() + 'px')
+    this.addClass(document.body, className)
+  },
+
+  unblockBodyScroll(className = 'p-overflow-hidden') {
+    document.body.style.removeProperty('--scrollbar-width')
+    this.removeClass(document.body, className)
+  },
+
+  generateZIndex() {
+    this.zindex = this.zindex || 999
+    return ++this.zindex
+  },
+
+  getCurrentZIndex() {
+    return this.zindex
   }
 }

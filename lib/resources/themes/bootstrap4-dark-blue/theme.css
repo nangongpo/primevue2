@@ -4274,7 +4274,7 @@
 .p-breadcrumb ul li .p-menuitem-link .p-menuitem-icon {
   color: #8dd0ff;
 }
-.p-breadcrumb ul li.p-breadcrumb-chevron {
+.p-breadcrumb ul li.p-breadcrumb-separator {
   margin: 0 0.5rem 0 0.5rem;
   color: rgba(255, 255, 255, 0.87);
 }
@@ -5663,10 +5663,10 @@
 }
 
 /* Vendor extensions to the designer enhanced bootstrap compatibility */
-.p-breadcrumb .p-breadcrumb-chevron {
+.p-breadcrumb .p-breadcrumb-separator {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-.p-breadcrumb .p-breadcrumb-chevron:before {
+.p-breadcrumb .p-breadcrumb-separator:before {
   content: "/";
 }
 

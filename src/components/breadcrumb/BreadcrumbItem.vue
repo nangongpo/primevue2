@@ -1,61 +1,111 @@
-<template>
-  <li :class="containerClass(item)" v-if="visible()">
-    <router-link v-if="item.to" :to="item.to" custom v-slot="{ navigate, href, isActive, isExactActive }">
-      <a :href="href" @click="onClick($event, navigate)" :class="linkClass({ isActive, isExactActive })">
-        <span v-if="item.icon" :class="iconClass"></span>
-        <span v-if="item.label" class="p-menuitem-text">{{ label(item) }}</span>
-      </a>
-    </router-link>
-    <a v-else :href="item.url || '#'" :class="linkClass()" @click="onClick" :target="item.target">
-      <span v-if="item.icon" :class="iconClass"></span>
-      <span v-if="item.label" class="p-menuitem-text">{{ label(item) }}</span>
-    </a>
-  </li>
-</template>
-
 <script>
 export default {
   name: 'BreadcrumbItem',
   props: {
-    item: null,
-    exact: null
+    item: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    templates: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    index: Number
+  },
+  computed: {
+    containerClass({ item, disabled }) {
+      return ['p-menuitem', { 'p-disabled': disabled() }, item.class]
+    },
+    iconClass({ item }) {
+      return ['p-menuitem-icon', item.icon]
+    },
+    getMenuItemProps({ iconClass, label, isCurrentUrl, onClick }) {
+      return {
+        action: {
+          'aria-current': isCurrentUrl(),
+          onClick: ($event) => onClick($event)
+        },
+        icon: iconClass,
+        label: label
+      }
+    }
   },
   methods: {
-    onClick(event, navigate) {
+    onClick(event) {
       if (this.item.command) {
         this.item.command({
           originalEvent: event,
           item: this.item
         })
       }
-
-      if (this.item.to && navigate) {
-        navigate(event)
-      }
-    },
-    containerClass(item) {
-      return [{ 'p-disabled': this.disabled(item) }, item.class]
-    },
-    linkClass(routerProps) {
-      return ['p-menuitem-link', {
-        'router-link-active': routerProps && routerProps.isActive,
-        'router-link-active-exact': this.exact && routerProps && routerProps.isExactActive
-      }]
     },
     visible() {
       return (typeof this.item.visible === 'function' ? this.item.visible() : this.item.visible !== false)
     },
-    disabled(item) {
-      return (typeof item.disabled === 'function' ? item.disabled() : item.disabled)
+    disabled() {
+      return (typeof this.item.disabled === 'function' ? this.item.disabled() : this.item.disabled)
     },
     label() {
       return (typeof this.item.label === 'function' ? this.item.label() : this.item.label)
+    },
+    isCurrentUrl() {
+      const { to, url } = this.item
+      const lastPath = typeof window !== 'undefined' ? window.location.pathname : ''
+
+      return to === lastPath || url === lastPath ? 'page' : undefined
     }
   },
-  computed: {
-    iconClass() {
-      return ['p-menuitem-icon', this.item.icon]
+  render(h) {
+    const { item, templates, containerClass, iconClass, getMenuItemProps, onClick, visible, label, isCurrentUrl } = this
+
+    if (visible()) {
+      const vNodes = []
+
+      if (!templates.item) {
+        const childNodes = []
+
+        if (templates && templates.itemicon) {
+          childNodes.push(
+            templates.itemicon({ item, class: iconClass })
+          )
+        } else if (item.icon) {
+          childNodes.push(
+            h('span', { class: iconClass })
+          )
+        }
+
+        item.label && childNodes.push(
+          h('span', { class: 'p-menuitem-text' }, label())
+        )
+
+        vNodes.push(
+          h('a', {
+            class: 'p-menuitem-link',
+            attrs: {
+              href: item.url || '#',
+              target: item.target,
+              'aria-current': isCurrentUrl()
+            },
+            on: {
+              click: onClick
+            }
+          }, childNodes)
+        )
+
+      } else {
+        vNodes.push(
+          templates.item({ item, label: label(), props: getMenuItemProps })
+        )
+      }
+
+      return h('li', { class: containerClass }, vNodes)
     }
+
+    return null
   }
 }
 </script>

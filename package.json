@@ -64,15 +64,15 @@
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.0",
     "quill": "^2.0.0",
-    "vue": "^2.7.0",
+    "vue": "^2.7.14",
     "vue-router": "^3.1.0",
-    "vue-template-compiler": "^2.7.0",
+    "vue-template-compiler": "^2.7.14",
     "vuelidate": "^0.7.7"
   },
   "peerDependencies": {
     "@fullcalendar/core": "^5.0.0",
     "primeicons": "^6.0.0",
-    "vue": "^2.7.0",
+    "vue": "^2.7.14",
     "vue-router": "^3.1.0"
   },
   "browserslist": [

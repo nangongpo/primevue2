@@ -4297,7 +4297,7 @@
 .p-breadcrumb ul li .p-menuitem-link .p-menuitem-icon {
   color: #71717A;
 }
-.p-breadcrumb ul li.p-breadcrumb-chevron {
+.p-breadcrumb ul li.p-breadcrumb-separator {
   margin: 0 0.5rem 0 0.5rem;
   color: #3f3f46;
 }

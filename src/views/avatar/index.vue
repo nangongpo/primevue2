@@ -17,6 +17,7 @@
               label="V"
               class="mr-2"
               size="large"
+              image="test"
               style="background-color: #2196f3; color: #ffffff" />
             <Avatar
               label="U"

@@ -1,11 +1,11 @@
 <template>
-  <div class="p-blockui-container">
+  <div ref="container" :aria-busy="isBlocked" class="p-blockui-container">
     <slot></slot>
   </div>
 </template>
 
 <script>
-import { DomHandler } from 'primevue2/utils'
+import { DomHandler, ZIndexUtils } from 'primevue2/utils'
 
 export default {
   name: 'BlockUI',
@@ -28,17 +28,20 @@ export default {
     }
   },
   mask: null,
-  mounted() {
-    if (this.blocked) {
-      this.block()
+  data() {
+    return {
+      isBlocked: false
     }
   },
   watch: {
     blocked(newValue) {
-      if (newValue === true)
-        this.block()
-      else
-        this.unblock()
+      if (newValue === true) this.block()
+      else this.unblock()
+    }
+  },
+  mounted() {
+    if (this.blocked) {
+      this.block()
     }
   },
   methods: {
@@ -46,43 +49,64 @@ export default {
       let styleClass = 'p-blockui p-component-overlay p-component-overlay-enter'
       if (this.fullScreen) {
         styleClass += ' p-blockui-document'
-        this.mask = document.createElement('div')
-        this.mask.setAttribute('class', styleClass)
+
+        this.mask = DomHandler.createElement('div', {
+          style: {
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%'
+          },
+          class: styleClass
+        })
+
         document.body.appendChild(this.mask)
-        DomHandler.addClass(document.body, 'p-overflow-hidden')
+        DomHandler.blockBodyScroll()
         document.activeElement.blur()
-      }
-      else {
-        const target = this.$children ? this.$children[0] : null
-        if (target) {
-          this.mask = document.createElement('div')
-          this.mask.setAttribute('class', styleClass)
-          target.$el.appendChild(this.mask)
-          target.$el.style.position = 'relative'
-        }
+      } else {
+        this.mask = DomHandler.createElement('div', {
+          style: {
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%'
+          },
+          class: styleClass
+        })
+        this.$refs.container.appendChild(this.mask)
       }
 
       if (this.autoZIndex) {
-        this.mask.style.zIndex = String(this.baseZIndex + DomHandler.generateZIndex())
+        ZIndexUtils.set('modal', this.mask, this.baseZIndex + this.$primevue.config.zIndex.modal)
       }
-
+      
+      this.isBlocked = true
       this.$emit('block')
     },
     unblock() {
       DomHandler.addClass(this.mask, 'p-component-overlay-leave')
-      this.mask.addEventListener('animationend', () => {
+      
+      if (DomHandler.hasCSSAnimation(this.mask) > 0) {
+        this.mask.addEventListener('animationend', () => {
+          this.removeMask()
+        })
+      } else {
         this.removeMask()
-      })
+      }
     },
     removeMask() {
+      ZIndexUtils.clear(this.mask)
+
       if (this.fullScreen) {
         document.body.removeChild(this.mask)
-        DomHandler.removeClass(document.body, 'p-overflow-hidden')
-      }
-      else {
-        this.$children[0].$el.removeChild(this.mask)
+        DomHandler.unblockBodyScroll()
+      } else {
+        this.$refs.container.removeChild(this.mask)
       }
 
+      this.isBlocked = false
       this.$emit('unblock')
     }
   }
@@ -90,12 +114,8 @@ export default {
 </script>
 
 <style>
-.p-blockui {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.p-blockui-container {
+  position: relative;
 }
 
 .p-blockui.p-component-overlay {

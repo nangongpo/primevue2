@@ -1,5 +1,10 @@
 <template>
-  <span :class="containerClass" aria-haspopup="listbox" :aria-owns="listId" :aria-expanded="overlayVisible">
+  <div
+    :class="containerClass"
+    aria-haspopup="listbox"
+    :aria-owns="listId"
+    :aria-expanded="overlayVisible"
+    @click="onContainerClick">
     <input
       ref="input"
       :class="inputClass"
@@ -13,10 +18,18 @@
       aria-autocomplete="list"
       :aria-controls="listId"
       :aria-labelledby="ariaLabelledBy" />
-    <ul ref="multiContainer" :class="multiContainerClass" v-if="multiple" @click="onMultiContainerClick">
+    <ul
+      ref="multiContainer"
+      :class="multiContainerClass"
+      v-if="multiple"
+      @click="onMultiContainerClick">
       <li v-for="(item, i) of value" :key="i" class="p-autocomplete-token">
-        <span class="p-autocomplete-token-label">{{ getItemContent(item) }}</span>
-        <span class="p-autocomplete-token-icon pi pi-times-circle" @click="removeItem($event, i)"></span>
+        <span class="p-autocomplete-token-label">{{
+          getItemContent(item)
+        }}</span>
+        <span
+          class="p-autocomplete-token-icon pi pi-times-circle"
+          @click="removeItem($event, i)"></span>
       </li>
       <li class="p-autocomplete-input-token">
         <input
@@ -31,7 +44,7 @@
           :aria-labelledby="ariaLabelledBy" />
       </li>
     </ul>
-    <i class="p-autocomplete-loader pi pi-spinner pi-spin" v-if="searching"></i>
+    <i class="p-autocomplete-loader pi pi-spinner pi-spin" v-if="searching || loading"></i>
     <Button
       ref="dropdownButton"
       type="button"
@@ -40,12 +53,17 @@
       :disabled="$attrs.disabled"
       @click="onDropdownClick"
       v-if="dropdown" />
-    <transition name="p-connected-overlay" @enter="onOverlayEnter" @leave="onOverlayLeave">
+    <transition
+      name="p-connected-overlay"
+      @enter="onOverlayEnter"
+      @after-enter="onOverlayAfterEnter"
+      @leave="onOverlayLeave"
+      @after-leave="onOverlayAfterLeave">
       <div
-        ref="overlay"
+        v-if="overlayVisible"
+        :ref="overlayRef"
         class="p-autocomplete-panel p-component"
-        :style="{ 'max-height': scrollHeight }"
-        v-if="overlayVisible">
+        :style="{ 'max-height': scrollHeight }">
         <ul :id="listId" class="p-autocomplete-items" role="listbox">
           <li
             v-for="(item, i) of suggestions"
@@ -61,11 +79,17 @@
         </ul>
       </div>
     </transition>
-  </span>
+  </div>
 </template>
 
 <script>
-import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler, UniqueComponentId } from 'primevue2/utils'
+import {
+  ConnectedOverlayScrollHandler,
+  ObjectUtils,
+  DomHandler,
+  UniqueComponentId,
+  ZIndexUtils
+} from 'primevue2/utils'
 import Button from 'primevue2/button'
 import Ripple from 'primevue2/ripple'
 
@@ -98,6 +122,10 @@ export default {
       type: Boolean,
       default: false
     },
+    loading: {
+      type: Boolean,
+      default: false
+    },
     minLength: {
       type: Number,
       default: 1
@@ -127,8 +155,10 @@ export default {
   outsideClickListener: null,
   resizeListener: null,
   scrollHandler: null,
+  overlay: null,
   data() {
     return {
+      clicked: false,
       searching: false,
       focused: false,
       overlayVisible: false,
@@ -138,11 +168,11 @@ export default {
   watch: {
     suggestions() {
       if (this.searching) {
-
-        if (this.suggestions && this.suggestions.length)
+        if (this.suggestions && this.suggestions.length) {
           this.showOverlay()
-        else
+        } else {
           this.hideOverlay()
+        }
 
         this.searching = false
       }
@@ -157,6 +187,11 @@ export default {
       this.scrollHandler.destroy()
       this.scrollHandler = null
     }
+
+    if (this.overlay) {
+      ZIndexUtils.clear(this.overlay)
+      this.overlay = null
+    }
   },
   updated() {
     if (this.overlayVisible) {
@@ -164,38 +199,64 @@ export default {
     }
   },
   methods: {
-    onOverlayEnter() {
-      this.$refs.overlay.style.zIndex = String(DomHandler.generateZIndex())
+    onOverlayEnter(el) {
+      ZIndexUtils.set('overlay', el, this.$primevue.config.zIndex.overlay)
+      DomHandler.addStyles(el, { position: 'absolute', top: '0', left: '0' })
       this.appendContainer()
       this.alignOverlay()
+
+      if (this.autoHighlight && this.suggestions && this.suggestions.length) {
+        DomHandler.addClass(
+          this.overlay.firstElementChild.firstElementChild,
+          'p-highlight'
+        )
+      }
+    },
+    onOverlayAfterEnter() {
       this.bindOutsideClickListener()
       this.bindScrollListener()
       this.bindResizeListener()
 
-      if (this.autoHighlight && this.suggestions && this.suggestions.length) {
-        DomHandler.addClass(this.$refs.overlay.firstElementChild.firstElementChild, 'p-highlight')
-      }
+      this.$emit('show')
     },
     onOverlayLeave() {
       this.unbindOutsideClickListener()
       this.unbindScrollListener()
       this.unbindResizeListener()
+
+      this.$emit('hide')
+      this.overlay = null
+    },
+    onOverlayAfterLeave(el) {
+      ZIndexUtils.clear(el)
     },
     alignOverlay() {
       let target = this.multiple ? this.$refs.multiContainer : this.$refs.input
-      if (this.appendTo)
-        DomHandler.absolutePosition(this.$refs.overlay, target)
-      else
-        DomHandler.relativePosition(this.$refs.overlay, target)
+      if (this.appendTo) {
+        this.overlay.style.minWidth = DomHandler.getOuterWidth(target) + 'px'
+        DomHandler.absolutePosition(this.overlay, target)
+      } else {
+        DomHandler.relativePosition(this.overlay, target)
+      }
     },
     bindOutsideClickListener() {
       if (!this.outsideClickListener) {
         this.outsideClickListener = (event) => {
-          if (this.overlayVisible && this.$refs.overlay && this.isOutsideClicked(event)) {
+          if (
+            this.overlayVisible &&
+            this.overlay &&
+            this.isOutsideClicked(event)
+          ) {
             this.hideOverlay()
           }
         }
         document.addEventListener('click', this.outsideClickListener)
+      }
+    },
+    unbindOutsideClickListener() {
+      if (this.outsideClickListener) {
+        document.removeEventListener('click', this.outsideClickListener)
+        this.outsideClickListener = null
       }
     },
     bindScrollListener() {
@@ -217,7 +278,7 @@ export default {
     bindResizeListener() {
       if (!this.resizeListener) {
         this.resizeListener = () => {
-          if (this.overlayVisible) {
+          if (this.overlayVisible && !DomHandler.isTouchDevice()) {
             this.hideOverlay()
           }
         }
@@ -231,22 +292,25 @@ export default {
       }
     },
     isOutsideClicked(event) {
-      return !this.$refs.overlay.contains(event.target) && !this.isInputClicked(event) && !this.isDropdownClicked(event)
+      return (
+        !this.overlay.contains(event.target) &&
+        !this.isInputClicked(event) &&
+        !this.isDropdownClicked(event)
+      )
     },
     isInputClicked(event) {
       if (this.multiple)
-        return event.target === this.$refs.multiContainer || this.$refs.multiContainer.contains(event.target)
-      else
-        return event.target === this.$refs.input
+        return (
+          event.target === this.$refs.multiContainer ||
+          this.$refs.multiContainer.contains(event.target)
+        )
+      else return event.target === this.$refs.input
     },
     isDropdownClicked(event) {
-      return this.$refs.dropdownButton ? (event.target === this.$refs.dropdownButton || this.$refs.dropdownButton.$el.contains(event.target)) : false
-    },
-    unbindOutsideClickListener() {
-      if (this.outsideClickListener) {
-        document.removeEventListener('click', this.outsideClickListener)
-        this.outsideClickListener = null
-      }
+      return this.$refs.dropdownButton
+        ? event.target === this.$refs.dropdownButton ||
+            this.$refs.dropdownButton.$el.contains(event.target)
+        : false
     },
     selectItem(event, item) {
       if (this.multiple) {
@@ -255,11 +319,10 @@ export default {
 
         if (!this.isSelected(item)) {
           let newValue = this.value ? [...this.value, item] : [item]
-          this.$emit('input', newValue)
+          this.updateValue(event, newValue)
         }
-      }
-      else {
-        this.$emit('input', item)
+      } else {
+        this.updateValue(event, item)
       }
 
       this.$emit('item-select', {
@@ -275,19 +338,35 @@ export default {
     },
     removeItem(event, index) {
       let removedValue = this.value[index]
-      let newValue = this.value.filter((val, i) => (index !== i))
-      this.$emit('input', newValue)
+      let newValue = this.value.filter((val, i) => index !== i)
+      this.updateValue(event, newValue)
       this.$emit('item-unselect', {
         originalEvent: event,
         value: removedValue
       })
     },
+    onContainerClick(event) {
+      this.clicked = true
+
+      if (
+        this.disabled ||
+        this.searching ||
+        this.loading ||
+        this.isInputClicked(event) ||
+        this.isDropdownClicked(event)
+      ) {
+        return
+      }
+
+      if (!this.overlay || !this.overlay.contains(event.target)) {
+        DomHandler.focus(this.$refs.input)
+      }
+    },
     onDropdownClick(event) {
       this.focus()
       const query = this.$refs.input.value
 
-      if (this.dropdownMode === 'blank')
-        this.search(event, '', 'dropdown')
+      if (this.dropdownMode === 'blank') this.search(event, '', 'dropdown')
       else if (this.dropdownMode === 'current')
         this.search(event, query, 'dropdown')
 
@@ -299,11 +378,22 @@ export default {
     getItemContent(item) {
       return this.field ? ObjectUtils.resolveFieldData(item, this.field) : item
     },
-    showOverlay() {
+    showOverlay(isFocus) {
+      this.$emit('before-show')
       this.overlayVisible = true
+
+      isFocus && DomHandler.focus(this.$refs.input)
     },
-    hideOverlay() {
-      this.overlayVisible = false
+    hideOverlay(isFocus) {
+      const _hide = () => {
+        this.$emit('before-hide')
+        this.overlayVisible = false
+
+        isFocus && DomHandler.focus(this.$refs.input)
+      }
+      setTimeout(() => {
+        _hide()
+      }, 0)
     },
     focus() {
       this.$refs.input.focus()
@@ -334,20 +424,18 @@ export default {
 
       let query = event.target.value
       if (!this.multiple) {
-        this.$emit('input', query)
+        this.updateValue(event, query)
       }
 
       if (query.length === 0) {
         this.hideOverlay()
         this.$emit('clear')
-      }
-      else {
+      } else {
         if (query.length >= this.minLength) {
           this.timeout = setTimeout(() => {
             this.search(event, query, 'input')
           }, this.delay)
-        }
-        else {
+        } else {
           this.hideOverlay()
         }
       }
@@ -361,10 +449,14 @@ export default {
       this.$emit('blur', event)
     },
     onKeyDown(event) {
+      const keyCode = ObjectUtils.getKeyboardCode(event)
       if (this.overlayVisible) {
-        let highlightItem = DomHandler.findSingle(this.$refs.overlay, 'li.p-highlight')
+        let highlightItem = DomHandler.findSingle(
+          this.overlay,
+          'li.p-highlight'
+        )
 
-        switch (event.which) {
+        switch (keyCode) {
         //down
         case 40:
           if (highlightItem) {
@@ -372,11 +464,13 @@ export default {
             if (nextElement) {
               DomHandler.addClass(nextElement, 'p-highlight')
               DomHandler.removeClass(highlightItem, 'p-highlight')
-              DomHandler.scrollInView(this.$refs.overlay, nextElement)
+              DomHandler.scrollInView(this.overlay, nextElement)
             }
-          }
-          else {
-            DomHandler.addClass(this.$refs.overlay.firstChild.firstElementChild, 'p-highlight')
+          } else {
+            DomHandler.addClass(
+              this.overlay.firstChild.firstElementChild,
+              'p-highlight'
+            )
           }
 
           event.preventDefault()
@@ -389,7 +483,7 @@ export default {
             if (previousElement) {
               DomHandler.addClass(previousElement, 'p-highlight')
               DomHandler.removeClass(highlightItem, 'p-highlight')
-              DomHandler.scrollInView(this.$refs.overlay, previousElement)
+              DomHandler.scrollInView(this.overlay, previousElement)
             }
           }
 
@@ -399,7 +493,10 @@ export default {
           //enter,tab
         case 13:
           if (highlightItem) {
-            this.selectItem(event, this.suggestions[DomHandler.index(highlightItem)])
+            this.selectItem(
+              event,
+              this.suggestions[DomHandler.index(highlightItem)]
+            )
             this.hideOverlay()
           }
 
@@ -415,7 +512,10 @@ export default {
           //tab
         case 9:
           if (highlightItem) {
-            this.selectItem(event, this.suggestions[DomHandler.index(highlightItem)])
+            this.selectItem(
+              event,
+              this.suggestions[DomHandler.index(highlightItem)]
+            )
           }
 
           this.hideOverlay()
@@ -427,14 +527,14 @@ export default {
       }
 
       if (this.multiple) {
-        switch (event.which) {
+        switch (keyCode) {
         //backspace
         case 8:
           if (this.value && this.value.length && !this.$refs.input.value) {
             let removedValue = this.value[this.value.length - 1]
             let newValue = this.value.slice(0, -1)
 
-            this.$emit('input', newValue)
+            this.updateValue(event, newValue)
             this.$emit('item-unselect', {
               originalEvent: event,
               value: removedValue
@@ -454,7 +554,9 @@ export default {
 
         if (this.suggestions) {
           for (let item of this.suggestions) {
-            let itemValue = this.field ? ObjectUtils.resolveFieldData(item, this.field) : item
+            let itemValue = this.field
+              ? ObjectUtils.resolveFieldData(item, this.field)
+              : item
             if (itemValue && inputValue === itemValue.trim()) {
               valid = true
               this.selectItem(event, item)
@@ -467,9 +569,7 @@ export default {
           this.$refs.input.value = ''
           this.inputTextValue = ''
           this.$emit('clear')
-          if (!this.multiple) {
-            this.$emit('input', null)
-          }
+          !this.multiple && this.updateValue(event, null)
         }
       }
     },
@@ -488,19 +588,22 @@ export default {
     },
     appendContainer() {
       if (this.appendTo) {
-        if (this.appendTo === 'body')
-          document.body.appendChild(this.$refs.overlay)
-        else
-          document.getElementById(this.appendTo).appendChild(this.$refs.overlay)
+        if (this.appendTo === 'body') document.body.appendChild(this.overlay)
+        else document.getElementById(this.appendTo).appendChild(this.overlay)
       }
     },
     restoreAppend() {
-      if (this.$refs.overlay && this.appendTo) {
-        if (this.appendTo === 'body')
-          document.body.removeChild(this.$refs.overlay)
-        else
-          document.getElementById(this.appendTo).removeChild(this.$refs.overlay)
+      if (this.overlay && this.appendTo) {
+        if (this.appendTo === 'body') document.body.removeChild(this.overlay)
+        else document.getElementById(this.appendTo).removeChild(this.overlay)
       }
+    },
+    overlayRef(el) {
+      this.overlay = el
+    },
+    updateValue(event, value) {
+      this.$emit('input', value)
+      this.$emit('change', { originalEvent: event, value })
     }
   },
   computed: {
@@ -515,35 +618,45 @@ export default {
       }
     },
     containerClass() {
-      return ['p-autocomplete p-component p-inputwrapper', {
-        'p-autocomplete-dd': this.dropdown,
-        'p-autocomplete-multiple': this.multiple,
-        'p-inputwrapper-filled': ((this.value) || (this.inputTextValue && this.inputTextValue.length)),
-        'p-inputwrapper-focus': this.focused
-      }]
+      return [
+        'p-autocomplete p-component p-inputwrapper',
+        {
+          'p-autocomplete-dd': this.dropdown,
+          'p-autocomplete-multiple': this.multiple,
+          'p-inputwrapper-filled':
+            this.value || (this.inputTextValue && this.inputTextValue.length),
+          'p-inputwrapper-focus': this.focused
+        }
+      ]
     },
     inputClass() {
-      return ['p-autocomplete-input p-inputtext p-component', {
-        'p-autocomplete-dd-input': this.dropdown,
-        'p-disabled': this.$attrs.disabled
-      }]
+      return [
+        'p-autocomplete-input p-inputtext p-component',
+        {
+          'p-autocomplete-dd-input': this.dropdown,
+          'p-disabled': this.$attrs.disabled
+        }
+      ]
     },
     multiContainerClass() {
-      return ['p-autocomplete-multiple-container p-component p-inputtext', {
-        'p-disabled': this.$attrs.disabled,
-        'p-focus': this.focused
-      }]
+      return [
+        'p-autocomplete-multiple-container p-component p-inputtext',
+        {
+          'p-disabled': this.$attrs.disabled,
+          'p-focus': this.focused
+        }
+      ]
     },
     inputValue() {
       if (this.value) {
         if (this.field && typeof this.value === 'object') {
-          const resolvedFieldData = ObjectUtils.resolveFieldData(this.value, this.field)
+          const resolvedFieldData = ObjectUtils.resolveFieldData(
+            this.value,
+            this.field
+          )
           return resolvedFieldData != null ? resolvedFieldData : this.value
-        }
-        else
-          return this.value
-      }
-      else {
+        } else return this.value
+      } else {
         return ''
       }
     },
@@ -552,10 +665,10 @@ export default {
     }
   },
   components: {
-    'Button': Button
+    Button: Button
   },
   directives: {
-    'ripple': Ripple
+    ripple: Ripple
   }
 }
 </script>

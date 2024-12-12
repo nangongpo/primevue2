@@ -1,3 +1,5 @@
+type PlainObject = Record<string, any>
+
 export declare class ConnectedOverlayScrollHandler {
   constructor(element: any, listener?: () => void)
   bindScrollListener(): void
@@ -6,59 +8,71 @@ export declare class ConnectedOverlayScrollHandler {
 }
 
 export declare class DomHandler {
-  static innerWidth(el: HTMLElement): number
-  static width(el: HTMLElement): number
-  static getWindowScrollTop(): number
-  static getWindowScrollLeft(): number
-  static getOuterWidth(el: HTMLElement, margin: boolean): number
-  static getOuterHeight(el: HTMLElement, margin: boolean): number
-  static getClientHeight(el: HTMLElement, margin: boolean): number
-  static getViewport(): { width: number; height: number }
-  static getOffset(el: HTMLElement): { top: any; left: any }
-  static index(el: HTMLElement): number
-  static addMultipleClasses(el: HTMLElement, className: string): void
-  static addClass(el: HTMLElement, className: string): void
-  static removeClass(el: HTMLElement, className: string): void
-  static hasClass(el: HTMLElement, className: string): boolean
-  static find(el: HTMLElement, selector: string): any[]
-  static findSingle(el: HTMLElement, selector: string): any
-  static getHeight(el: HTMLElement): number
-  static getWidth(el: HTMLElement): number
-  static absolutePosition(el: HTMLElement, target: HTMLElement): void
-  static relativePosition(el: HTMLElement, target: HTMLElement): void
-  static getParents(el: HTMLElement, parents?: any[]): any[]
-  static getScrollableParents(el: HTMLElement): any[]
-  static getHiddenElementOuterHeight(el: HTMLElement): number
-  static getHiddenElementOuterWidth(el: HTMLElement): number
-  static getHiddenElementDimensions(el: HTMLElement): {
-    width?: number
-    height?: number
-  }
-  static fadeIn(el: HTMLElement, duration: number): void
-  static fadeOut(el: HTMLElement, duration: number): void
-  static getUserAgent(): string
-  static appendChild(el: HTMLElement, target: HTMLElement): void
-  static scrollInView(container: HTMLElement, item: HTMLElement): void
-  static clearSelection(): void
-  static calculateScrollbarWidth(): number
-  static getBrowser(): object
-  static resolveUserAgent(): { browser: string; version: string }
-  static isVisible(el: HTMLElement): boolean
-  static invokeElementMethod(
-    el: HTMLElement,
-    methodName: string,
-    args: any
-  ): void
-  static isExist(el: HTMLElement): boolean
-  static getFocusableElements(el: HTMLElement): any[]
-  static getFirstFocusableElement(el: HTMLElement): any
-  static getPreviousElementSibling(el: HTMLElement, selector?: string): any
-  static getNextElementSibling(el: HTMLElement, selector?: string): any
-  static isClickable(el: HTMLElement): boolean
-  static applyStyle(el: HTMLElement, style: any): void
-  static isIOS(): boolean
-  static isAndroid(): boolean
-  static isTouchDevice(): boolean
+  static innerWidth(el: HTMLElement): number;
+  static width(el: HTMLElement): number;
+  static getWindowScrollTop(): number;
+  static getWindowScrollLeft(): number;
+  static getOuterWidth(el: HTMLElement, margin: boolean): number;
+  static getOuterHeight(el: HTMLElement, margin: boolean): number;
+  static getClientHeight(el: HTMLElement, margin: boolean): number;
+  static getViewport(): { width: number; height: number };
+  static getOffset(el: HTMLElement): { top: any; left: any };
+  static index(el: HTMLElement): number;
+  static addMultipleClasses(el: HTMLElement, classNames: string | string[]): void;
+  static addRemoveClasses(el: HTMLElement, classNames: string | string[]): void;
+  static addClass(el: HTMLElement, className: string): void;
+  static removeClass(el: HTMLElement, className: string): void;
+  static hasClass(el: HTMLElement, className: string): boolean;
+  static addStyles(el: HTMLElement, styles: object): void;
+  static find(el: HTMLElement, selector: string): any[];
+  static findSingle(el: HTMLElement, selector: string): any;
+  static createElement(type: string, attributes: object, ...children: any): HTMLElement;
+  static setAttribute(el: HTMLElement, attribute: string, value: any): void;
+  static setAttributes(el: HTMLElement, attributes: object): void;
+  static getAttribute(el: HTMLElement, name: string): any;
+  static isAttributeEquals(el: HTMLElement, name: string, value: any): boolean;
+  static isAttributeNotEquals(el: HTMLElement, name: string, value: any): boolean;
+  static getHeight(el: HTMLElement): number;
+  static getWidth(el: HTMLElement): number;
+  static absolutePosition(el: HTMLElement, target: HTMLElement): void;
+  static relativePosition(el: HTMLElement, target: HTMLElement): void;
+  static nestedPosition(el: HTMLElement, level: number): void;
+  static getParents(el: HTMLElement, parents?: any[]): any[];
+  static getScrollableParents(el: HTMLElement): any[];
+  static getHiddenElementOuterHeight(el: HTMLElement): number;
+  static getHiddenElementOuterWidth(el: HTMLElement): number;
+  static getHiddenElementDimensions(el: HTMLElement): { width?: number; height?: number };
+  static fadeIn(el: HTMLElement, duration: number): void;
+  static fadeOut(el: HTMLElement, duration: number): void;
+  static getUserAgent(): string;
+  static appendChild(el: HTMLElement, target: HTMLElement): void;
+  static scrollInView(container: HTMLElement, item: HTMLElement): void;
+  static clearSelection(): void;
+  static getSelection(): string | null;
+  static calculateScrollbarWidth(): number;
+  static calculateBodyScrollbarWidth(): number;
+  static getBrowser(): object;
+  static resolveUserAgent(): { browser: string; version: string };
+  static isVisible(el: HTMLElement): boolean;
+  static invokeElementMethod(el: HTMLElement, methodName: string, args: any): void;
+  static isExist(el: HTMLElement): boolean;
+  static isClient(): boolean;
+  static focus(el: HTMLElement, options?: FocusOptions): void;
+  static getFocusableElements(el: HTMLElement, selector?: string): any[];
+  static getFirstFocusableElement(el: HTMLElement, selector?: string): any;
+  static getLastFocusableElement(el: HTMLElement, selector?: string): any;
+  static getPreviousElementSibling(el: HTMLElement, selector?: string): any;
+  static getNextElementSibling(el: HTMLElement, selector?: string): any;
+  static isClickable(el: HTMLElement): boolean;
+  static applyStyle(el: HTMLElement, style: any): void;
+  static isIOS(): boolean;
+  static isAndroid(): boolean;
+  static isTouchDevice(): boolean;
+  static hasCSSAnimation(el: HTMLElement): boolean;
+  static hasCSSTransition(el: HTMLElement): boolean;
+  static exportCSV(csv: any, filename: string): void;
+  static blockBodyScroll(className?: string): void;
+  static unblockBodyScroll(className?: string): void;
 }
 
 export declare class ObjectUtils {
@@ -78,6 +92,9 @@ export declare class ObjectUtils {
   ): void
   static removeAccents(str: any): string
   static getVNodeProp(vnode: object, prop: string): string | null
+  static deepMerge<T extends PlainObject, S extends PlainObject[]>(target: T,
+    ...sources: S): T & S[number]
+  static getKeyboardCode(event: KeyboardEvent): number
 }
 
 export declare function UniqueComponentId(prefix?: string): string
@@ -86,4 +103,11 @@ export declare function EventBus(): {
   on(type: string, fn: any): void
   emit(type: string, evt?: any): void
   off(type: string, fn: any): void
+}
+
+export declare namespace ZIndexUtils {
+  export function get(el?: HTMLElement): number;
+  export function set(key: string, el: HTMLElement, baseZIndex?: number): void;
+  export function clear(el: HTMLElement): void;
+  export function getCurrent(): number;
 }

@@ -17,6 +17,17 @@
     <DocSectionCode :code="baseCode" />
     <DocSectionCode :code="baseCode2" importCode />
 
+    <h5>Template</h5>
+    <p>Custom content can be placed inside the items using the item template. The divider between the items has its own separator template.</p>
+    <DocSectionCode :code="templateCode" />
+    <DocSectionCode :code="templateCode2" importCode />
+
+    <h5>Router</h5>
+    <p>Items with navigation are defined with templating to be able to use a
+      router link component, an external link or programmatic navigation.</p>
+    <DocSectionCode :code="routerCode" />
+    <DocSectionCode :code="routerCode2" importCode />
+
     <h5>Properties</h5>
     <p>
       Any property as style and class are passed to the main container element.
@@ -85,7 +96,7 @@
             <td>Label of a menuitem.</td>
           </tr>
           <tr>
-            <td>p-breadcrumb-chevron</td>
+            <td>p-breadcrumb-separator</td>
             <td>Chevron element.</td>
           </tr>
         </tbody>
@@ -117,7 +128,7 @@ import Breadcrumb from 'primevue2/breadcrumb';
 export default {
     data() {
         return {
-            home: {icon: 'pi pi-home', to: '/'},
+            home: {icon: 'pi pi-home'},
             items: [
                 {label: 'Computer'},
                 {label: 'Notebook'},
@@ -127,6 +138,77 @@ export default {
             ]
         }
     }
+}
+        `
+      },
+      templateCode: {
+        basic: `
+<Breadcrumb :home="home" :model="items">
+  <template #item="{ item }">
+    <a class="cursor-pointer">
+      <span :class="item.icon"></span>
+    </a>
+  </template>
+  <template #separator> / </template>
+</Breadcrumb>
+        `
+      },
+      templateCode2: {
+        basic: `
+export default {
+  data() {
+    return {
+      home: { icon: 'pi pi-home' },
+      items: [
+        { icon: 'pi pi-sitemap' },
+        { icon: 'pi pi-book' },
+        { icon: 'pi pi-wallet' },
+        { icon: 'pi pi-shopping-bag' },
+        { icon: 'pi pi-calculator' }
+      ]
+    }
+  }
+}
+        `
+      },
+      routerCode: {
+        basic: `
+<Breadcrumb :home="home" :model="items">
+  <template #item="{ item, props }">
+    <router-link
+      v-if="item.to"
+      v-slot="{ href, navigate }"
+      :to="item.to"
+      custom>
+      <a :href="href" v-bind="props.action" @click="navigate">
+        <span :class="[item.icon, 'text-color']" />
+        <span class="text-primary font-semibold">{{ item.label }}</span>
+      </a>
+    </router-link>
+    <a
+      v-else
+      :href="item.url"
+      :target="item.target"
+      v-bind="props.action">
+      <span class="text-color">{{ item.label }}</span>
+    </a>
+  </template>
+</Breadcrumb>
+        `
+      },
+      routerCode2: {
+        basic: `
+export default {
+  data() {
+    return {
+      home: { icon: 'pi pi-home', to: '/' },
+      items: [
+        { label: 'Components' },
+        { label: 'Form' },
+        { label: 'InputText', to: '/inputtext' }
+      ]
+    }
+  }
 }
         `
       },

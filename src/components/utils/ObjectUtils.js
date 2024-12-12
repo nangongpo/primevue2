@@ -241,5 +241,9 @@ export default {
       }
       return accumulated
     }, { ...target })  // 使用一个新的目标对象来避免修改原始目标
+  },
+
+  getKeyboardCode(event) {
+    return event.which || event.key
   }
 }

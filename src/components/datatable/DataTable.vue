@@ -1190,28 +1190,23 @@ export default {
         })
       }
 
-      let blob = new Blob([csv], {
-        type: 'text/csv;charset=utf-8;'
-      })
+      //footers
+      let footerInitiated = false
 
-      if (window.navigator.msSaveOrOpenBlob) {
-        navigator.msSaveOrOpenBlob(blob, this.exportFilename + '.csv')
-      }
-      else {
-        let link = document.createElement('a')
-        link.style.display = 'none'
-        document.body.appendChild(link)
-        if (link.download !== undefined) {
-          link.setAttribute('href', URL.createObjectURL(blob))
-          link.setAttribute('download', this.exportFilename + '.csv')
-          link.click()
+      for (let i = 0; i < this.columns.length; i++) {
+        let column = this.columns[i]
+
+        if (i === 0) csv += '\n'
+
+        if (this.columnProp(column, 'exportable') !== false && this.columnProp(column, 'exportFooter')) {
+          if (footerInitiated) csv += this.csvSeparator
+          else footerInitiated = true
+
+          csv += '"' + (this.columnProp(column, 'exportFooter') || this.columnProp(column, 'footer') || this.columnProp(column, 'field')) + '"'
         }
-        else {
-          csv = 'data:text/csv;charset=utf-8,' + csv
-          window.open(encodeURI(csv))
-        }
-        document.body.removeChild(link)
       }
+
+      DomHandler.exportCSV(csv, this.exportFilename)
     },
     resetPage() {
       if (this.lazy) {

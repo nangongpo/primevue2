@@ -3,7 +3,7 @@
     <slot>
       <span class="p-avatar-text" v-if="label">{{ label }}</span>
       <span :class="iconClass" v-else-if="icon"></span>
-      <img :src="image" v-else-if="image" />
+      <img :src="image" v-else-if="image" @error="onError" />
     </slot>
   </div>
 </template>
@@ -44,6 +44,11 @@ export default {
     },
     iconClass() {
       return ['p-avatar-icon', this.icon]
+    }
+  },
+  methods: {
+    onError(event) {
+      this.$emit('error', event)
     }
   }
 }

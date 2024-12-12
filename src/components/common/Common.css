@@ -60,14 +60,6 @@
   user-select: none;
 }
 
-.p-scrollbar-measure {
-  width: 100px;
-  height: 100px;
-  overflow: scroll;
-  position: absolute;
-  top: -9999px;
-}
-
 @-webkit-keyframes p-fadein {
   0% {
     opacity: 0;

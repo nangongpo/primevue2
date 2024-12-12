@@ -4249,7 +4249,7 @@
 .p-breadcrumb ul li .p-menuitem-link .p-menuitem-icon {
   color: #333333;
 }
-.p-breadcrumb ul li.p-breadcrumb-chevron {
+.p-breadcrumb ul li.p-breadcrumb-separator {
   margin: 0 0.5rem 0 0.5rem;
   color: #333333;
 }

@@ -31,6 +31,10 @@ export default {
   },
   methods: {
     onToggle(event, tab, index, isActive) {
+      this.changeActiveIndex(event, tab, index, isActive)
+      this.$emit('tab-click', { originalEvent: event, index })
+    },
+    changeActiveIndex(event, tab, index, isActive) {
       const eventName = isActive ? 'tab-close' : 'tab-open'
 
       if (this.multiple) {
@@ -52,7 +56,7 @@ export default {
         originalEvent: event,
         index: index
       })
-    }
+    },
   }
 }
 </script>

@@ -1,15 +1,3 @@
-<template>
-    <nav class="p-breadcrumb p-component" aria-label="Breadcrumb">
-        <ul>
-            <BreadcrumbItem v-if="home" :item="home" class="p-breadcrumb-home" :exact="exact" />
-            <template v-for="(item, i) of model">
-                <li class="p-breadcrumb-chevron pi pi-chevron-right" :key="'chevron' + i"></li>
-                <BreadcrumbItem :key="item.label + i" :item="item" :exact="exact" />
-            </template>
-        </ul>
-    </nav>
-</template>
-
 <script>
 import BreadcrumbItem from './BreadcrumbItem.vue'
 
@@ -23,14 +11,58 @@ export default {
     home: {
       type: null,
       default: null
-    },
-    exact: {
-      type: Boolean,
-      default: true
     }
   },
   components: {
     'BreadcrumbItem': BreadcrumbItem
+  },
+  render (h) {
+    const { model = [], home, $scopedSlots } = this
+    const separatorNodes =  $scopedSlots.separator
+      ? $scopedSlots.separator()
+      : [h('i', { class: 'pi pi-chevron-right' })]
+
+    const vNodes = []
+
+    if (home) {
+      vNodes.push(
+        h('BreadcrumbItem', {
+          class: 'p-breadcrumb-home',
+          props: {
+            item: home,
+            templates: $scopedSlots
+          }
+        })
+      )
+    }
+
+    model.map((item, index) => {
+      if (item) {
+        vNodes.push(
+          h('li', {
+            class: 'p-breadcrumb-separator',
+            key: 'separator' + '_' + index,
+          }, separatorNodes),
+          h('BreadcrumbItem', {
+            props: {
+              item: item,
+              index: index,
+              templates: $scopedSlots
+            },
+            key: item.label + '_' + index,
+          })
+        )
+      }
+    })
+
+    return h('nav', {
+      staticClass: 'p-breadcrumb p-component',
+      attrs: {
+        'aria-label': 'Breadcrumb'
+      }
+    }, [
+      h('ul', vNodes)
+    ])
   }
 }
 </script>

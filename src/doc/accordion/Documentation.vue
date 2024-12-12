@@ -128,8 +128,8 @@
         </thead>
         <tbody>
           <tr>
-            <td>tab-open</td>
-            <td>
+            <td style="min-width:110px">tab-open</td>
+            <td style="min-width:160px">
               event.originalEvent: Browser event <br />
               event.tab: opened tab
             </td>
@@ -142,6 +142,13 @@
               event.tab: closed tab
             </td>
             <td>Callback to invoke when an active tab is collapsed by clicking on the header.</td>
+          </tr>
+          <tr>
+            <td>tab-click</td>
+            <td>event.originalEvent: Browser event <br />
+              event.index actived tab index
+            </td>
+            <td>Callback to invoke when an active tab is clicked.</td>
           </tr>
         </tbody>
       </table>

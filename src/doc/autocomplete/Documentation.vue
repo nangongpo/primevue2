@@ -126,6 +126,12 @@
             <td>Specifies if multiple values can be selected.</td>
           </tr>
           <tr>
+            <td>loading</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether the autocomplete is in loading state.</td>
+          </tr>
+          <tr>
             <td>minLength</td>
             <td>number</td>
             <td>1</td>
@@ -195,12 +201,26 @@
         </thead>
         <tbody>
           <tr>
-            <td>complete</td>
+            <td>change</td>
             <td>
               event.originalEvent: Browser event <br />
-              event.query: Value to search with
+              event.value: Selected item
             </td>
-            <td>Callback to invoke to search for suggestions.</td>
+            <td>Callback to invoke on value change.</td>
+          </tr>
+          <tr>
+            <td>focus</td>
+            <td>
+              event.originalEvent: Browser event
+            </td>
+            <td>Callback to invoke when the component receives focus.	</td>
+          </tr>
+          <tr>
+            <td>blur</td>
+            <td>
+              event.originalEvent: Browser event
+            </td>
+            <td>Callback to invoke when the component loses focus.</td>
           </tr>
           <tr>
             <td>item-select</td>
@@ -230,6 +250,34 @@
             <td>clear</td>
             <td>event: Browser event</td>
             <td>Callback to invoke when input is cleared by the user.</td>
+          </tr>
+          <tr>
+            <td>complete</td>
+            <td>
+              event.originalEvent: Browser event <br />
+              event.query: Value to search with
+            </td>
+            <td>Callback to invoke to search for suggestions.</td>
+          </tr>
+          <tr>
+            <td>before-show</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>before-hide</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>show</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>hide</td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
