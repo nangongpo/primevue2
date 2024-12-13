@@ -199,7 +199,7 @@ Vue.component('Dialog', Dialog);
 &lt;link href="https://unpkg.com/primevue2/resources/primevue.min.css " rel="stylesheet"&gt;
 &lt;link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet"&gt;
 &lt;script src="https://unpkg.com/vue"&gt;&lt;/script&gt;
-&lt;script src="https://unpkg.com/primevue^2/calendar/calendar.umd.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/primevue2/calendar/calendar.umd.min.js"&gt;&lt;/script&gt;
 
 &lt;div id="app"&gt;
     &lt;p-calendar&gt;&lt;/p-calendar&gt;

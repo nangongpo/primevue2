@@ -1,12 +1,6 @@
-import { beforeAll, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { config, mount } from '@vue/test-utils'
 import { defaultOptions } from 'primevue2/config'
-import Vue from 'vue'
-
-beforeAll(() => {
-  Vue.config.devtools = false
-})
-
 
 const TestComponent = {
   computed: {

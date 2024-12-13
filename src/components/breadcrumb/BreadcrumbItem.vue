@@ -1,68 +1,44 @@
 <script>
 export default {
   name: 'BreadcrumbItem',
+  functional: true,
   props: {
-    item: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
+    item: null,
     templates: {
       type: Object,
       default() {
         return {}
       }
-    },
-    index: Number
-  },
-  computed: {
-    containerClass({ item, disabled }) {
-      return ['p-menuitem', { 'p-disabled': disabled() }, item.class]
-    },
-    iconClass({ item }) {
-      return ['p-menuitem-icon', item.icon]
-    },
-    getMenuItemProps({ iconClass, label, isCurrentUrl, onClick }) {
-      return {
-        action: {
-          'aria-current': isCurrentUrl(),
-          onClick: ($event) => onClick($event)
-        },
-        icon: iconClass,
-        label: label
-      }
     }
   },
-  methods: {
-    onClick(event) {
-      if (this.item.command) {
-        this.item.command({
+  render(h, context) {
+    const { item, templates } = context.props
+    if (!item) return null
+
+    const visible = typeof item.visible === 'function' ? item.visible() : item.visible !== false
+    const label = typeof item.label === 'function' ? item.label() : item.label
+    const disabled = typeof item.disabled === 'function' ? item.disabled() : item.disabled
+    const containerClass = ['p-menuitem', { 'p-disabled': disabled }, item.class]
+    const iconClass = ['p-menuitem-icon', item.icon]
+    const ariaCurrent = isCurrentUrl(item)
+    const onClick = (event) => {
+      if (item.command) {
+        item.command({
           originalEvent: event,
-          item: this.item
+          item: item
         })
       }
-    },
-    visible() {
-      return (typeof this.item.visible === 'function' ? this.item.visible() : this.item.visible !== false)
-    },
-    disabled() {
-      return (typeof this.item.disabled === 'function' ? this.item.disabled() : this.item.disabled)
-    },
-    label() {
-      return (typeof this.item.label === 'function' ? this.item.label() : this.item.label)
-    },
-    isCurrentUrl() {
-      const { to, url } = this.item
-      const lastPath = typeof window !== 'undefined' ? window.location.pathname : ''
-
-      return to === lastPath || url === lastPath ? 'page' : undefined
     }
-  },
-  render(h) {
-    const { item, templates, containerClass, iconClass, getMenuItemProps, onClick, visible, label, isCurrentUrl } = this
+    const getMenuItemProps = {
+      action: {
+        'aria-current': ariaCurrent,
+        onClick: ($event) => onClick($event)
+      },
+      icon: iconClass,
+      label: label
+    }
 
-    if (visible()) {
+    if (visible) {
       const vNodes = []
 
       if (!templates.item) {
@@ -79,7 +55,7 @@ export default {
         }
 
         item.label && childNodes.push(
-          h('span', { class: 'p-menuitem-text' }, label())
+          h('span', { class: 'p-menuitem-text' }, label)
         )
 
         vNodes.push(
@@ -88,7 +64,7 @@ export default {
             attrs: {
               href: item.url || '#',
               target: item.target,
-              'aria-current': isCurrentUrl()
+              'aria-current': ariaCurrent
             },
             on: {
               click: onClick
@@ -98,7 +74,7 @@ export default {
 
       } else {
         vNodes.push(
-          templates.item({ item, label: label(), props: getMenuItemProps })
+          templates.item({ item, label: label, props: getMenuItemProps })
         )
       }
 
@@ -107,5 +83,12 @@ export default {
 
     return null
   }
+}
+
+function isCurrentUrl(item) {
+  const { to, url } = item
+  const lastPath = typeof window !== 'undefined' ? window.location.pathname : ''
+
+  return to === lastPath || url === lastPath ? 'page' : undefined
 }
 </script>

@@ -17,7 +17,7 @@ export default {
     'BreadcrumbItem': BreadcrumbItem
   },
   render (h) {
-    const { model = [], home, $scopedSlots } = this
+    const { model, home, $scopedSlots } = this
     const separatorNodes =  $scopedSlots.separator
       ? $scopedSlots.separator()
       : [h('i', { class: 'pi pi-chevron-right' })]
@@ -36,7 +36,7 @@ export default {
       )
     }
 
-    model.map((item, index) => {
+    (model || []).map((item, index) => {
       if (item) {
         vNodes.push(
           h('li', {
