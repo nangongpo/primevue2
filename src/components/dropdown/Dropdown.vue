@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler } from 'primevue2/utils'
+import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -217,7 +217,8 @@ export default {
       this.focused = false
     },
     onKeyDown(event) {
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         this.onDownKey(event)
@@ -256,7 +257,8 @@ export default {
       }
     },
     onFilterKeyDown(event) {
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         this.onDownKey(event)

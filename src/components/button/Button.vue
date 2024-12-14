@@ -1,5 +1,5 @@
 <template>
-  <button :class="buttonClass" v-on="$listeners" type="button" v-ripple>
+  <button :disabled="disabled" :class="buttonClass" v-on="$listeners" type="button" v-ripple>
     <slot>
       <span v-if="loading && !icon" :class="iconClass"></span>
       <span v-if="icon" :class="iconClass"></span>
@@ -42,6 +42,9 @@ export default {
     }
   },
   computed: {
+    disabled() {
+      return this.$attrs.disabled || this.$attrs.disabled === '' || this.loading
+    },
     buttonClass() {
       return {
         'p-button p-component': true,

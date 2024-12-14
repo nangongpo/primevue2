@@ -1,77 +1,30 @@
 <template>
-  <div
-    :class="containerClass"
-    aria-haspopup="listbox"
-    :aria-owns="listId"
-    :aria-expanded="overlayVisible"
+  <div :class="containerClass" aria-haspopup="listbox" :aria-owns="listId" :aria-expanded="overlayVisible"
     @click="onContainerClick">
-    <input
-      ref="input"
-      :class="inputClass"
-      v-bind="$attrs"
-      v-on="listeners"
-      :value="inputValue"
-      type="text"
-      autoComplete="off"
-      v-if="!multiple"
-      role="searchbox"
-      aria-autocomplete="list"
-      :aria-controls="listId"
+    <input ref="input" :class="inputClass" v-bind="$attrs" v-on="listeners" :value="inputValue" type="text"
+      autoComplete="off" v-if="!multiple" role="searchbox" aria-autocomplete="list" :aria-controls="listId"
       :aria-labelledby="ariaLabelledBy" />
-    <ul
-      ref="multiContainer"
-      :class="multiContainerClass"
-      v-if="multiple"
-      @click="onMultiContainerClick">
+    <ul ref="multiContainer" :class="multiContainerClass" v-if="multiple" @click="onMultiContainerClick">
       <li v-for="(item, i) of value" :key="i" class="p-autocomplete-token">
         <span class="p-autocomplete-token-label">{{
           getItemContent(item)
-        }}</span>
-        <span
-          class="p-autocomplete-token-icon pi pi-times-circle"
-          @click="removeItem($event, i)"></span>
+          }}</span>
+        <span class="p-autocomplete-token-icon pi pi-times-circle" @click="removeItem($event, i)"></span>
       </li>
       <li class="p-autocomplete-input-token">
-        <input
-          ref="input"
-          type="text"
-          autoComplete="off"
-          v-bind="$attrs"
-          v-on="listeners"
-          role="searchbox"
-          aria-autocomplete="list"
-          :aria-controls="listId"
-          :aria-labelledby="ariaLabelledBy" />
+        <input ref="input" type="text" autoComplete="off" v-bind="$attrs" v-on="listeners" role="searchbox"
+          aria-autocomplete="list" :aria-controls="listId" :aria-labelledby="ariaLabelledBy" />
       </li>
     </ul>
     <i class="p-autocomplete-loader pi pi-spinner pi-spin" v-if="searching || loading"></i>
-    <Button
-      ref="dropdownButton"
-      type="button"
-      icon="pi pi-chevron-down"
-      class="p-autocomplete-dropdown"
-      :disabled="$attrs.disabled"
-      @click="onDropdownClick"
-      v-if="dropdown" />
-    <transition
-      name="p-connected-overlay"
-      @enter="onOverlayEnter"
-      @after-enter="onOverlayAfterEnter"
-      @leave="onOverlayLeave"
-      @after-leave="onOverlayAfterLeave">
-      <div
-        v-if="overlayVisible"
-        :ref="overlayRef"
-        class="p-autocomplete-panel p-component"
-        :style="{ 'max-height': scrollHeight }">
+    <Button ref="dropdownButton" type="button" icon="pi pi-chevron-down" class="p-autocomplete-dropdown"
+      :disabled="$attrs.disabled" @click="onDropdownClick" v-if="dropdown" />
+    <transition name="p-connected-overlay" @enter="onOverlayEnter" @after-enter="onOverlayAfterEnter" @leave="onOverlayLeave" @after-leave="onOverlayAfterLeave">
+      <div v-if="overlayVisible" :ref="overlayRef" class="p-autocomplete-panel p-component"
+        :style="{ 'max-height': scrollHeight }" @click="onOverlayClick" @keydown="onOverlayKeyDown">
         <ul :id="listId" class="p-autocomplete-items" role="listbox">
-          <li
-            v-for="(item, i) of suggestions"
-            class="p-autocomplete-item"
-            :key="i"
-            @click="selectItem($event, item)"
-            role="option"
-            v-ripple>
+          <li v-for="(item, i) of suggestions" class="p-autocomplete-item" :key="i" @click="selectItem($event, item)"
+            role="option" v-ripple>
             <slot name="item" :item="item" :index="i">
               {{ getItemContent(item) }}
             </slot>
@@ -83,14 +36,9 @@
 </template>
 
 <script>
-import {
-  ConnectedOverlayScrollHandler,
-  ObjectUtils,
-  DomHandler,
-  UniqueComponentId,
-  ZIndexUtils
-} from 'primevue2/utils'
+import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler, UniqueComponentId, ZIndexUtils, KeyboardHandler } from 'primevue2/utils'
 import Button from 'primevue2/button'
+import OverlayEventBus from 'primevue2/overlayeventbus'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -230,6 +178,28 @@ export default {
     onOverlayAfterLeave(el) {
       ZIndexUtils.clear(el)
     },
+    onOverlayClick(event) {
+      OverlayEventBus.emit('overlay-click', {
+        originalEvent: event,
+        target: this.$el
+      })
+    },
+    onOverlayKeyDown(event) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
+      // Escape
+      case 27:
+        this.onEscapeKey(event)
+        break
+
+      default:
+        break
+      }
+    },
+    onEscapeKey(event) {
+      this.overlayVisible && this.hideOverlay(true)
+      event.preventDefault()
+    },
     alignOverlay() {
       let target = this.multiple ? this.$refs.multiContainer : this.$refs.input
       if (this.appendTo) {
@@ -309,7 +279,7 @@ export default {
     isDropdownClicked(event) {
       return this.$refs.dropdownButton
         ? event.target === this.$refs.dropdownButton ||
-            this.$refs.dropdownButton.$el.contains(event.target)
+        this.$refs.dropdownButton.$el.contains(event.target)
         : false
     },
     selectItem(event, item) {
@@ -449,13 +419,9 @@ export default {
       this.$emit('blur', event)
     },
     onKeyDown(event) {
-      const keyCode = ObjectUtils.getKeyboardCode(event)
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
       if (this.overlayVisible) {
-        let highlightItem = DomHandler.findSingle(
-          this.overlay,
-          'li.p-highlight'
-        )
-
+        let highlightItem = DomHandler.findSingle(this.overlay, 'li.p-highlight')
         switch (keyCode) {
         //down
         case 40:

@@ -33,7 +33,7 @@
 
 <script>
 import TreeNode from './TreeNode.vue'
-import { ObjectUtils } from 'primevue2/utils'
+import { ObjectUtils, KeyboardHandler } from 'primevue2/utils'
 
 export default {
   name: 'Tree',
@@ -214,7 +214,8 @@ export default {
         : !(node.children && node.children.length)
     },
     onFilterKeydown(event) {
-      if (event.which === 13) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      if (keyCode === 13) {
         event.preventDefault()
       }
     },

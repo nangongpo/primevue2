@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { UniqueComponentId, DomHandler } from 'primevue2/utils'
+import { UniqueComponentId, DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -196,7 +196,8 @@ export default {
       }
     },
     onKeyDown(event) {
-      if (event.which === 9) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      if (keyCode === 9) { // Tab
         event.preventDefault()
         let focusableElements = DomHandler.getFocusableElements(this.$refs.dialog)
         if (focusableElements && focusableElements.length > 0) {
@@ -219,7 +220,7 @@ export default {
             }
           }
         }
-      } else if (event.which === 27 && this.closeOnEscape) {
+      } else if (keyCode === 27 && this.closeOnEscape) {
         this.close()
       }
     },

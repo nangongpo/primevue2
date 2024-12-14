@@ -410,7 +410,7 @@
   background: #EFF6FF;
 }
 .p-datepicker .p-datepicker-buttonbar {
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   border-top: 1px solid #dee2e6;
 }
 .p-datepicker .p-datepicker-buttonbar .p-button {

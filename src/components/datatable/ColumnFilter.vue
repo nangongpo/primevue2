@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import { DomHandler, ConnectedOverlayScrollHandler } from 'primevue2/utils'
+import { DomHandler, ConnectedOverlayScrollHandler, KeyboardHandler } from 'primevue2/utils'
 import OverlayEventBus from 'primevue2/overlayeventbus'
 import { FilterOperator } from 'primevue2/api'
 import Dropdown from 'primevue2/dropdown'
@@ -359,13 +359,13 @@ export default {
       this.overlayVisible = !this.overlayVisible
     },
     onToggleButtonKeyDown(event) {
-      switch (event.key) {
-      case 'Escape':
-      case 'Tab':
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
+      case 27:  // Escape
+      case 9:   // Tab
         this.overlayVisible = false
         break
-
-      case 'ArrowDown':
+      case 40:  // ArrowDown
         if (this.overlayVisible) {
           let focusable = DomHandler.getFocusableElements(this.$refs.overlay)
           if (focusable) {

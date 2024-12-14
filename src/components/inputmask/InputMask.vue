@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { DomHandler } from 'primevue2/utils'
+import { DomHandler, KeyboardHandler } from 'primevue2/utils'
 
 export default {
   name: 'InputMask',
@@ -385,7 +385,7 @@ export default {
             return
           }
 
-          let k = event.which || event.keyCode,
+          let k = KeyboardHandler.getKeyboardCode(event),
             pos,
             begin,
             end
@@ -426,7 +426,7 @@ export default {
             return
           }
 
-          var k = event.which || event.keyCode,
+          var k = KeyboardHandler.getKeyboardCode(event),
             pos = $vm.caret(),
             p,
             c,

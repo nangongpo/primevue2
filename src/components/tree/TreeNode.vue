@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { DomHandler } from 'primevue2/utils'
+import { DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 const TreeNodeTemplate = {
@@ -136,8 +136,8 @@ export default {
     },
     onKeyDown(event) {
       const nodeElement = event.target.parentElement
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down arrow
       case 40:
         var listElement = nodeElement.children[1]

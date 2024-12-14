@@ -1,17 +1,22 @@
 <template>
   <span :class="containerClass" :style="styles">
     <CalendarInputText
-      ref="input"
       v-if="!inline"
+      :ref="inputRef"
       type="text"
-      v-bind="$attrs"
-      v-on="listeners"
       :value="inputFieldValue"
       :readonly="!manualInput"
       :aria-labelledby="ariaLabelledBy"
       inputmode="none"
       :class="inputClass"
-      :style="inputStyle" />
+      :style="inputStyle"
+      v-bind="$attrs"
+      @input="onInput"
+      @click="onInputClick"
+      @focus="onFocus"
+      @blur="onBlur"
+      @keydown="onKeyDown"
+    />
     <CalendarButton
       v-if="showIcon"
       :icon="icon"
@@ -25,13 +30,18 @@
       name="p-connected-overlay"
       @enter="onOverlayEnter"
       @after-enter="onOverlayEnterComplete"
+      @after-leave="onOverlayAfterLeave" 
       @leave="onOverlayLeave">
       <div
-        ref="overlay"
+        :ref="overlayRef"
         :class="panelStyleClass"
         v-if="inline ? true : overlayVisible"
         :role="inline ? null : 'dialog'"
-        :aria-labelledby="ariaLabelledBy">
+        :aria-modal="inline ? null : 'true'"
+        :aria-label="$primevue.config.locale.chooseDate"
+        @click="onOverlayClick"
+        @keydown="onOverlayKeyDown"
+        @mouseup="onOverlayMouseUp">
         <template v-if="!timeOnly">
           <div class="p-datepicker-group-container">
             <div class="p-datepicker-group" v-for="(month, groupIndex) of months" :key="month.month + month.year">
@@ -44,7 +54,8 @@
                   type="button"
                   @keydown="onContainerButtonKeydown"
                   v-ripple
-                  :disabled="$attrs.disabled">
+                  :disabled="$attrs.disabled"
+                  :aria-label="currentView === 'year' ? $primevue.config.locale.prevDecade : currentView === 'month' ? $primevue.config.locale.prevYear : $primevue.config.locale.prevMonth">
                   <span class="p-datepicker-prev-icon pi pi-chevron-left"></span>
                 </button>
                 <div class="p-datepicker-title">
@@ -56,7 +67,8 @@
                       @click="switchToMonthView"
                       @keydown="onContainerButtonKeydown"
                       class="p-datepicker-month p-link"
-                      :disabled="switchViewButtonDisabled">
+                      :disabled="switchViewButtonDisabled"
+                      :aria-label="$primevue.config.locale.chooseMonth">
                       {{ getMonthName(month.month) }}
                     </button>
                     <button
@@ -66,7 +78,8 @@
                       @click="switchToYearView"
                       @keydown="onContainerButtonKeydown"
                       class="p-datepicker-year p-link"
-                      :disabled="switchViewButtonDisabled">
+                      :disabled="switchViewButtonDisabled"
+                      :aria-label="$primevue.config.locale.chooseYear">
                       {{ getYear(month) }}
                     </button>
                     <span
@@ -158,6 +171,7 @@
           <div class="p-hour-picker">
             <button
               class="p-link"
+              :aria-label="$primevue.config.locale.nextHour"
               @mousedown="onTimePickerElementMouseDown($event, 0, 1)"
               @mouseup="onTimePickerElementMouseUp($event)"
               @keydown="onContainerButtonKeydown"
@@ -171,6 +185,7 @@
             <span>{{ formattedCurrentHour }}</span>
             <button
               class="p-link"
+              :aria-label="$primevue.config.locale.prevHour"
               @mousedown="onTimePickerElementMouseDown($event, 0, -1)"
               @mouseup="onTimePickerElementMouseUp($event)"
               @keydown="onContainerButtonKeydown"
@@ -188,6 +203,7 @@
           <div class="p-minute-picker">
             <button
               class="p-link"
+              :aria-label="$primevue.config.locale.nextMinute"
               @mousedown="onTimePickerElementMouseDown($event, 1, 1)"
               @mouseup="onTimePickerElementMouseUp($event)"
               @keydown="onContainerButtonKeydown"
@@ -202,6 +218,7 @@
             <span>{{ formattedCurrentMinute }}</span>
             <button
               class="p-link"
+              :aria-label="$primevue.config.locale.prevMinute"
               @mousedown="onTimePickerElementMouseDown($event, 1, -1)"
               @mouseup="onTimePickerElementMouseUp($event)"
               @keydown="onContainerButtonKeydown"
@@ -220,6 +237,7 @@
           <div class="p-second-picker" v-if="showSeconds">
             <button
               class="p-link"
+              :aria-label="$primevue.config.locale.nextSecond"
               @mousedown="onTimePickerElementMouseDown($event, 2, 1)"
               @mouseup="onTimePickerElementMouseUp($event)"
               @keydown="onContainerButtonKeydown"
@@ -234,6 +252,7 @@
             <span>{{ formattedCurrentSecond }}</span>
             <button
               class="p-link"
+              :aria-label="$primevue.config.locale.prevSecond"
               @mousedown="onTimePickerElementMouseDown($event, 2, -1)"
               @mouseup="onTimePickerElementMouseUp($event)"
               @keydown="onContainerButtonKeydown"
@@ -250,11 +269,11 @@
             <span>{{ timeSeparator }}</span>
           </div>
           <div class="p-ampm-picker" v-if="hourFormat == '12'">
-            <button class="p-link" @click="toggleAMPM($event)" type="button" v-ripple :disabled="$attrs.disabled">
+            <button class="p-link" :aria-label="$primevue.config.locale.am" @click="toggleAMPM($event)" type="button" v-ripple :disabled="$attrs.disabled">
               <span class="pi pi-chevron-up"></span>
             </button>
-            <span>{{ pm ? pmLabel : amLabel }}</span>
-            <button class="p-link" @click="toggleAMPM($event)" type="button" v-ripple :disabled="$attrs.disabled">
+            <span>{{ pm ? $primevue.config.locale.pm : $primevue.config.locale.am }}</span>
+            <button class="p-link" :aria-label="$primevue.config.locale.pm" @click="toggleAMPM($event)" type="button" v-ripple :disabled="$attrs.disabled">
               <span class="pi pi-chevron-down"></span>
             </button>
           </div>
@@ -280,9 +299,10 @@
 </template>
 
 <script>
-import { ConnectedOverlayScrollHandler, UniqueComponentId, DomHandler } from 'primevue2/utils'
+import { ConnectedOverlayScrollHandler, UniqueComponentId, DomHandler, ZIndexUtils, KeyboardHandler } from 'primevue2/utils'
 import InputText from 'primevue2/inputtext'
 import Button from 'primevue2/button'
+import OverlayEventBus from 'primevue2/overlayeventbus'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -451,6 +471,8 @@ export default {
   outsideClickListener: null,
   maskClickListener: null,
   resizeListener: null,
+  overlay: null,
+  input: null,
   mask: null,
   timePickerTimer: null,
   isKeydown: false,
@@ -461,22 +483,22 @@ export default {
   mounted() {
     this.createResponsiveStyle()
     if (this.inline) {
-      this.$refs.overlay && this.$refs.overlay.setAttribute(this.attributeSelector, '')
+      this.overlay && this.overlay.setAttribute(this.attributeSelector, '')
       if (!this.$attrs.disabled) {
         this.initFocusableCell()
-        this.$refs.overlay.style.width = DomHandler.getOuterWidth(this.$el) + 'px'
+        this.overlay.style.width = DomHandler.getOuterWidth(this.$el) + 'px'
       }
     }
   },
   updated() {
-    if (this.$refs.overlay) {
+    if (this.overlay) {
       this.preventFocus = true
-      this.updateFocus()
+      setTimeout(this.updateFocus, 0)
     }
 
-    if (this.$refs.input && this.selectionStart != null && this.selectionEnd != null) {
-      this.$refs.input.$el.selectionStart = this.selectionStart
-      this.$refs.input.$el.selectionEnd = this.selectionEnd
+    if (this.input && this.selectionStart != null && this.selectionEnd != null) {
+      this.input.$el.selectionStart = this.selectionStart
+      this.input.$el.selectionEnd = this.selectionEnd
       this.selectionStart = null
       this.selectionEnd = null
     }
@@ -499,6 +521,12 @@ export default {
       this.scrollHandler.destroy()
       this.scrollHandler = null
     }
+
+    if (this.overlay && this.autoZIndex) {
+      ZIndexUtils.clear(this.overlay)
+    }
+
+    this.overlay = null
   },
   data() {
     return {
@@ -518,7 +546,7 @@ export default {
       this.updateCurrentMetaData()
     },
     months() {
-      if (this.$refs.overlay) {
+      if (this.overlay) {
         if (!this.focused) {
           setTimeout(this.updateFocus, 0)
         }
@@ -727,7 +755,8 @@ export default {
       el.setAttribute(this.attributeSelector, '')
 
       if (this.autoZIndex) {
-        this.$refs.overlay.style.zIndex = String(this.baseZIndex + DomHandler.generateZIndex())
+        if (this.touchUI) ZIndexUtils.set('modal', el, this.baseZIndex || this.$primevue.config.zIndex.modal)
+        else ZIndexUtils.set('overlay', el, this.baseZIndex || this.$primevue.config.zIndex.overlay)
       }
       this.appendContainer()
       this.alignOverlay()
@@ -737,6 +766,11 @@ export default {
       this.bindOutsideClickListener()
       this.bindScrollListener()
       this.bindResizeListener()
+    },
+    onOverlayAfterLeave(el) {
+      if (this.autoZIndex) {
+        ZIndexUtils.clear(el)
+      }
     },
     onOverlayLeave() {
       this.currentView = this.view
@@ -748,6 +782,8 @@ export default {
       if (this.mask) {
         this.disableModality()
       }
+
+      this.overlay = null
     },
     onPrevButtonClick(event) {
       if (this.showOtherMonths) {
@@ -904,7 +940,7 @@ export default {
     },
     isOutsideClicked(event) {
       return !(this.$el.isSameNode(event.target) || this.isNavIconClicked(event) ||
-        this.$el.contains(event.target) || (this.$refs.overlay && this.$refs.overlay.contains(event.target)))
+        this.$el.contains(event.target) || (this.overlay && this.overlay.contains(event.target)))
     },
     isNavIconClicked(event) {
       return (DomHandler.hasClass(event.target, 'p-datepicker-prev') || DomHandler.hasClass(event.target, 'p-datepicker-prev-icon')
@@ -914,17 +950,17 @@ export default {
       if (this.touchUI) {
         this.enableModality()
       }
-      else if (this.$refs.overlay) {
+      else if (this.overlay) {
         if (this.appendTo)
-          DomHandler.absolutePosition(this.$refs.overlay, this.$el)
+          DomHandler.absolutePosition(this.overlay, this.$el)
         else
-          DomHandler.relativePosition(this.$refs.overlay, this.$el)
+          DomHandler.relativePosition(this.overlay, this.$el)
       }
     },
     onButtonClick() {
       if (this.isEnabled()) {
         if (!this.overlayVisible) {
-          this.$refs.input.$el.focus()
+          this.input.$el.focus()
           this.overlayVisible = true
         }
         else {
@@ -964,7 +1000,7 @@ export default {
         return
       }
 
-      DomHandler.find(this.$refs.overlay, '.p-datepicker-calendar td span:not(.p-disabled)').forEach(cell => cell.tabIndex = -1)
+      DomHandler.find(this.overlay, '.p-datepicker-calendar td span:not(.p-disabled)').forEach(cell => cell.tabIndex = -1)
 
       if (event) {
         event.currentTarget.focus()
@@ -1234,7 +1270,7 @@ export default {
       }
 
       if (this.hourFormat === '12') {
-        output += date.getHours() > 11 ? ' ' + this.pmLabel : ' ' + this.amLabel
+        output += date.getHours() > 11 ? ' ' + this.$primevue.config.locale.pm : ' ' + this.$primevue.config.locale.am
       }
 
       return output
@@ -1515,7 +1551,7 @@ export default {
     enableModality() {
       if (!this.mask) {
         this.mask = document.createElement('div')
-        this.mask.style.zIndex = String(parseInt(this.$refs.overlay.style.zIndex, 10) - 1)
+        this.mask.style.zIndex = String(parseInt(this.overlay.style.zIndex, 10) - 1)
         DomHandler.addMultipleClasses(this.mask, 'p-datepicker-mask p-datepicker-mask-scrollblocker p-component-overlay p-component-overlay-enter')
 
         this.maskClickListener = () => {
@@ -1524,7 +1560,7 @@ export default {
         this.mask.addEventListener('click', this.maskClickListener)
 
         document.body.appendChild(this.mask)
-        DomHandler.addClass(document.body, 'p-overflow-hidden')
+        DomHandler.blockBodyScroll()
       }
     },
     disableModality() {
@@ -1554,7 +1590,7 @@ export default {
       }
 
       if (!hasBlockerMasks) {
-        DomHandler.removeClass(document.body, 'p-overflow-hidden')
+        DomHandler.unblockBodyScroll()
       }
     },
     updateCurrentMetaData() {
@@ -1837,8 +1873,8 @@ export default {
     onDateCellKeydown(event, date, groupIndex) {
       const cellContent = event.currentTarget
       const cell = cellContent.parentElement
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down arrow
       case 40: {
         cellContent.tabIndex = '-1'
@@ -1964,7 +2000,7 @@ export default {
           this.navBackward(event)
         }
         else {
-          let prevMonthContainer = this.$refs.overlay.children[groupIndex - 1]
+          let prevMonthContainer = this.overlay.children[groupIndex - 1]
           let cells = DomHandler.find(prevMonthContainer, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink)')
           let focusCell = cells[cells.length - 1]
           focusCell.tabIndex = '0'
@@ -1977,7 +2013,7 @@ export default {
           this.navForward(event)
         }
         else {
-          let nextMonthContainer = this.$refs.overlay.children[groupIndex + 1]
+          let nextMonthContainer = this.overlay.children[groupIndex + 1]
           let focusCell = DomHandler.findSingle(nextMonthContainer, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink)')
           focusCell.tabIndex = '0'
           focusCell.focus()
@@ -1986,15 +2022,15 @@ export default {
     },
     onMonthCellKeydown(event, index) {
       const cell = event.currentTarget
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //arrows
       case 38:
       case 40: {
         cell.tabIndex = '-1'
         var cells = cell.parentElement.children
         var cellIndex = DomHandler.index(cell)
-        let nextCell = cells[event.which === 40 ? cellIndex + 3 : cellIndex - 3]
+        let nextCell = cells[keyCode === 40 ? cellIndex + 3 : cellIndex - 3]
         if (nextCell) {
           nextCell.tabIndex = '0'
           nextCell.focus()
@@ -2065,14 +2101,15 @@ export default {
     },
     onYearCellKeydown(event, index) {
       const cell = event.currentTarget
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //arrows
       case 38:
       case 40: {
         cell.tabIndex = '-1'
         var cells = cell.parentElement.children
         var cellIndex = DomHandler.index(cell)
-        let nextCell = cells[event.which === 40 ? cellIndex + 2 : cellIndex - 2]
+        let nextCell = cells[keyCode === 40 ? cellIndex + 2 : cellIndex - 2]
         if (nextCell) {
           nextCell.tabIndex = '0'
           nextCell.focus()
@@ -2139,21 +2176,21 @@ export default {
         if (this.navigationState.button) {
           this.initFocusableCell()
           if (this.navigationState.backward)
-            DomHandler.findSingle(this.$refs.overlay, '.p-datepicker-prev').focus()
+            DomHandler.findSingle(this.overlay, '.p-datepicker-prev').focus()
           else
-            DomHandler.findSingle(this.$refs.overlay, '.p-datepicker-next').focus()
+            DomHandler.findSingle(this.overlay, '.p-datepicker-next').focus()
         }
         else {
           if (this.navigationState.backward) {
             let cells
             if (this.currentView === 'month') {
-              cells = DomHandler.find(this.$refs.overlay, '.p-monthpicker .p-monthpicker-month:not(.p-disabled)')
+              cells = DomHandler.find(this.overlay, '.p-monthpicker .p-monthpicker-month:not(.p-disabled)')
             }
             else if (this.currentView === 'year') {
-              cells = DomHandler.find(this.$refs.overlay, '.p-yearpicker .p-yearpicker-year:not(.p-disabled)')
+              cells = DomHandler.find(this.overlay, '.p-yearpicker .p-yearpicker-year:not(.p-disabled)')
             }
             else {
-              cells = DomHandler.find(this.$refs.overlay, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink)')
+              cells = DomHandler.find(this.overlay, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink)')
             }
             if (cells && cells.length > 0) {
               cell = cells[cells.length - 1]
@@ -2161,13 +2198,13 @@ export default {
           }
           else {
             if (this.currentView === 'month') {
-              cell = DomHandler.findSingle(this.$refs.overlay, '.p-monthpicker .p-monthpicker-month:not(.p-disabled)')
+              cell = DomHandler.findSingle(this.overlay, '.p-monthpicker .p-monthpicker-month:not(.p-disabled)')
             }
             else if (this.currentView === 'year') {
-              cell = DomHandler.findSingle(this.$refs.overlay, '.p-yearpicker .p-yearpicker-year:not(.p-disabled)')
+              cell = DomHandler.findSingle(this.overlay, '.p-yearpicker .p-yearpicker-year:not(.p-disabled)')
             }
             else {
-              cell = DomHandler.findSingle(this.$refs.overlay, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink)')
+              cell = DomHandler.findSingle(this.overlay, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink)')
             }
           }
           if (cell) {
@@ -2185,26 +2222,26 @@ export default {
     initFocusableCell() {
       let cell
       if (this.currentView === 'month') {
-        let cells = DomHandler.find(this.$refs.overlay, '.p-monthpicker .p-monthpicker-month')
-        let selectedCell = DomHandler.findSingle(this.$refs.overlay, '.p-monthpicker .p-monthpicker-month.p-highlight')
+        let cells = DomHandler.find(this.overlay, '.p-monthpicker .p-monthpicker-month')
+        let selectedCell = DomHandler.findSingle(this.overlay, '.p-monthpicker .p-monthpicker-month.p-highlight')
         cells.forEach(cell => cell.tabIndex = -1)
         cell = selectedCell || cells[0]
       }
       else if (this.currentView === 'year') {
-        let cells = DomHandler.find(this.$refs.overlay, '.p-yearpicker .p-yearpicker-year')
-        let selectedCell = DomHandler.findSingle(this.$refs.overlay, '.p-yearpicker .p-yearpicker-year.p-highlight')
+        let cells = DomHandler.find(this.overlay, '.p-yearpicker .p-yearpicker-year')
+        let selectedCell = DomHandler.findSingle(this.overlay, '.p-yearpicker .p-yearpicker-year.p-highlight')
         cells.forEach(cell => cell.tabIndex = -1)
         cell = selectedCell || cells[0]
       }
       else {
-        if (this.$refs.overlay) {
-          cell = DomHandler.findSingle(this.$refs.overlay, 'span.p-highlight')
+        if (this.overlay) {
+          cell = DomHandler.findSingle(this.overlay, 'span.p-highlight')
           if (!cell) {
-            let todayCell = DomHandler.findSingle(this.$refs.overlay, 'td.p-datepicker-today span:not(.p-disabled):not(.p-ink)')
+            let todayCell = DomHandler.findSingle(this.overlay, 'td.p-datepicker-today span:not(.p-disabled):not(.p-ink)')
             if (todayCell)
               cell = todayCell
             else
-              cell = DomHandler.findSingle(this.$refs.overlay, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink')
+              cell = DomHandler.findSingle(this.overlay, '.p-datepicker-calendar td span:not(.p-disabled):not(.p-ink')
           }
         }
       }
@@ -2221,7 +2258,7 @@ export default {
     },
     trapFocus(event) {
       event.preventDefault()
-      let focusableElements = DomHandler.getFocusableElements(this.$refs.overlay)
+      let focusableElements = DomHandler.getFocusableElements(this.overlay)
 
       if (focusableElements && focusableElements.length > 0) {
         if (!document.activeElement) {
@@ -2246,7 +2283,8 @@ export default {
       }
     },
     onContainerButtonKeydown(event) {
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //tab
       case 9:
         if (!this.inline) {
@@ -2273,8 +2311,8 @@ export default {
       this.isKeydown = false
 
       try {
-        this.selectionStart = this.$refs.input.$el.selectionStart
-        this.selectionEnd = this.$refs.input.$el.selectionEnd
+        this.selectionStart = this.input.$el.selectionStart
+        this.selectionEnd = this.input.$el.selectionEnd
 
         let value = this.parseValue(val)
         if (this.isValidSelection(value)) {
@@ -2285,20 +2323,62 @@ export default {
         this.updateModel(val)
       }
     },
+    onInputClick() {
+      if (this.showOnFocus && this.isEnabled() && !this.overlayVisible) {
+        this.overlayVisible = true
+      }
+    },
+    onFocus(event) {
+      if (this.showOnFocus && this.isEnabled()) {
+        this.overlayVisible = true
+      }
+
+      this.focused = true
+      this.$emit('focus', event)
+    },
+    onBlur(event) {
+      this.$emit('blur', { originalEvent: event, value: event.target.value })
+
+      this.focused = false
+      event.target.value = this.formatValue(this.value)
+    },
+    onKeyDown(event) {
+      this.isKeydown = true
+
+      if (event.keyCode === 40 && this.overlay) {
+        this.trapFocus(event)
+      }
+      else if (event.keyCode === 27) {
+        if (this.overlayVisible) {
+          this.overlayVisible = false
+          event.preventDefault()
+        }
+      }
+      else if (event.keyCode === 9) {
+        if(this.showOnFocus){
+          DomHandler.getFocusableElements(this.overlay).forEach(el => el.tabIndex = '-1')
+        }
+        if (this.overlayVisible) {
+          this.overlayVisible = false
+        }
+      }
+
+      this.$emit('keydown', event)
+    },
     appendContainer() {
       if (this.appendTo) {
         if (this.appendTo === 'body')
-          document.body.appendChild(this.$refs.overlay)
+          document.body.appendChild(this.overlay)
         else
-          document.getElementById(this.appendTo).appendChild(this.$refs.overlay)
+          document.getElementById(this.appendTo).appendChild(this.overlay)
       }
     },
     restoreAppend() {
-      if (this.$refs.overlay && this.appendTo) {
+      if (this.overlay && this.appendTo) {
         if (this.appendTo === 'body')
-          document.body.removeChild(this.$refs.overlay)
+          document.body.removeChild(this.overlay)
         else
-          document.getElementById(this.appendTo).removeChild(this.$refs.overlay)
+          document.getElementById(this.appendTo).removeChild(this.overlay)
       }
     },
     getMonthName(index) {
@@ -2306,6 +2386,33 @@ export default {
     },
     getYear(month) {
       return (this.currentView === 'month' ? this.currentYear : month.year) + this.yearName
+    },
+    onOverlayClick(event) {
+      if (!this.inline) {
+        OverlayEventBus.emit('overlay-click', {
+          originalEvent: event,
+          target: this.$el
+        })
+      }
+    },
+    onOverlayKeyDown(event) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
+      // Escape
+      case 27:
+        if (!this.inline) {
+          this.input.focus()
+          this.overlayVisible = false
+        }
+
+        break
+
+      default:
+        break
+      }
+    },
+    onOverlayMouseUp(event) {
+      this.onOverlayClick(event)
     },
     createResponsiveStyle() {
       if (this.numberOfMonths > 1 && this.responsiveOptions) {
@@ -2348,54 +2455,15 @@ export default {
         this.responsiveStyleElement.remove()
         this.responsiveStyleElement = null
       }
+    },
+    overlayRef(el) {
+      this.overlay = el
+    },
+    inputRef(el) {
+      this.input = el
     }
   },
   computed: {
-    listeners() {
-      let $vm = this
-
-      return {
-        ...$vm.$listeners,
-        input: val => {
-          this.onInput(val)
-        },
-        focus: event => {
-          $vm.focus = true
-          if ($vm.showOnFocus && $vm.isEnabled()) {
-            $vm.overlayVisible = true
-          }
-          $vm.focused = true
-          $vm.$emit('focus', event)
-        },
-        blur: event => {
-          $vm.focused = false
-          $vm.$emit('blur', event)
-        },
-        keydown: event => {
-          $vm.isKeydown = true
-
-          if (event.keyCode === 40 && $vm.$refs.overlay) {
-            $vm.trapFocus(event)
-          }
-          else if (event.keyCode === 27) {
-            if ($vm.overlayVisible) {
-              $vm.overlayVisible = false
-              event.preventDefault()
-            }
-          }
-          else if (event.keyCode === 9) {
-            if ($vm.showOnFocus) {
-              DomHandler.getFocusableElements($vm.$refs.overlay).forEach(el => el.tabIndex = '-1')
-            }
-            if ($vm.overlayVisible) {
-              $vm.overlayVisible = false
-            }
-          }
-
-          $vm.$emit('keydown', event)
-        }
-      }
-    },
     viewDate() {
       let propValue = this.value
       if (typeof propValue === 'string') {
@@ -2589,12 +2657,6 @@ export default {
     },
     datePickerTitle() {
       return this.$primevue.config.locale.datePickerTitle || ['date', 'year']
-    },
-    amLabel() {
-      return this.$primevue.config.locale.am || 'AM'
-    },
-    pmLabel() {
-      return this.$primevue.config.locale.pm || 'PM'
     },
     todayLabel() {
       return this.$primevue.config.locale.today

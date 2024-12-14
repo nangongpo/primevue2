@@ -42,7 +42,7 @@ export default {
     return {
       sidebarActive: false,
       newsActive: false,
-      theme: 'lara-light-blue'
+      theme: 'saga-blue' // lara-light-blue
     }
   },
   mounted() {

@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { KeyboardHandler } from 'primevue2/utils'
 import InputText from 'primevue2/inputtext'
 import Button from 'primevue2/button'
 
@@ -428,8 +429,9 @@ export default {
       if (event.altKey) {
         event.preventDefault()
       }
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
 
-      switch (event.which) {
+      switch (keyCode) {
       //up
       case 38:
         this.spin(event, 1)
@@ -567,7 +569,7 @@ export default {
     },
     onInputKeyPress(event) {
       event.preventDefault()
-      let code = event.which || event.keyCode
+      let code = KeyboardHandler.getKeyboardCode(event)
       let char = String.fromCharCode(code)
       const isDecimalSign = this.isDecimalSign(char)
       const isMinusSign = this.isMinusSign(char)

@@ -1,18 +1,13 @@
 import { h } from 'vue'
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
-import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
-import PrimeVue from 'primevue2/config'
+import { RouterLinkStub, mount } from '@vue/test-utils'
 import Breadcrumb from './Breadcrumb.vue'
 import BreadcrumbItem from './BreadcrumbItem.vue'
 
 describe('Breadcrumb.vue', () => {
-  const localVue = createLocalVue()
-  localVue.use(PrimeVue)
-
   let wrapper = null
 
   const BreadcrumbOptions = {
-    localVue,
     mocks: {
       $router: {
         currentRoute: {
@@ -84,7 +79,7 @@ describe('Breadcrumb.vue', () => {
   })
 
   it('separator slot: Used to pass attributes to the separator DOM element', async() => {
-    const separatorWrapper = mount(Breadcrumb, {
+    const SeparatorWrapper = mount(Breadcrumb, {
       ...BreadcrumbOptions,
       scopedSlots: {
         separator() {
@@ -103,9 +98,9 @@ describe('Breadcrumb.vue', () => {
       }
     })
 
-    const items = separatorWrapper.findAll('.p-menuitem')
+    const items = SeparatorWrapper.findAll('.p-menuitem')
     expect(items.length).toBe(6)
-    const separators = separatorWrapper.findAll('.p-breadcrumb-separator')
+    const separators = SeparatorWrapper.findAll('.p-breadcrumb-separator')
     expect(separators.length).toBe(5)
     for (let i = 0; i < separators.length; i++) {
       expect(separators.at(i).text()).toBe('/')
@@ -113,7 +108,7 @@ describe('Breadcrumb.vue', () => {
   })
 
   it('item slot: use a router link component, an external link or programmatic navigation', async() => {
-    const itemWrapper = mount(Breadcrumb, {
+    const ItemWrapper = mount(Breadcrumb, {
       ...BreadcrumbOptions,
       scopedSlots: {
         item({ item, props }) {
@@ -162,7 +157,7 @@ describe('Breadcrumb.vue', () => {
       }
     })
 
-    const items = itemWrapper.findAll('.p-menuitem')
+    const items = ItemWrapper.findAll('.p-menuitem')
     expect(items.length).toBe(4)
 
     const InputText = items.at(3)

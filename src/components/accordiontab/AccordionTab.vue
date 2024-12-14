@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { UniqueComponentId, DomHandler, ObjectUtils } from 'primevue2/utils'
+import { UniqueComponentId, DomHandler, KeyboardHandler } from 'primevue2/utils'
 
 export default {
   name: 'AccordionTab',
@@ -56,7 +56,7 @@ export default {
       }
     },
     onTabKeydown(event) {
-      const keyCode = ObjectUtils.getKeyboardCode(event)
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
       if (keyCode === 13) {
         this.onTabClick(event)
       }

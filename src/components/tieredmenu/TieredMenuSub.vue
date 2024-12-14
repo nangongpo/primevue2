@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { DomHandler } from 'primevue2/utils'
+import { DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -158,8 +158,8 @@ export default {
     },
     onItemKeyDown(event, item) {
       let listItem = event.currentTarget.parentElement
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         var nextItem = this.findNextItem(listItem)
@@ -203,8 +203,9 @@ export default {
       })
     },
     onChildItemKeyDown(event) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event.originalEvent)
       //left
-      if (event.originalEvent.which === 37) {
+      if (keyCode === 37) {
         this.activeItem = null
         event.element.parentElement.previousElementSibling.focus()
       }

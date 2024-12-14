@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { ConnectedOverlayScrollHandler, DomHandler } from 'primevue2/utils'
+import { ConnectedOverlayScrollHandler, DomHandler, KeyboardHandler } from 'primevue2/utils'
 
 export default {
   name: 'ColorPicker',
@@ -370,7 +370,8 @@ export default {
       this.overlayVisible = !this.overlayVisible
     },
     onInputKeydown(event) {
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //space
       case 32:
         this.overlayVisible = !this.overlayVisible

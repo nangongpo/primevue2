@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { DomHandler, ObjectUtils } from 'primevue2/utils'
+import { DomHandler, ObjectUtils, KeyboardHandler } from 'primevue2/utils'
 import TreeTableColumnSlot from './TreeTableColumnSlot.vue'
 
 export default {
@@ -100,7 +100,8 @@ export default {
       this.$emit('column-click', { originalEvent: event, column: this.column })
     },
     onKeyDown(event) {
-      if (event.which === 13 && event.currentTarget.nodeName === 'TH' && DomHandler.hasClass(event.currentTarget, 'p-sortable-column')) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      if (keyCode === 13 && event.currentTarget.nodeName === 'TH' && DomHandler.hasClass(event.currentTarget, 'p-sortable-column')) {
         this.$emit('column-click', { originalEvent: event, column: this.column })
       }
     },

@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { DomHandler, ObjectUtils } from 'primevue2/utils'
+import { DomHandler, ObjectUtils, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 const TabPanelHeaderSlot = {
@@ -120,7 +120,8 @@ export default {
       })
     },
     onTabKeydown(event, i) {
-      if (event.which === 13) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      if (keyCode === 13) {
         this.onTabClick(event, i)
       }
     },

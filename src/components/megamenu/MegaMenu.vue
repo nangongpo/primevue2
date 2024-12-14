@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { DomHandler } from 'primevue2/utils'
+import { DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -206,8 +206,8 @@ export default {
     },
     onCategoryKeydown(event, category) {
       let listItem = event.currentTarget.parentElement
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         if (this.horizontal) this.expandMenu(category)

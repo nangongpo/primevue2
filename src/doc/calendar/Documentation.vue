@@ -477,6 +477,28 @@
             </td>
             <td>Callback to invoke when a year is changed using the navigators.</td>
           </tr>
+          <tr>
+            <td>focus</td>
+            <td>
+              event: Event
+            </td>
+            <td>Callback to invoke on focus of input field.</td>
+          </tr>
+          <tr>
+            <td>blur</td>
+            <td>
+              originalEvent: Event <br />
+              value: Selected value
+            </td>
+            <td>Callback to invoke on blur of input field.</td>
+          </tr>
+          <tr>
+            <td>keydown</td>
+            <td>
+              event: Event
+            </td>
+            <td>Callback to invoke when a key is pressed.</td>
+          </tr>
         </tbody>
       </table>
     </div>

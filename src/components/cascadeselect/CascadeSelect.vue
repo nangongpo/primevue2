@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler } from 'primevue2/utils'
+import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler, KeyboardHandler } from 'primevue2/utils'
 import CascadeSelectSub from './CascadeSelectSub.vue'
 
 export default {
@@ -272,9 +272,10 @@ export default {
       }
     },
     onKeyDown(event) {
-      switch (event.key) {
-      case 'Down':
-      case 'ArrowDown':
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
+      // ArrowDown
+      case 40:
         if (this.overlayVisible) {
           DomHandler.findSingle(this.$refs.overlay, '.p-cascadeselect-item').children[0].focus()
         }
@@ -283,13 +284,15 @@ export default {
         }
         event.preventDefault()
         break
-      case 'Escape':
+      // Escape
+      case 27:
         if (this.overlayVisible) {
           this.hide()
           event.preventDefault()
         }
         break
-      case 'Tab':
+      // Tab
+      case 9:
         this.hide()
         break
       }

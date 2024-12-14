@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { ObjectUtils, DomHandler } from 'primevue2/utils'
+import { ObjectUtils, DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -196,8 +196,8 @@ export default {
     },
     onOptionKeyDown(event, option) {
       let item = event.currentTarget
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         var nextItem = this.findNextItem(item)

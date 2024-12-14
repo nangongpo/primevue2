@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { DomHandler, ObjectUtils } from 'primevue2/utils'
+import { DomHandler, ObjectUtils, KeyboardHandler } from 'primevue2/utils'
 import ColumnSlot from './ColumnSlot.vue'
 import HeaderCheckbox from './HeaderCheckbox.vue'
 import ColumnFilter from './ColumnFilter.vue'
@@ -154,7 +154,8 @@ export default {
       this.$emit('column-click', { originalEvent: event, column: this.column })
     },
     onKeyDown(event) {
-      if (event.which === 13 && event.currentTarget.nodeName === 'TH' && DomHandler.hasClass(event.currentTarget, 'p-sortable-column')) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      if (keyCode === 13 && event.currentTarget.nodeName === 'TH' && DomHandler.hasClass(event.currentTarget, 'p-sortable-column')) {
         this.$emit('column-click', { originalEvent: event, column: this.column })
       }
     },

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { DomHandler, ObjectUtils } from 'primevue2/utils'
+import { DomHandler, ObjectUtils, KeyboardHandler } from 'primevue2/utils'
 import TreeTableColumnSlot from './TreeTableColumnSlot.vue'
 import Ripple from 'primevue2/ripple'
 
@@ -119,8 +119,8 @@ export default {
     onKeyDown(event) {
       if (event.target === this.$el) {
         const rowElement = this.$el
-
-        switch (event.which) {
+        const keyCode = KeyboardHandler.getKeyboardCode(event)
+        switch (keyCode) {
         //down arrow
         case 40: {
           const nextRow = rowElement.nextElementSibling

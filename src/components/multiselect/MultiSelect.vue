@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler } from 'primevue2/utils'
+import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler, KeyboardHandler } from 'primevue2/utils'
 import Ripple from 'primevue2/ripple'
 
 export default {
@@ -246,7 +246,8 @@ export default {
       this.hide()
     },
     onKeyDown(event) {
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         if (this.visibleOptions && !this.overlayVisible && event.altKey) {
@@ -298,8 +299,8 @@ export default {
     },
     onOptionKeyDown(event, option) {
       let listItem = event.target
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         var nextItem = this.findNextItem(listItem)

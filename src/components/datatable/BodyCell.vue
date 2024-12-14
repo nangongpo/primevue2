@@ -73,7 +73,7 @@
 
 <script>
 import OverlayEventBus from 'primevue2/overlayeventbus'
-import { DomHandler, ObjectUtils } from 'primevue2/utils'
+import { DomHandler, ObjectUtils, KeyboardHandler } from 'primevue2/utils'
 import ColumnSlot from './ColumnSlot.vue'
 import RowRadioButton from './RowRadioButton.vue'
 import RowCheckbox from './RowCheckbox.vue'
@@ -255,7 +255,8 @@ export default {
     },
     onKeyDown(event) {
       if (this.editMode === 'cell') {
-        switch (event.which) {
+        const keyCode = KeyboardHandler.getKeyboardCode(event)
+        switch (keyCode) {
         case 13:
           this.completeEdit(event, 'enter')
           break

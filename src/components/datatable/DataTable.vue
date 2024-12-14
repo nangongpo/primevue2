@@ -200,7 +200,7 @@
 </template>
 
 <script>
-import { ObjectUtils, DomHandler, UniqueComponentId } from 'primevue2/utils'
+import { ObjectUtils, DomHandler, UniqueComponentId, KeyboardHandler } from 'primevue2/utils'
 import { FilterMatchMode, FilterOperator, FilterService} from 'primevue2/api'
 import Paginator from 'primevue2/paginator'
 import TableHeader from './TableHeader.vue'
@@ -920,11 +920,12 @@ export default {
       const event = e.originalEvent
       const rowData = e.data
       const rowIndex = e.index
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
 
       if (this.selectionMode) {
         const row = event.target
 
-        switch (event.which) {
+        switch (keyCode) {
         //down arrow
         case 40:
           var nextRow = this.findNextSelectableRow(row)

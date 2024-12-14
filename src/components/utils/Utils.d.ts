@@ -94,7 +94,6 @@ export declare class ObjectUtils {
   static getVNodeProp(vnode: object, prop: string): string | null
   static deepMerge<T extends PlainObject, S extends PlainObject[]>(target: T,
     ...sources: S): T & S[number]
-  static getKeyboardCode(event: KeyboardEvent): number
 }
 
 export declare function UniqueComponentId(prefix?: string): string
@@ -110,4 +109,8 @@ export declare namespace ZIndexUtils {
   export function set(key: string, el: HTMLElement, baseZIndex?: number): void;
   export function clear(el: HTMLElement): void;
   export function getCurrent(): number;
+}
+
+export declare class KeyboardHandler {
+  static getKeyboardCode(event: KeyboardEvent): number
 }

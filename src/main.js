@@ -53,8 +53,6 @@ Vue.use(PrimeVue, {
   //   choose: '选择',
   //   upload: '上传',
   //   cancel: '取消',
-  //   am: '上午', // AM
-  //   pm: '下午', // PM
   //   datePickerTitle: ['year', 'date'],
   //   dayNames: [
   //     '星期日',
@@ -96,6 +94,23 @@ Vue.use(PrimeVue, {
   //     '十二月'
   //   ],
   //   yearName: '年',
+  //   chooseYear: '选择年份',
+  //   chooseMonth: '选择月份',
+  //   chooseDate: '选择日期',
+  //   prevDecade: '过去十年',
+  //   nextDecade: '未来十年',
+  //   prevYear: '去年',
+  //   nextYear: '明年',
+  //   prevMonth: '上个月',
+  //   nextMonth: '下个月',
+  //   prevHour: '前一小时',
+  //   nextHour: '下一小时',
+  //   prevMinute: '上一分钟',
+  //   nextMinute: '下一分钟',
+  //   prevSecond: '前一秒',
+  //   nextSecond: '下一秒',
+  //   am: '上午', // AM
+  //   pm: '下午', // PM
   //   today: '今天',
   //   weekHeader: '周数', // Wk
   //   firstDayOfWeek: 0,

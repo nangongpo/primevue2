@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { KeyboardHandler } from 'primevue2/utils'
 export default {
   name: 'Chips',
   props: {
@@ -82,8 +83,8 @@ export default {
     },
     onKeyDown(event) {
       const inputValue = event.target.value
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //backspace
       case 8:
         if (inputValue.length === 0 && this.value && this.value.length > 0) {
@@ -100,7 +101,7 @@ export default {
 
       default:
         if (this.separator) {
-          if (this.separator === ',' && event.which === 188) {
+          if (this.separator === ',' && keyCode === 188) {
             this.addItem(event, inputValue, true)
           }
         }

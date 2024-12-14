@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { DomHandler } from 'primevue2/utils'
+import { DomHandler, KeyboardHandler } from 'primevue2/utils'
 
 export default {
   name: 'Slider',
@@ -223,8 +223,8 @@ export default {
     },
     onKeyDown(event, index) {
       this.handleIndex = index
-
-      switch (event.which) {
+      const keyCode = KeyboardHandler.getKeyboardCode(event)
+      switch (keyCode) {
       //down
       case 40:
         if (this.vertical) {

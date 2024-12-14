@@ -1,20 +1,12 @@
 import { describe, beforeEach, expect, it } from 'vitest'
-import { createLocalVue, mount } from '@vue/test-utils'
-import PrimeVue from 'primevue2/config'
+import { mount } from '@vue/test-utils'
 import Avatar from './Avatar.vue'
-
-
 
 describe('Avatar.vue', () => {
   let wrapper = null
 
-  const localVue = createLocalVue()
-  localVue.use(PrimeVue)
-
   beforeEach(() => {
-    wrapper = mount(Avatar, {
-      localVue
-    })
+    wrapper = mount(Avatar)
   })
 
   it('label', async () => {
