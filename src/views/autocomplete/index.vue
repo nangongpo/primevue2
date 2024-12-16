@@ -21,6 +21,7 @@
         <AutoComplete
           v-model="selectedCountry2"
           :suggestions="filteredCountries"
+          :virtualScrollerOptions="{ itemSize: 38 }"
           @complete="searchCountry($event)"
           :dropdown="true"
           field="name"

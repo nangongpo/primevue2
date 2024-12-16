@@ -43,5 +43,6 @@ function copyDependencies(inFolder, outFolder, subFolder) {
 
 copyDependencies(entryDir, outputDir, '/images')
 
+fs.copySync(path.resolve(__dirname, entryDir, 'ts-helpers.d.ts'), path.resolve(__dirname, outputDir, 'ts-helpers.d.ts'))
 fs.copySync(path.resolve(__dirname, './README.md'), path.resolve(__dirname, outputDir, 'README.md'))
 fs.copySync(path.resolve(__dirname, './LICENSE.md'), path.resolve(__dirname, outputDir, 'LICENSE.md'))

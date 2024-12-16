@@ -81,12 +81,12 @@ export default {
     }
   },
 
-  isFunction(obj) {
-    return !!(obj && obj.constructor && obj.call && obj.apply)
+  getItemValue(obj, ...params) {
+    return this.isFunction(obj) ? obj(...params) : obj
   },
 
   filter(value, fields, filterValue) {
-    var filteredItems = []
+    const filteredItems = []
 
     if (value) {
       for (let item of value) {
@@ -201,6 +201,158 @@ export default {
     }
 
     return null
+  },
+
+  toFlatCase(str) {
+    // convert snake, kebab, camel and pascal cases to flat case
+    return this.isString(str) ? str.replace(/(-|_)/g, '').toLowerCase() : str
+  },
+
+  toKebabCase(str) {
+    // convert snake, camel and pascal cases to kebab case
+    return this.isString(str)
+      ? str
+        .replace(/(_)/g, '-')
+        .replace(/[A-Z]/g, (c, i) => (i === 0 ? c : '-' + c.toLowerCase()))
+        .toLowerCase()
+      : str
+  },
+
+  toCapitalCase(str) {
+    return this.isString(str, { empty: false }) ? str[0].toUpperCase() + str.slice(1) : str
+  },
+
+  isEmpty(value) {
+    return value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0) || (!(value instanceof Date) && typeof value === 'object' && Object.keys(value).length === 0)
+  },
+
+  isNotEmpty(value) {
+    return !this.isEmpty(value)
+  },
+
+  isFunction(obj) {
+    return !!(obj && obj.constructor && obj.call && obj.apply)
+  },
+
+  isObject(value, empty = true) {
+    return value instanceof Object && value.constructor === Object && (empty || Object.keys(value).length !== 0)
+  },
+
+  isDate(value) {
+    return value instanceof Date && value.constructor === Date
+  },
+
+  isArray(value, empty = true) {
+    return Array.isArray(value) && (empty || value.length !== 0)
+  },
+
+  isString(value, empty = true) {
+    return typeof value === 'string' && (empty || value !== '')
+  },
+
+  isPrintableCharacter(char = '') {
+    return this.isNotEmpty(char) && char.length === 1 && char.match(/\S| /)
+  },
+
+  /**
+   * Firefox-v103 does not currently support the "findLast" method. It is stated that this method will be supported with Firefox-v104.
+   * https://caniuse.com/mdn-javascript_builtins_array_findlast
+   */
+  findLast(arr, callback) {
+    let item
+
+    if (this.isNotEmpty(arr)) {
+      try {
+        item = arr.findLast(callback)
+      } catch {
+        item = [...arr].reverse().find(callback)
+      }
+    }
+
+    return item
+  },
+
+  /**
+   * Firefox-v103 does not currently support the "findLastIndex" method. It is stated that this method will be supported with Firefox-v104.
+   * https://caniuse.com/mdn-javascript_builtins_array_findlastindex
+   */
+  findLastIndex(arr, callback) {
+    let index = -1
+
+    if (this.isNotEmpty(arr)) {
+      try {
+        index = arr.findLastIndex(callback)
+      } catch {
+        index = arr.lastIndexOf([...arr].reverse().find(callback))
+      }
+    }
+
+    return index
+  },
+
+  sort(value1, value2, order = 1, comparator, nullSortOrder = 1) {
+    const result = this.compare(value1, value2, comparator, order)
+    let finalSortOrder = order
+
+    // nullSortOrder == 1 means Excel like sort nulls at bottom
+    if (this.isEmpty(value1) || this.isEmpty(value2)) {
+      finalSortOrder = nullSortOrder === 1 ? order : nullSortOrder
+    }
+
+    return finalSortOrder * result
+  },
+
+  compare(value1, value2, comparator, order = 1) {
+    let result = -1
+    const emptyValue1 = this.isEmpty(value1)
+    const emptyValue2 = this.isEmpty(value2)
+
+    if (emptyValue1 && emptyValue2) result = 0
+    else if (emptyValue1) result = order
+    else if (emptyValue2) result = -order
+    else if (typeof value1 === 'string' && typeof value2 === 'string') result = comparator(value1, value2)
+    else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0
+
+    return result
+  },
+
+  localeComparator() {
+    //performance gain using Int.Collator. It is not recommended to use localeCompare against large arrays.
+    return new Intl.Collator(undefined, { numeric: true }).compare
+  },
+
+  nestedKeys(obj = {}, parentKey = '') {
+    return Object.entries(obj).reduce((o, [key, value]) => {
+      const currentKey = parentKey ? `${parentKey}.${key}` : key
+
+      this.isObject(value) ? (o = o.concat(this.nestedKeys(value, currentKey))) : o.push(currentKey)
+
+      return o
+    }, [])
+  },
+
+  stringify(value, indent = 2, currentIndent = 0) {
+    const currentIndentStr = ' '.repeat(currentIndent)
+    const nextIndentStr = ' '.repeat(currentIndent + indent)
+
+    if (this.isArray(value)) {
+      return '[' + value.map((v) => this.stringify(v, indent, currentIndent + indent)).join(', ') + ']'
+    } else if (this.isDate(value)) {
+      return value.toISOString()
+    } else if (this.isFunction(value)) {
+      return value.toString()
+    } else if (this.isObject(value)) {
+      return (
+        '{\n' +
+                Object.entries(value)
+                  .map(([k, v]) => `${nextIndentStr}${k}: ${this.stringify(v, indent, currentIndent + indent)}`)
+                  .join(',\n') +
+                `\n${currentIndentStr}` +
+                '}'
+      )
+    } else {
+      return JSON.stringify(value)
+    }
   },
 
   deepMerge(target, ...sources) {

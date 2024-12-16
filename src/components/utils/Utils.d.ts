@@ -1,3 +1,7 @@
+interface FocusOptions {
+  preventScroll?: boolean;
+}
+
 type PlainObject = Record<string, any>
 
 export declare class ConnectedOverlayScrollHandler {
@@ -76,22 +80,32 @@ export declare class DomHandler {
 }
 
 export declare class ObjectUtils {
-  static equals(obj1: any, obj2: any, field: string): boolean
-  static deepEquals(a: any, b: any): boolean
-  static resolveFieldData(data: any, field: string): any
-  static isFunction(obj: any): boolean
-  static filter(value: any, fields: any, filterValue: any): any
-  static reorderArray(value: any, from: number, to: number): void
-  static findIndexInList(value: any, list: any[], dataKey?: string): number
-  static contains(value: any, list: any[]): boolean
-  static insertIntoOrderedArray(
-    item: any,
-    index: number,
-    arr: any[],
-    sourceArr: any[]
-  ): void
-  static removeAccents(str: any): string
-  static getVNodeProp(vnode: object, prop: string): string | null
+  static equals(obj1: any, obj2: any, field: string): boolean;
+  static deepEquals(a: any, b: any): boolean;
+  static resolveFieldData(data: any, field: string): any;
+  static filter(value: any, fields: any, filterValue: any): any;
+  static reorderArray(value: any, from: number, to: number): void;
+  static findIndexInList(value: any, list: any[], dataKey?: string): number;
+  static contains(value: any, list: any[]): boolean;
+  static insertIntoOrderedArray(item: any, index: number, arr: any[], sourceArr: any[]): void;
+  static removeAccents(str: any): string;
+  static toFlatCase(str: string): string;
+  static toCapitalCase(str: string): string;
+  static toKebabCase(str: string): string;
+  static isEmpty(value: any): boolean;
+  static isNotEmpty(value: any): boolean;
+  static isFunction(value: any): boolean;
+  static isObject(value: any, empty?: boolean): boolean;
+  static isDate(value: any): boolean;
+  static isArray(value: any, empty?: boolean): boolean;
+  static isString(value: any, empty?: boolean): boolean;
+  static isPrintableCharacter(char: string): boolean;
+  static findLast(value: any[], callback: () => any): any;
+  static findLastIndex(value: any[], callback: () => any): number;
+  static sort(value1: any, value2: any, order: number, comparator: (a: any, b: any) => any, nullSortOrder: number): number;
+  static compare(value1: any, value2: any, comparator: (a: any, b: any) => any, order: number): number;
+  static nestedKeys(obj: object, parentKey?: string): string[];
+  static stringify(value: any, indent?: number, currentIndent?: number): string;
   static deepMerge<T extends PlainObject, S extends PlainObject[]>(target: T,
     ...sources: S): T & S[number]
 }
