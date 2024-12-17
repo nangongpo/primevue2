@@ -33,13 +33,12 @@ export default {
     }
   },
   computed: {
-    isTeleport({ appendTo }) {
-      return appendTo && appendTo !== 'self'
+    isTeleport({ disabled, appendTo }) {
+      return !disabled && appendTo !== 'self'
     }
   },
   mounted() {
     this.mounted = DomHandler.isClient()
-
     this.$nextTick(() => {
       this.slotContent = this.$refs.slotContent
 
@@ -71,19 +70,15 @@ export default {
     }
   },
   render(h) {
-    const { inline, mounted, disabled } = this
-
-    if (inline) {
+    if (!this.isTeleport) {
       return this.$slots.default
     }
 
-    if (mounted) {
-      if (!disabled) {
-        return h('div', {
-          class: 'p-portal',
-          ref: 'slotContent'
-        }, this.$slots.default)
-      }
+    if (this.mounted) {
+      return h('div', {
+        class: 'p-portal',
+        ref: 'slotContent'
+      }, this.$slots.default)
     }
 
     return null

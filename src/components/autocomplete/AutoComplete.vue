@@ -131,7 +131,7 @@
                     :key="getOptionRenderKey(option, getOptionIndex(i, getItemOptions))"
                     :id="id + '_' + getOptionIndex(i, getItemOptions)"
                     :style="{ height: itemSize ? itemSize + 'px' : undefined }"
-                    :class="['p-autocomplete-item', { 'p-highlight': i === focusedOptionIndex }]"
+                    :class="['p-autocomplete-item', { 'p-focus': i === focusedOptionIndex, 'p-highlight': isSelected(option) }]"
                     role="option"
                     :aria-label="getOptionLabel(option)"
                     :aria-selected="isSelected(option)"
@@ -141,10 +141,13 @@
                     @click="onOptionSelect($event, option)"
                     @mousemove="onOptionMouseMove($event, getOptionIndex(i, getItemOptions))"
                     v-ripple>
-                    <slot v-if="$slots.option" name="option" :option="option" :index="getOptionIndex(i, getItemOptions)">{{ getOptionLabel(option) }}</slot>
+                    <slot v-if="$scopedSlots.option" name="option" :option="option" :index="getOptionIndex(i, getItemOptions)">{{ getOptionLabel(option) }}</slot>
                     <slot v-else name="item" :item="option" :index="getOptionIndex(i, getItemOptions)">{{ getOptionLabel(option) }}</slot>
                   </li>
                 </template>
+                <li v-if="!items || (items && items.length === 0)" class="p-autocomplete-item p-autocomplete-empty-message" role="option">
+                  <slot name="empty">{{ searchResultMessageText }}</slot>
+                </li>
               </ul>
             </template>
           </VirtualScroller>
@@ -183,6 +186,7 @@ export default {
       default: null
     },
     optionLabel: null,
+    optionValue: null,
     optionDisabled: null,
     optionGroupLabel: null,
     optionGroupChildren: null,
@@ -347,6 +351,16 @@ export default {
     }
   },
   methods: {
+    getOptionLabelByValue(value) {
+      const { getOptionValue, getOptionLabel, optionValue } = this
+      if (optionValue) {
+        return this.visibleOptions.reduce((t, v) => {
+          const _value = getOptionValue(v)
+          return _value === value ? getOptionLabel(v) : t
+        }, value)
+      }
+      return value
+    },
     getOptionIndex(index, fn) {
       return this.virtualScrollerDisabled ? index : fn && fn(index)['index']
     },
@@ -354,7 +368,7 @@ export default {
       return this.field || this.optionLabel ? ObjectUtils.resolveFieldData(option, this.field || this.optionLabel) : option
     },
     getOptionValue(option) {
-      return option // TODO: The 'optionValue' properties can be added.
+      return this.optionValue ? option[this.optionValue] : option
     },
     getOptionRenderKey(option, index) {
       return (this.dataKey ? ObjectUtils.resolveFieldData(option, this.dataKey) : this.getOptionLabel(option)) + '_' + index
@@ -891,7 +905,7 @@ export default {
     isSelected(option) {
       const optionValue = this.getOptionValue(option)
 
-      return this.multiple ? (this.modelValue || []).some((value) => this.isEquals(value, optionValue)) : this.isEquals(this.modelValue, this.getOptionValue(option))
+      return this.multiple ? (this.value || []).some((value) => this.isEquals(value, optionValue)) : this.isEquals(this.value, this.getOptionValue(option))
     },
     findFirstOptionIndex() {
       return this.visibleOptions.findIndex((option) => this.isValidOption(option))
@@ -1032,18 +1046,20 @@ export default {
     visibleOptions() {
       return this.optionGroupLabel ? this.flatOptions(this.suggestions) : this.suggestions || []
     },
-    inputValue() {
-      if (this.value) {
-        if (this.field && typeof this.value === 'object') {
-          const resolvedFieldData = ObjectUtils.resolveFieldData(
-            this.value,
-            this.field
-          )
-          return resolvedFieldData != null ? resolvedFieldData : this.value
-        } else return this.value
+    inputValue({ value, optionValue }) {
+      if (ObjectUtils.isNotEmpty(value)) {
+        if (typeof value === 'object') {
+          const label = this.getOptionLabel(value)
+          return label != null ? label : value
+        } else {
+          return this.getOptionLabelByValue(value)
+        }
       } else {
         return ''
       }
+    },
+    hasSelectedOption() {
+      return ObjectUtils.isNotEmpty(this.value)
     },
     equalityKey() {
       return this.dataKey // TODO: The 'optionValue' properties can be added.
@@ -1064,7 +1080,7 @@ export default {
       return this.emptySelectionMessage || this.$primevue.config.locale.emptySelectionMessage || ''
     },
     selectedMessageText() {
-      return this.hasSelectedOption ? this.selectionMessageText.replaceAll('{0}', this.multiple ? this.modelValue.length : '1') : this.emptySelectionMessageText
+      return this.hasSelectedOption ? this.selectionMessageText.replaceAll('{0}', this.multiple ? this.value.length : '1') : this.emptySelectionMessageText
     },
     listAriaLabel() {
       return this.$primevue.config.locale.aria ? this.$primevue.config.locale.aria.listLabel : undefined
@@ -1128,14 +1144,6 @@ export default {
 .p-autocomplete-panel {
   position: absolute;
   overflow: auto;
-}
-
-.p-autocomplete-item-group {
-  margin: 0;
-  padding: 0.5rem 0.75rem;
-  color: #94a3b8;
-  background: #ffffff;
-  font-weight: 600;
 }
 
 .p-autocomplete-items {

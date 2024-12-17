@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ 'p-virtualscroller-disabled': disabled }">
     <template v-if="!disabled">
       <div :ref="elementRef" :class="containerClass" :tabindex="tabindex" :style="$attrs.style" @scroll="onScroll">
         <slot name="content" :styleClass="contentClass" :items="loadedItems" :getItemOptions="getOptions"
@@ -764,6 +764,9 @@ export default {
 </script>
 
 <style>
+.p-virtualscroller-disabled {
+  height: 100% !important;
+}
 .p-virtualscroller {
   position: relative;
   overflow: auto;

@@ -121,8 +121,12 @@ locale: {
     medium: 'Medium',
     strong: 'Strong',
     passwordPrompt: 'Enter a password',
-    emptyFilterMessage: 'No results found',
-    emptyMessage: 'No available options'
+    emptyFilterMessage: 'No results found', // @deprecated Use 'emptySearchMessage' option instead.
+    searchMessage: '{0} results are available',
+    selectionMessage: '{0} items selected',
+    emptySelectionMessage: 'No selected item',
+    emptySearchMessage: 'No results found',
+    emptyMessage: 'No available options',
 }
         `
       },
@@ -224,8 +228,12 @@ Vue.use(PrimeVue, {
     medium: '中',
     strong: '强',
     passwordPrompt: '请输入密码',
-    emptyFilterMessage: '未找到结果',
-    emptyMessage: '无可用选项'
+    emptyFilterMessage: '未找到结果',  // @deprecated Use 'emptySearchMessage' option instead.
+    searchMessage: '有 {0} 个结果可用',
+    selectionMessage: '已选择 {0} 项',
+    emptySelectionMessage: '无可用选项',
+    emptySearchMessage: '未找到结果',
+    emptyMessage: '暂无数据',
   }
 })
         `

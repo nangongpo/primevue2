@@ -119,8 +119,12 @@ Vue.use(PrimeVue, {
   //   medium: '中',
   //   strong: '强',
   //   passwordPrompt: '请输入密码',
-  //   emptyFilterMessage: '未找到结果',
-  //   emptyMessage: '无可用选项'
+  //   emptyFilterMessage: '未找到结果',  // @deprecated Use 'emptySearchMessage' option instead.
+  //   searchMessage: '有 {0} 个结果可用',
+  //   selectionMessage: '已选择 {0} 项',
+  //   emptySelectionMessage: '无可用选项',
+  //   emptySearchMessage: '未找到结果',
+  //   emptyMessage: '暂无数据'
   // }
 })
 Vue.use(Vuelidate)
