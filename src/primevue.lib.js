@@ -86,6 +86,7 @@ import TieredMenu from 'lib/tieredmenu'
 import Timeline from 'lib/timeline'
 import Tree from 'lib/tree'
 import TreeTable from 'lib/treetable'
+import VirtualScroller from 'lib/virtualscroller'
 import Toast from 'lib/toast'
 import ToastService from 'lib/toastservice'
 import Toolbar from 'lib/toolbar'
@@ -194,6 +195,7 @@ export default {
     Vue.component('ToggleButton', ToggleButton)
     Vue.component('Tree', Tree)
     Vue.component('TreeTable', TreeTable)
+    Vue.component('VirtualScroller', VirtualScroller)
     Vue.component('TriStateCheckbox', TriStateCheckbox)
     Vue.component('Galleria', Galleria)
   }

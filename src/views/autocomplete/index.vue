@@ -14,48 +14,29 @@
     <div class="content-section implementation">
       <div class="card">
         <h5>Basic</h5>
-        <AutoComplete
-          v-model="selectedCountry1"
-          :suggestions="filteredCountries1"
-          optionLabel="name"
-          optionValue="code"
-          @complete="searchCountry1($event)" 
-        />
+        <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries1" optionLabel="name" optionValue="code"
+          @complete="searchCountry1($event)">
+        </AutoComplete>
 
         <h5>Group</h5>
-        <AutoComplete
-          v-model="selectedCity"
-          :suggestions="filteredCities"
-          @complete="searchCity($event)"
-          optionLabel="label"
-          optionValue="value"
-          optionGroupLabel="label"
-          optionGroupChildren="items"
+        <AutoComplete v-model="selectedCity" :suggestions="filteredCities" @complete="searchCity($event)"
+          optionLabel="label" optionValue="value" optionGroupLabel="label" optionGroupChildren="items"
           placeholder="Hint: type 'a'">
           <template #optiongroup="slotProps">
             <div class="flex align-items-center country-item">
-              <img
-                :alt="slotProps.option.label"
-                src="../../assets/images/flag_placeholder.png"
-                :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`"
-                style="width: 18px" />
+              <img :alt="slotProps.option.label" src="../../assets/images/flag_placeholder.png"
+                :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>
         </AutoComplete>
 
         <h5>Dropdown, Templating and Force Selection</h5>
-        <AutoComplete
-          v-model="selectedCountry2"
-          :suggestions="filteredCountries2"
-          @complete="searchCountry2($event)"
-          :dropdown="true"
-          optionLabel="name"
-          forceSelection>
+        <AutoComplete v-model="selectedCountry2" :suggestions="filteredCountries2" @complete="searchCountry2($event)"
+          :dropdown="true" optionLabel="name" forceSelection>
           <template #option="slotProps">
             <div class="country-item">
-              <img
-                src="../../assets/images/flag_placeholder.png"
+              <img src="../../assets/images/flag_placeholder.png"
                 :class="'flag flag-' + slotProps.option.code.toLowerCase()" />
               <div>{{ slotProps.option.name }}</div>
             </div>
@@ -63,32 +44,27 @@
         </AutoComplete>
 
         <h5>Virtual Scroll</h5>
-        <AutoComplete
-          v-model="selectedCountry3"
-          :suggestions="filteredCountries3"
-          :virtualScrollerOptions="{ itemSize: 38 }"
-          @complete="searchCountry3($event)"
-          :dropdown="true"
-          optionLabel="name"
-          forceSelection>
+        <AutoComplete v-model="selectedCountry3" :suggestions="filteredCountries3"
+          :virtualScrollerOptions="{ itemSize: 38, showLoader: true, delay: 250 }" :dropdown="true" optionLabel="name"
+          forceSelection @complete="searchCountry3($event)">
           <template #option="slotProps">
             <div class="country-item">
-              <img
-                src="../../assets/images/flag_placeholder.png"
+              <img src="../../assets/images/flag_placeholder.png"
                 :class="'flag flag-' + slotProps.option.code.toLowerCase()" />
               <div>{{ slotProps.option.name }}</div>
+            </div>
+          </template>
+          <template v-slot:loader="{ options }">
+            <div :class="['flex align-items-center p-2', { 'surface-hover': options.odd }]" style="height: 38px">
+              <Skeleton :width="options.even ? '60%' : '50%'" height="1.3rem" />
             </div>
           </template>
         </AutoComplete>
 
         <h5>Multiple</h5>
         <span class="p-fluid">
-          <AutoComplete
-            :multiple="true"
-            v-model="selectedCountry4"
-            :suggestions="filteredCountries4"
-            @complete="searchCountry4($event)"
-            optionLabel="name" />
+          <AutoComplete :multiple="true" v-model="selectedCountry4" :suggestions="filteredCountries4"
+            @complete="searchCountry4($event)" optionLabel="name" />
         </span>
       </div>
     </div>
@@ -223,7 +199,7 @@ export default {
       for (let country of groupedCities) {
         let filteredItems = FilterService.filter(country.items, ['label'], query, FilterMatchMode.CONTAINS)
         if (filteredItems && filteredItems.length) {
-          newFilteredCities.push({...country, ...{items: filteredItems}})
+          newFilteredCities.push({ ...country, ...{ items: filteredItems } })
         }
       }
 

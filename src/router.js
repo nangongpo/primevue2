@@ -791,6 +791,11 @@ export default new Router({
       path: '/galleria/advanced',
       name: 'galleriaadvvanced',
       component: () => import('./views/galleria/Advanced.vue')
+    },
+    {
+      path: '/virtualscroller',
+      name: 'virtualscroller',
+      component: () => import('./views/virtualscroller/virtualscroller.vue')
     }
   ]
 })

@@ -3,13 +3,16 @@ import { DomHandler } from 'primevue2/utils'
 
 const getTargetElement = (appendTo) => {
   let target
+
   if (typeof appendTo === 'string') {
-    target = document.querySelector(appendTo) || document.body
+    target = appendTo ? document.querySelector(appendTo) : document.body
   } else if (appendTo instanceof HTMLElement) {
     target = appendTo
   } else {
     target = document.body
   }
+
+  console.log(target)
 
   return target
 }
@@ -55,6 +58,7 @@ export default {
   methods: {
     appendToElement() {
       const target = getTargetElement(this.appendTo)
+      console.log(this)
 
       if (this.slotContent && target) {
         target.appendChild(this.slotContent)

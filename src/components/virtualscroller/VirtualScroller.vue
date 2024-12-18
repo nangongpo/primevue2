@@ -2,10 +2,22 @@
   <div :class="{ 'p-virtualscroller-disabled': disabled }">
     <template v-if="!disabled">
       <div :ref="elementRef" :class="containerClass" :tabindex="tabindex" :style="$attrs.style" @scroll="onScroll">
-        <slot name="content" :styleClass="contentClass" :items="loadedItems" :getItemOptions="getOptions"
-          :loading="d_loading" :getLoaderOptions="getLoaderOptions" :itemSize="itemSize" :rows="loadedRows"
-          :columns="loadedColumns" :contentRef="contentRef" :spacerStyle="spacerStyle" :contentStyle="contentStyle"
-          :vertical="isVertical()" :horizontal="isHorizontal()" :both="isBoth()">
+        <slot 
+          name="content" 
+          :styleClass="contentClass" 
+          :items="loadedItems" 
+          :getItemOptions="getOptions"
+          :loading="d_loading" 
+          :getLoaderOptions="getLoaderOptions" 
+          :itemSize="itemSize" 
+          :rows="loadedRows"
+          :columns="loadedColumns" 
+          :contentRef="contentRef" 
+          :spacerStyle="spacerStyle" 
+          :contentStyle="contentStyle"
+          :vertical="isVertical()" 
+          :horizontal="isHorizontal()"
+          :both="isBoth()">
           <div :ref="contentRef" :class="contentClass" :style="contentStyle">
             <template v-for="(item, index) of loadedItems">
               <slot name="item" :item="item" :options="getOptions(index)"></slot>
@@ -14,7 +26,7 @@
         </slot>
         <div v-if="showSpacer" class="p-virtualscroller-spacer" :style="spacerStyle"></div>
         <div v-if="!loaderDisabled && showLoader && d_loading" :class="loaderClass">
-          <template v-if="$slots && $slots.loader">
+          <template v-if="$scopedSlots && $scopedSlots.loader">
             <template v-for="(_, index) of loaderArr">
               <slot name="loader"
                 :options="getLoaderOptions(index, isBoth() && { numCols: d_numItemsInViewport.cols })"></slot>
@@ -731,7 +743,7 @@ export default {
       return [
         'p-virtualscroller-loader',
         {
-          'p-component-overlay': !this.$slots.loader
+          'p-component-overlay': !this.$scopedSlots.loader
         }
       ]
     },

@@ -49,7 +49,7 @@
         <slot name="chip" :value="option">
           <span class="p-autocomplete-token-label" >{{ getOptionLabel(option) }}</span>
         </slot>
-        <slot name="removetokenicon" class="p-autocomplete-token-icon" :index="i" :onClick="(event) => removeOption(event, i)" :removeCallback="(event) => removeOption(event, i)">
+        <slot name="removetokenicon" class="p-autocomplete-token-icon" :index="i" :removeCallback="(event) => removeOption(event, i)">
           <span class="p-autocomplete-token-icon pi pi-times-circle" aria-hidden="true" @click="removeOption($event, i)"></span>
         </slot>
       </li>
@@ -78,8 +78,8 @@
         />
       </li>
     </ul>
-    <slot v-if="searching || loading" class="p-autocomplete-loader" name="loadingicon">
-      <i class="p-autocomplete-loader pi pi-spinner pi-spin"></i>
+    <slot v-if="searching || loading" name="loadingicon" className="p-autocomplete-loader">
+      <i class="p-autocomplete-loader pi pi-spin pi-spinner"></i>
     </slot>
     <Button
       v-if="dropdown"
@@ -91,6 +91,9 @@
       :disabled="$attrs.disabled"
       @click="onDropdownClick"
     />
+    <span role="status" aria-live="polite" class="p-hidden-accessible">
+      {{ selectedMessageText }}
+    </span>
     <Portal :appendTo="appendTo">
       <transition
         name="p-connected-overlay"
@@ -150,7 +153,14 @@
                 </li>
               </ul>
             </template>
+            <template v-if="$scopedSlots.loader" v-slot:loader="{ options }">
+              <slot name="loader" :options="options"></slot>
+            </template>
           </VirtualScroller>
+          <slot name="footer" :value="value" :suggestions="visibleOptions"></slot>
+          <span role="status" aria-live="polite" class="p-hidden-accessible">
+            {{ selectedMessageText }}
+          </span>
         </div>
       </transition>
     </Portal>
@@ -352,11 +362,11 @@ export default {
   },
   methods: {
     getOptionLabelByValue(value) {
-      const { getOptionValue, getOptionLabel, optionValue } = this
+      const { optionValue, getOptionLabel, getOptionValue } = this
       if (optionValue) {
         return this.visibleOptions.reduce((t, v) => {
-          const _value = getOptionValue(v)
-          return _value === value ? getOptionLabel(v) : t
+          const curentValue = getOptionValue(v)
+          return ObjectUtils.deepEquals(curentValue, value) ? getOptionLabel(v) : t
         }, value)
       }
       return value
@@ -368,7 +378,7 @@ export default {
       return this.field || this.optionLabel ? ObjectUtils.resolveFieldData(option, this.field || this.optionLabel) : option
     },
     getOptionValue(option) {
-      return this.optionValue ? option[this.optionValue] : option
+      return this.optionValue ? ObjectUtils.resolveFieldData(option, this.optionValue) : option
     },
     getOptionRenderKey(option, index) {
       return (this.dataKey ? ObjectUtils.resolveFieldData(option, this.dataKey) : this.getOptionLabel(option)) + '_' + index

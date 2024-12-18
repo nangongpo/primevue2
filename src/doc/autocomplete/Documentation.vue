@@ -90,12 +90,49 @@
             <td>An array of suggestions to display.</td>
           </tr>
           <tr>
-            <td>field</td>
-            <td>any</td>
+            <td class="line-through">field</td>
+            <td>string | Function</td>
+            <td>null</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>optionLabel</td>
+            <td>string | Function</td>
             <td>null</td>
             <td>
-              Property name or getter function of a suggested object to resolve
-              and display.
+              Property name or getter function to use as the label of an option.
+            </td>
+          </tr>
+          <tr>
+            <td>optionValue</td>
+            <td>string | Function</td>
+            <td>null</td>
+            <td>
+              Property name or getter function to use as the value of an option.
+            </td>
+          </tr>
+          <tr>
+            <td>optionDisabled</td>
+            <td>string | Function</td>
+            <td>null</td>
+            <td>
+              Property name or getter function to use as the disabled flag of an option, defaults to false when not defined.	
+            </td>
+          </tr>
+          <tr>
+            <td>optionGroupLabel</td>
+            <td>string | Function</td>
+            <td>null</td>
+            <td>
+              Property name or getter function to use as the label of an option group.	
+            </td>
+          </tr>
+          <tr>
+            <td>optionGroupChildren</td>
+            <td>string | Function</td>
+            <td>null</td>
+            <td>
+              Property name or getter function that refers to the children options of option group.	
             </td>
           </tr>
           <tr>
@@ -120,16 +157,34 @@
             </td>
           </tr>
           <tr>
+            <td class="line-through">autoHighlight</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td></td>
+          </tr>
+          <tr>
             <td>multiple</td>
             <td>boolean</td>
             <td>false</td>
             <td>Specifies if multiple values can be selected.</td>
           </tr>
           <tr>
+            <td>placeholder</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Default text to display when no option is selected.</td>
+          </tr>
+          <tr>
             <td>loading</td>
             <td>boolean</td>
             <td>false</td>
             <td>Whether the autocomplete is in loading state.</td>
+          </tr>
+          <tr>
+            <td>dataKey</td>
+            <td>string</td>
+            <td>null</td>
+            <td>A property to uniquely identify an option.</td>
           </tr>
           <tr>
             <td>minLength</td>
@@ -144,18 +199,9 @@
             <td>Delay between keystrokes to wait before sending a query.</td>
           </tr>
           <tr>
-            <td>ariaLabelledBy</td>
-            <td>string</td>
-            <td>null</td>
-            <td>
-              Establishes relationships between the component and label(s) where
-              its value should be one or more element IDs.
-            </td>
-          </tr>
-          <tr>
             <td>appendTo</td>
-            <td>string</td>
-            <td>null</td>
+            <td>HTMLElement | HintedString&lt;"body" | "self"&gt;</td>
+            <td>body</td>
             <td>
               Id of the element or "body" for document where the overlay should
               be appended to.
@@ -172,12 +218,90 @@
             </td>
           </tr>
           <tr>
-            <td>autoHighlight</td>
+            <td>completeOnFocus</td>
             <td>boolean</td>
             <td>false</td>
+            <td>Whether to run a query when input receives focus.</td>
+          </tr>
+          <tr>
+            <td>inputId</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Inline style of the input field.</td>
+          </tr>
+          <tr>
+            <td>virtualScrollerOptions</td>
+            <td>VirtualScrollerProps</td>
+            <td>null</td>
+            <td>Whether to use the virtualScroller feature. The properties of VirtualScroller component can be used like an object in it.</td>
+          </tr>
+          <tr>
+            <td>autoOptionFocus</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Whether to focus on the first visible or selected element when the overlay panel is shown.</td>
+          </tr>
+          <tr>
+            <td>selectOnFocus</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>When enabled, the focused option is selected.</td>
+          </tr>
+          <tr>
+            <td>focusOnHover</td>
+            <td>boolean</td>
+            <td>true</td>
+            <td>When enabled, the focus is placed on the hovered option.</td>
+          </tr>
+          <tr>
+            <td>searchLocale</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Locale to use in searching. The default locale is the host environment's current locale.</td>
+          </tr>
+          <tr>
+            <td>selectionMessage</td>
+            <td>string</td>
+            <td>'{0} results are available'</td>
+            <td>Text to be displayed in hidden accessible field when filtering returns any results. Defaults to value from PrimeVue locale configuration.</td>
+          </tr>
+          <tr>
+            <td>selectionMessage</td>
+            <td>string</td>
+            <td>'{0} items selected'</td>
+            <td>Text to be displayed in hidden accessible field when options are selected. Defaults to value from PrimeVue locale configuration.</td>
+          </tr>
+          <tr>
+            <td>emptySelectionMessage</td>
+            <td>string</td>
+            <td>No selected item</td>
+            <td>Text to be displayed in hidden accessible field when any option is not selected. Defaults to value from PrimeVue locale configuration.</td>
+          </tr>
+          <tr>
+            <td>emptySearchMessage</td>
+            <td>string</td>
+            <td>No results found</td>
+            <td>Text to display when filtering does not return any results. Defaults to value from PrimeVue locale configuration.</td>
+          </tr>
+          <tr>
+            <td>tabindex</td>
+            <td>string | number</td>
+            <td>null</td>
+            <td>Index of the element in tabbing order.</td>
+          </tr>
+          <tr>
+            <td>ariaLabel</td>
+            <td>string</td>
+            <td>null</td>
+            <td>Defines a string value that labels an interactive element.</td>
+          </tr>
+          <tr>
+            <td>ariaLabelledBy</td>
+            <td>string</td>
+            <td>null</td>
             <td>
-              Highlights automatically the first item of the dropdown to be
-              selected.
+              Establishes relationships between the component and label(s) where
+              its value should be one or more element IDs.
             </td>
           </tr>
         </tbody>
@@ -294,10 +418,78 @@
         </thead>
         <tbody>
           <tr>
-            <td>item</td>
+            <td>chip</td>
+            <td>
+              value: any // A value in the selection
+            </td>
+          </tr>
+          <tr>
+            <td>header</td>
+            <td>
+              value: any // Value of the component <br/>
+              suggestions: any // Displayed options
+            </td>
+          </tr>
+          <tr>
+            <td>footer</td>
+            <td>
+                value: any // Value of the component <br/>
+                suggestions: any // Displayed options
+            </td>
+          </tr>
+          <tr>
+            <td class="line-through">item</td>
             <td>
               item: Option instance <br />
               index: Index of the option
+            </td>
+          </tr>
+          <tr>
+            <td>option</td>
+            <td>
+              option: Option instance <br />
+              index: Index of the option
+            </td>
+          </tr>
+          <tr>
+            <td>optiongroup</td>
+            <td>
+              item: any // undefined  <br />
+              option: any // Option instance  <br />
+              index: number // Index of the option
+            </td>
+          </tr>
+          <tr>
+            <td>content</td>
+            <td>
+              items: any, // An array of objects to display for virtualscroller <br />
+              styleClass: string // Style class of the component <br />
+              contentRef: (el: any) ⇒ void // Referance of the content <br />
+              getItemOptions: (index: number) ⇒ VirtualScrollerItemOptions // Options of the items
+            </td>
+          </tr>
+          <tr>
+            <td>loader</td>
+            <td>
+              options: any // Options of the loader items for virtualscroller
+            </td>
+          </tr>
+          <tr>
+            <td>empty</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>removetokenicon</td>
+            <td>
+              class: string // Style class of the icon. <br />
+              index: number // Index of the token. <br />
+              removeCallback: (event: Event, index: number) ⇒ void, // Remove token icon function.
+            </td>
+          </tr>
+          <tr>
+            <td>loadingicon</td>
+            <td>
+              className: string, // Style class of the loading icon.
             </td>
           </tr>
         </tbody>

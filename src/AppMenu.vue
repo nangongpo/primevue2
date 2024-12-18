@@ -157,6 +157,7 @@
                         </transition>
                     </div>
                 </router-link>
+                <router-link to="/virtualscroller">VirtualScroller</router-link>
             </div>
 
             <div class="menu-category">Panel</div>
