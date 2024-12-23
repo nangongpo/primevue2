@@ -95,7 +95,7 @@ import ToggleButton from 'primevue2/togglebutton'
 import TriStateCheckbox from 'primevue2/tristatecheckbox'
 import Galleria from 'primevue2/galleria'
 
-import './assets/styles/primevue.css'
+// import './assets/styles/primevue.css'
 
 export default {
   install(Vue, opts = {}) {

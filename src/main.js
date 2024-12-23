@@ -127,6 +127,7 @@ Vue.use(PrimeVue, {
   //   emptyMessage: '暂无数据'
   // }
 })
+
 Vue.use(Vuelidate)
 
 Vue.prototype.$appState = Vue.observable({ darkTheme: false })

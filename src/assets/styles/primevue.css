@@ -1,9 +1,15 @@
-@import '../../components/common/Common.css';
-@import '../../components/badge/Badge.css';
-@import '../../components/button/Button.css';
-@import '../../components/checkbox/Checkbox.css';
-@import '../../components/colorpicker/ColorPicker.css';
-@import '../../components/inputtext/InputText.css';
-@import '../../components/radiobutton/RadioButton.css';
-@import '../../components/ripple/Ripple.css';
-@import '../../components/tooltip/Tooltip.css';
+@import './components/Common.css';
+@import './components/Badge.css';
+@import './components/Button.css';
+@import './components/Checkbox.css';
+@import './components/ColorPicker.css';
+@import './components/InputText.css';
+@import './components/RadioButton.css';
+@import './components/Ripple.css';
+@import './components/Tooltip.css';
+
+.p-focus-disabled .p-focus,
+.p-focus-disabled *:focus,
+.p-focus-disabled .p-inputtext:enabled:focus {
+  box-shadow: none !important;
+}

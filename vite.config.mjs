@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { defineConfig, loadEnv, normalizePath } from 'vite'
 import path from 'node:path'
 import fs from 'node:fs'
@@ -5,29 +6,55 @@ import fs from 'node:fs'
 import legacy from '@vitejs/plugin-legacy'
 import vue2 from '@vitejs/plugin-vue2'
 import vue2Jsx from '@vitejs/plugin-vue2-jsx'
+import aliasConfig from './vite.alias.mjs'
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const alias = {
-  '@': resolve('src'),
-  'lib': resolve('lib')
-}
+// const alias = {
+//   '@': resolve('src'),
+//   'lib': resolve('lib')
+// }
 
 // src/components中使用了 'primevue2/xx'，需要设置别名
-const componentDir = normalizePath('src/components')
-fs.readdirSync(componentDir, { withFileTypes: true })
-  .filter((dir) => dir.isDirectory())
-  .forEach(({ name: folderName }) => {
-    fs.readdirSync(path.join(componentDir, folderName)).forEach((file) => {
-      let name = file.split(/(.vue)$|(.js)$/)[0].toLowerCase()
+// const componentDir = normalizePath('src/components')
+// fs.readdirSync(componentDir, { withFileTypes: true })
+//   .filter((dir) => dir.isDirectory())
+//   .forEach(({ name: folderName }) => {
+//     const folderPath = path.join(componentDir, folderName)
 
-      if (name === 'primevue' || name === folderName) {
-        alias[path.join('primevue2', folderName)] = resolve(path.join(componentDir, folderName, file))
-      }
-    })
-  })
+//     fs.readdirSync(folderPath, { withFileTypes: true }).forEach((file) => {
+//       if (file.isDirectory()) {
+//         const filePath = path.join(folderPath, file.name)
+//         // if (file.name === 'style') {
+//         //   fs.readdirSync(filePath).forEach(_file => {
+//         //     if (_file.endsWith('.js')) {
+//         //       alias[path.join('primevue2', folderName, file.name)] = resolve(path.join(filePath, _file))
+//         //     }
+//         //   })
+//         // } else {
+//         //   fs.readdirSync(filePath).forEach(_file => {
+//         //     if (_file.endsWith('.vue')) {
+//         //       alias[path.join('primevue2', folderName, file.name)] = resolve(path.join(filePath, _file))
+//         //     }
+//         //   })
+//         // }
+//         fs.readdirSync(filePath).forEach(_file => {
+//           if (_file.endsWith('.vue') || _file.endsWith('.js')) {
+//             alias[path.join('primevue2', folderName, file.name)] = resolve(path.join(filePath, _file))
+//           }
+//         })
+//       } else {
+//         const name = file.name.split(/(.vue)$|(.js)$/)[0].toLowerCase()
+//         if (name === 'primevue') {
+//           alias[path.join('primevue2', folderName)] = resolve(path.join(folderPath, file.name))
+//         } else if (name === folderName) {
+//           alias[path.join('primevue2', name)] = resolve(path.join(folderPath, file.name))
+//         }
+//       }
+//     })
+//   })
 
 export default defineConfig(({ mode }) => {
   // 根据当前工作目录中的 `mode` 加载 .env 文件
@@ -39,7 +66,7 @@ export default defineConfig(({ mode }) => {
       'process.env': JSON.stringify(process.env),
     },
     resolve: {
-      alias: alias
+      alias: aliasConfig
     },
     plugins: [
       legacy({

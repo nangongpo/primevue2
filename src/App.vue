@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import DomHandler from '@/components/utils/DomHandler'
+import DomHandler from '@/components/lib/utils/DomHandler'
 import AppTopBar from '@/AppTopBar.vue'
 import AppMenu from '@/AppMenu.vue'
 import AppFooter from '@/AppFooter.vue'

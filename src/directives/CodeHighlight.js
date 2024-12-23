@@ -1,4 +1,4 @@
-import DomHandler from '@/components/utils/DomHandler.js'
+import DomHandler from '@/components/lib/utils/DomHandler.js'
 
 const CodeHighlight = {
   inserted(el, binding) {

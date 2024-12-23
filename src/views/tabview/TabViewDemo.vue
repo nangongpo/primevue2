@@ -185,12 +185,12 @@
       </div>
     </div>
 
-    <TabViewDoc />
+    <!-- <TabViewDoc /> -->
   </div>
 </template>
 
 <script>
-import TabViewDoc from '@/doc/tabview/index.vue'
+// import TabViewDoc from '@/doc/tabview/index.vue'
 import EventBus from '@/EventBus'
 
 export default {
@@ -231,7 +231,7 @@ export default {
     EventBus.$off('change-theme')
   },
   components: {
-    'TabViewDoc': TabViewDoc
+    // 'TabViewDoc': TabViewDoc
   }
 }
 </script>
