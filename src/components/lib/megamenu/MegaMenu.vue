@@ -3,7 +3,7 @@
         <div v-if="$slots.start" :class="cx('start')" v-bind="ptm('start')">
             <slot name="start"></slot>
         </div>
-        <slot :id="id" name="menubutton" :class="cx('menubutton')" :toggleCallback="(event) => menuButtonClick(event)">
+        <slot :id="id" name="menubutton" :className="cx('menubutton')" :toggleCallback="(event) => menuButtonClick(event)">
             <a
                 v-if="model && model.length > 0"
                 ref="menubutton"

@@ -1,5 +1,5 @@
 <template>
-    <div :class="cx('root')" v-bind="getPTOptions('root')" :data-p-highlight="checked" :data-p-disabled="disabled">
+    <div :class="cx('root')" v-bind="getPTOptions('root')" :data-p-highlight="checked" :data-p-disabled="disabled"  v-on="$listeners">
         <input
             :id="inputId"
             type="radio"
@@ -33,6 +33,10 @@ export default {
     name: 'RadioButton',
     extends: BaseRadioButton,
     inheritAttrs: false,
+    model: {
+        prop: 'modelValue',
+        event: 'input'
+    },
     emits: ['input', 'change', 'focus', 'blur'],
     methods: {
         getPTOptions(key) {

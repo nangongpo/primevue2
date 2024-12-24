@@ -701,7 +701,6 @@ export default {
       this.$emit('dropdown-click', { originalEvent: event, query })
     },
     onOptionSelect(event, option, isHide = true) {
-      console.log('onOptionSelect', option)
       const value = this.getOptionValue(option)
 
       if (this.multiple) {

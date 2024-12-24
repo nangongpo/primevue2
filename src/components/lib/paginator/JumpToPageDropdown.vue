@@ -12,7 +12,7 @@
         data-pc-group-section="pagedropdown"
     >
         <template v-if="templates['jumptopagedropdownicon']" #dropdownicon="slotProps">
-            <component :is="templates['jumptopagedropdownicon']" :class="slotProps.class" />
+            <component :is="templates['jumptopagedropdownicon']" :class="slotProps.className" />
         </template>
     </JTPDropdown>
 </template>

@@ -6,7 +6,7 @@
         <slot name="start" :value="value" :totalPercent="totalPercent" :percentages="percentages" />
         <div :class="cx('metercontainer')" v-bind="ptm('metercontainer')">
             <template v-for="(val, index) in value" :key="index">
-                <slot name="meter" :value="val" :index="index" :class="cx('meter')" :orientation="orientation" :size="percentValue(val.value)" :totalPercent="totalPercent">
+                <slot name="meter" :value="val" :index="index" :className="cx('meter')" :orientation="orientation" :size="percentValue(val.value)" :totalPercent="totalPercent">
                     <span v-if="percent(val.value)" :class="cx('meter')" :style="meterCalculatedStyles(val)" v-bind="getPTOptions('meter', val, index)" />
                 </slot>
             </template>

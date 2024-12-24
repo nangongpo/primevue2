@@ -139,9 +139,9 @@ export default {
 
             return level;
         },
-        onInput(event) {
-            this.$emit('input', event.target.value);
-            this.$emit('change', event);
+        onInput(newVal) {
+            this.$emit('input', newVal);
+            this.$emit('change', newVal);
         },
         onFocus(event) {
             this.focused = true;

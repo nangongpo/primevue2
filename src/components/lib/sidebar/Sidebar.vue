@@ -6,11 +6,11 @@
                     <slot v-if="$slots.container" name="container" :onClose="hide" :closeCallback="hide"></slot>
                     <template v-else>
                         <div :ref="headerContainerRef" :class="cx('header')" v-bind="ptm('header')">
-                            <slot name="header" :class="cx('title')">
+                            <slot name="header" :className="cx('title')">
                                 <div v-if="header" :class="cx('title')" v-bind="ptm('title')">{{ header }}</div>
                             </slot>
                             <button v-if="showCloseIcon" :ref="closeButtonRef" v-ripple type="button" :class="cx('closeButton')" :aria-label="closeAriaLabel" @click="hide" v-bind="ptm('closeButton')" data-pc-group-section="iconcontainer">
-                                <slot name="closeicon" :class="cx('closeIcon')">
+                                <slot name="closeicon" :className="cx('closeIcon')">
                                     <component :is="closeIcon ? 'span' : 'TimesIcon'" :class="[cx('closeIcon'), closeIcon]" v-bind="ptm('closeIcon')"></component>
                                 </slot>
                             </button>

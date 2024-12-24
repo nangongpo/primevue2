@@ -16,7 +16,7 @@
                     v-bind="ptm('hiddenCancelInput')"
                 />
             </span>
-            <slot name="cancelicon" :class="cx('cancelIcon')">
+            <slot name="cancelicon" :className="cx('cancelIcon')">
                 <component :is="cancelIcon ? 'span' : 'BanIcon'" :class="[cx('cancelIcon'), cancelIcon]" v-bind="ptm('cancelIcon')" />
             </slot>
         </div>

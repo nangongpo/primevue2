@@ -141,6 +141,10 @@ export default {
     return {
       activeMenuIndex: null,
       logoMap: {
+        'aura-light-indigo': 'aura-light-indigo.png',
+        'aura-light-blue': 'aura-light-blue.png',
+        'aura-light-purple': 'aura-light-purple.png',
+        'aura-light-teal': 'aura-light-teal.png',
         'bootstrap4-light-blue': 'bootstrap4-light-blue.svg',
         'bootstrap4-light-purple': 'bootstrap4-light-purple.svg',
         'bootstrap4-dark-blue': 'bootstrap4-dark-blue.svg',

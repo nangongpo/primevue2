@@ -6,7 +6,7 @@
                     <slot v-if="$slots.container" name="container" :onClose="close" :onMaximize="(event) => maximize(event)" :closeCallback="close" :maximizeCallback="(event) => maximize(event)"></slot>
                     <template v-else>
                         <div v-if="showHeader" :ref="headerContainerRef" :class="cx('header')" @mousedown="initDrag" v-bind="ptm('header')">
-                            <slot name="header" :class="cx('title')">
+                            <slot name="header" :className="cx('title')">
                                 <span v-if="header" :id="ariaLabelledById" :class="cx('title')" v-bind="ptm('title')">{{ header }}</span>
                             </slot>
                             <div :class="cx('icons')" v-bind="ptm('icons')">
@@ -22,7 +22,7 @@
                                     v-bind="ptm('maximizableButton')"
                                     data-pc-group-section="headericon"
                                 >
-                                    <slot name="maximizeicon" :maximized="maximized" :class="cx('maximizableIcon')">
+                                    <slot name="maximizeicon" :maximized="maximized" :className="cx('maximizableIcon')">
                                         <component :is="maximizeIconComponent" :class="[cx('maximizableIcon'), maximized ? minimizeIcon : maximizeIcon]" v-bind="ptm('maximizableIcon')" />
                                     </slot>
                                 </button>
@@ -38,7 +38,7 @@
                                     v-bind="{ ...closeButtonProps, ...ptm('closeButton') }"
                                     data-pc-group-section="headericon"
                                 >
-                                    <slot name="closeicon" :class="cx('closeButtonIcon')">
+                                    <slot name="closeicon" :className="cx('closeButtonIcon')">
                                         <component :is="closeIcon ? 'span' : 'TimesIcon'" :class="[cx('closeButtonIcon'), closeIcon]" v-bind="ptm('closeButtonIcon')"></component>
                                     </slot>
                                 </button>

@@ -31,11 +31,11 @@
             </slot>
         </span>
         <div :class="cx('dropdownButton')" role="button" tabindex="-1" aria-hidden="true" v-bind="ptm('dropdownButton')">
-            <slot v-if="loading" name="loadingicon" :class="cx('loadingIcon')">
+            <slot v-if="loading" name="loadingicon" :className="cx('loadingIcon')">
                 <span v-if="loadingIcon" :class="[cx('loadingIcon'), 'pi-spin', loadingIcon]" aria-hidden="true" v-bind="ptm('loadingIcon')" />
                 <SpinnerIcon v-else :class="cx('loadingIcon')" spin aria-hidden="true" v-bind="ptm('loadingIcon')" />
             </slot>
-            <slot v-else name="dropdownicon" :class="cx('dropdownIcon')">
+            <slot v-else name="dropdownicon" :className="cx('dropdownIcon')">
                 <component :is="dropdownIcon ? 'span' : 'ChevronDownIcon'" :class="[cx('dropdownIcon'), dropdownIcon]" aria-hidden="true" v-bind="ptm('dropdownIcon')" />
             </slot>
         </div>
@@ -685,7 +685,7 @@ export default {
             }
         },
         updateModel(event, value) {
-            this.$emit('update:value', value);
+            this.$emit('input', value);
             this.$emit('change', { originalEvent: event, value });
         },
         createProcessedOptions(options, level = 0, parent = {}, parentKey = '') {

@@ -31,7 +31,7 @@
                     v-bind="{ ...filterInputProps, ...ptm('filterInput') }"
                 />
 
-                <slot name="filtericon" :class="cx('filterIcon')">
+                <slot name="filtericon" :className="cx('filterIcon')">
                     <component :is="filterIcon ? 'span' : 'SearchIcon'" :class="[cx('filterIcon'), filterIcon]" v-bind="ptm('filterIcon')" />
                 </slot>
             </div>
@@ -40,7 +40,7 @@
             </span>
         </div>
         <div ref="listWrapper" :class="cx('wrapper')" :style="listStyle" v-bind="ptm('wrapper')">
-            <VirtualScroller :ref="virtualScrollerRef" v-bind="virtualScrollerOptions" :style="listStyle" :items="visibleOptions" :tabindex="-1" :disabled="virtualScrollerDisabled" :pt="ptm('virtualScroller')">
+            <VirtualScroller :ref="virtualScrollerRef" v-bind="virtualScrollerOptions" :styleObject="listStyle" :items="visibleOptions" :tabindex="-1" :disabled="virtualScrollerDisabled" :pt="ptm('virtualScroller')">
                 <template v-slot:content="{ styleClass, contentRef, items, getItemOptions, contentStyle, itemSize }">
                     <ul
                         :ref="(el) => listRef(el, contentRef)"

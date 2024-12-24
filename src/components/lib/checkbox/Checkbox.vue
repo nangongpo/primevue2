@@ -21,7 +21,7 @@
             v-bind="getPTOptions('input')"
         />
         <div :class="cx('box')" v-bind="getPTOptions('box')">
-            <slot name="icon" :checked="checked" :class="cx('icon')">
+            <slot name="icon" :checked="checked" :className="cx('icon')">
                 <CheckIcon v-if="checked" :class="cx('icon')" v-bind="getPTOptions('icon')" />
             </slot>
         </div>

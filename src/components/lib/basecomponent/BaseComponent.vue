@@ -38,17 +38,17 @@ export default {
     }
   },
   created() {
-    // const _usept = this.pt?.['_usept']
-    // const originalValue = _usept ? this.pt?.originalValue?.[this.$name] : undefined
-    // const value = _usept ? this.pt?.value?.[this.$name] : this.pt;
+    const _usept = this.pt?.['_usept']
+    const originalValue = _usept ? this.pt?.originalValue?.[this.$vnode.componentOptions.tag] : undefined
+    const value = _usept ? this.pt?.value?.[this.$vnode.componentOptions.tag] : this.pt;
 
-    // (value || originalValue)?.hooks?.['onBeforeCreate']?.()
+    (value || originalValue)?.hooks?.['onBeforeCreate']?.()
 
-    // const _useptInConfig = this.$primevueConfig?.pt?.['_usept']
-    // const originalValueInConfig = _useptInConfig ? this.$primevue?.config?.pt?.originalValue : undefined
-    // const valueInConfig = _useptInConfig ? this.$primevue?.config?.pt?.value : this.$primevue?.config?.pt;
+    const _useptInConfig = this.$primevueConfig?.pt?.['_usept']
+    const originalValueInConfig = _useptInConfig ? this.$primevue?.config?.pt?.originalValue : undefined
+    const valueInConfig = _useptInConfig ? this.$primevue?.config?.pt?.value : this.$primevue?.config?.pt;
 
-    // (valueInConfig || originalValueInConfig)?.[this.$name]?.hooks?.['onBeforeCreate']?.()
+    (valueInConfig || originalValueInConfig)?.[this.$vnode.componentOptions.tag]?.hooks?.['onBeforeCreate']?.()
     this._hook('onCreated')
   },
   beforeMount() {
@@ -71,16 +71,10 @@ export default {
   destroyed() {
     this._hook('onDestroyed')
   },
-  // beforeUnmount() {
-  //   this._hook('onBeforeUnmount')
-  // },
-  // unmounted() {
-  //   this._hook('onUnmounted')
-  // },
   methods: {
     _hook(hookName) {
       if (!this.$options.hostName) {
-        const selfHook = this._usePT(this._getPT(this.pt, this.$name), this._getOptionValue, `hooks.${hookName}`)
+        const selfHook = this._usePT(this._getPT(this.pt, this.$vnode.componentOptions.tag), this._getOptionValue, `hooks.${hookName}`)
         const defaultHook = this._useDefaultPT(this._getOptionValue, `hooks.${hookName}`)
 
         selfHook?.()
@@ -106,7 +100,7 @@ export default {
       ObjectUtils.isNotEmpty(globalCSS) && BaseComponentStyle.loadGlobalStyle(globalCSS, { nonce: this.$primevueConfig?.csp?.nonce })
     },
     _getHostInstance(instance) {
-      return instance ? (this.$options.hostName ? (instance.$.type.name === this.$options.hostName ? instance : this._getHostInstance(instance.$parentInstance)) : instance.$parentInstance) : undefined
+      return instance ? (this.$options.hostName ? (instance.$vnode.componentOptions.tag === this.$options.hostName ? instance : this._getHostInstance(instance.$parentInstance)) : instance.$parentInstance) : undefined
     },
     _getPropValue(name) {
       return this[name] || this._getHostInstance(this)?.[name]
@@ -143,8 +137,8 @@ export default {
       return (
         key !== 'transition' && {
           ...(key === 'root' && {
-            [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(isExtended ? this.pt?.['data-pc-section'] : this.$name),
-            ...(isExtended && { [`${datasetPrefix}extend`]: ObjectUtils.toFlatCase(this.$name) })
+            [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(isExtended ? this.pt?.['data-pc-section'] : this.$vnode.componentOptions.tag),
+            ...(isExtended && { [`${datasetPrefix}extend`]: ObjectUtils.toFlatCase(this.$vnode.componentOptions.tag) })
           }),
           [`${datasetPrefix}section`]: ObjectUtils.toFlatCase(key)
         }
@@ -237,14 +231,14 @@ export default {
         props: this.$props,
         state: this.$data,
         attrs: this.$attrs,
+        listeners: this.$listeners,
         parent: {
           instance: parentInstance,
           props: parentInstance?.$props,
           state: parentInstance?.$data,
-          attrs: parentInstance?.$attrs
-        },
-        /* @deprecated since v3.43.0. Use the `parent.instance` instead of the `parentInstance`.*/
-        parentInstance
+          attrs: parentInstance?.$attrs,
+          listeners: parentInstance?.$listeners
+        }
       }
     },
     $style() {
@@ -254,7 +248,7 @@ export default {
       return this.$primevue?.config
     },
     $name() {
-      return this.$options.hostName || this.$options.name
+      return this.$options.hostName || this.$vnode.componentOptions.tag
     },
     $_attrsPT() {
       return Object.entries(this.$attrs || {})
@@ -281,6 +275,9 @@ export default {
           return acc
         }, {})
     }
+  },
+  render() {
+    return null
   }
 }
 </script>

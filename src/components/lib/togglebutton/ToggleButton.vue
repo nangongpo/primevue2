@@ -20,7 +20,7 @@
             v-bind="getPTOptions('input')"
         />
         <div v-ripple :class="cx('box')" v-bind="getPTOptions('box')">
-            <slot name="icon" :value="value" :class="cx('icon')">
+            <slot name="icon" :value="value" :className="cx('icon')">
                 <span v-if="onIcon || offIcon" :class="[cx('icon'), value ? onIcon : offIcon]" v-bind="getPTOptions('icon')" />
             </slot>
             <span :class="cx('label')" v-bind="getPTOptions('label')">{{ label }}</span>

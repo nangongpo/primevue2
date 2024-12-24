@@ -34,7 +34,7 @@
                             <slot name="chip" :value="item">
                                 <span :class="cx('tokenLabel')" v-bind="ptm('tokenLabel')">{{ getLabelByValue(item) }}</span>
                             </slot>
-                            <slot v-if="!disabled" name="removetokenicon" :class="cx('removeTokenIcon')" :item="item" :onClick="(event) => removeOption(event, item)" :removeCallback="(event) => removeOption(event, item)">
+                            <slot v-if="!disabled" name="removetokenicon" :className="cx('removeTokenIcon')" :item="item" :onClick="(event) => removeOption(event, item)" :removeCallback="(event) => removeOption(event, item)">
                                 <span v-if="removeTokenIcon" :class="[cx('removeTokenIcon'), removeTokenIcon]" @click.stop="removeOption($event, item)" v-bind="ptm('removeTokenIcon')" />
                                 <TimesCircleIcon v-else :class="cx('removeTokenIcon')" @click.stop="removeOption($event, item)" v-bind="ptm('removeTokenIcon')" />
                             </slot>
@@ -45,11 +45,11 @@
             </div>
         </div>
         <div :class="cx('trigger')" v-bind="ptm('trigger')">
-            <slot v-if="loading" name="loadingicon" :class="cx('loadingIcon')">
+            <slot v-if="loading" name="loadingicon" :className="cx('loadingIcon')">
                 <span v-if="loadingIcon" :class="[cx('loadingIcon'), 'pi-spin', loadingIcon]" aria-hidden="true" v-bind="ptm('loadingIcon')" />
                 <SpinnerIcon v-else :class="cx('loadingIcon')" spin aria-hidden="true" v-bind="ptm('loadingIcon')" />
             </slot>
-            <slot v-else name="dropdownicon" :class="cx('dropdownIcon')">
+            <slot v-else name="dropdownicon" :className="cx('dropdownIcon')">
                 <component :is="dropdownIcon ? 'span' : 'ChevronDownIcon'" :class="[cx('dropdownIcon'), dropdownIcon]" aria-hidden="true" v-bind="ptm('dropdownIcon')" />
             </slot>
         </div>
@@ -78,11 +78,10 @@
                             :aria-label="toggleAllAriaLabel"
                             @change="onToggleAll"
                             :unstyled="unstyled"
-                            :pt="getHeaderCheckboxPTOptions('headerCheckbox')"
-                        >
+                            :pt="getHeaderCheckboxPTOptions('headerCheckbox')">
                             <template #icon="slotProps">
-                                <component v-if="$slots.headercheckboxicon" :is="$slots.headercheckboxicon" :checked="slotProps.checked" :class="slotProps.class" />
-                                <component v-else-if="slotProps.checked" :is="checkboxIcon ? 'span' : 'CheckIcon'" :class="[slotProps.class, { [checkboxIcon]: slotProps.checked }]" v-bind="getHeaderCheckboxPTOptions('headerCheckbox.icon')" />
+                                <component v-if="$slots.headercheckboxicon" :is="$slots.headercheckboxicon" :checked="slotProps.checked" :class="slotProps.className" />
+                                <component v-else-if="slotProps.checked" :is="checkboxIcon ? 'span' : 'CheckIcon'" :class="[slotProps.className, { [checkboxIcon]: slotProps.checked }]" v-bind="getHeaderCheckboxPTOptions('headerCheckbox.icon')" />
                             </template>
                         </Checkbox>
                         <div v-if="filter" :class="cx('filterContainer')" v-bind="ptm('filterContainer')">
@@ -90,8 +89,8 @@
                                 ref="filterInput"
                                 type="text"
                                 :value="filterValue"
-                                @vue:mounted="onFilterUpdated"
-                                @vue:updated="onFilterUpdated"
+                                @hook:mounted="onFilterUpdated"
+                                @hook:updated="onFilterUpdated"
                                 :class="cx('filterInput')"
                                 :placeholder="filterPlaceholder"
                                 role="searchbox"
@@ -103,7 +102,7 @@
                                 @input="onFilterChange"
                                 v-bind="{ ...filterInputProps, ...ptm('filterInput') }"
                             />
-                            <slot name="filtericon" :class="cx('filterIcon')">
+                            <slot name="filtericon" :className="cx('filterIcon')">
                                 <component :is="filterIcon ? 'span' : 'SearchIcon'" :class="[cx('filterIcon'), filterIcon]" v-bind="ptm('filterIcon')" />
                             </slot>
                         </div>
@@ -111,13 +110,13 @@
                             {{ filterResultMessageText }}
                         </span>
                         <button v-ripple :class="cx('closeButton')" :aria-label="closeAriaLabel" @click="onCloseClick" type="button" v-bind="{ ...closeButtonProps, ...ptm('closeButton') }">
-                            <slot name="closeicon" :class="cx('closeIcon')">
+                            <slot name="closeicon" :className="cx('closeIcon')">
                                 <component :is="closeIcon ? 'span' : 'TimesIcon'" :class="[cx('closeIcon'), closeIcon]" v-bind="ptm('closeIcon')" />
                             </slot>
                         </button>
                     </div>
                     <div :class="cx('wrapper')" :style="{ 'max-height': virtualScrollerDisabled ? scrollHeight : '' }" v-bind="ptm('wrapper')">
-                        <VirtualScroller :ref="virtualScrollerRef" v-bind="virtualScrollerOptions" :items="visibleOptions" :style="{ height: scrollHeight }" :tabindex="-1" :disabled="virtualScrollerDisabled" :pt="ptm('virtualScroller')">
+                        <VirtualScroller :ref="virtualScrollerRef" v-bind="virtualScrollerOptions" :items="visibleOptions" :styleObject="{ height: scrollHeight }" :tabindex="-1" :disabled="virtualScrollerDisabled" :pt="ptm('virtualScroller')">
                             <template v-slot:content="{ styleClass, contentRef, items, getItemOptions, contentStyle, itemSize }">
                                 <ul :ref="(el) => listRef(el, contentRef)" :id="id + '_list'" :class="[cx('list'), styleClass]" :style="contentStyle" role="listbox" aria-multiselectable="true" :aria-label="listAriaLabel" v-bind="ptm('list')">
                                     <template v-for="(option, i) of items">
@@ -145,11 +144,11 @@
                                             :data-p-disabled="isOptionDisabled(option)">
                                             <Checkbox :modelValue="isSelected(option)" :binary="true" :tabindex="-1" :variant="variant" :unstyled="unstyled" :pt="getCheckboxPTOptions(option, getItemOptions, i, 'itemCheckbox')">
                                                 <template #icon="slotProps">
-                                                    <component v-if="$slots.itemcheckboxicon" :is="$slots.itemcheckboxicon" :checked="slotProps.checked" :class="slotProps.class" />
+                                                    <component v-if="$slots.itemcheckboxicon" :is="$slots.itemcheckboxicon" :checked="slotProps.checked" :class="slotProps.className" />
                                                     <component
                                                         v-else-if="slotProps.checked"
                                                         :is="checkboxIcon ? 'span' : 'CheckIcon'"
-                                                        :class="[slotProps.class, { [checkboxIcon]: slotProps.checked }]"
+                                                        :class="[slotProps.className, { [checkboxIcon]: slotProps.checked }]"
                                                         v-bind="getCheckboxPTOptions(option, getItemOptions, i, 'itemCheckbox.icon')"
                                                     />
                                                 </template>

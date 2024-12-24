@@ -4,7 +4,7 @@
         <div :class="cx('buttonbar')" v-bind="ptm('buttonbar')">
             <slot name="header" :files="files" :uploadedFiles="uploadedFiles" :chooseCallback="choose" :uploadCallback="upload" :clearCallback="clear">
                 <span v-ripple :class="chooseButtonClass" :style="style" @click="choose" @keydown.enter="choose" @focus="onFocus" @blur="onBlur" tabindex="0" v-bind="ptm('chooseButton')">
-                    <slot name="chooseicon" :class="cx('chooseIcon')">
+                    <slot name="chooseicon" :className="cx('chooseIcon')">
                         <component :is="chooseIcon ? 'span' : 'PlusIcon'" :class="[cx('chooseIcon'), chooseIcon]" aria-hidden="true" v-bind="ptm('chooseIcon')" />
                     </slot>
                     <span :class="cx('chooseButtonLabel')" v-bind="ptm('chooseButtonLabel')">{{ chooseButtonLabel }}</span>
@@ -42,10 +42,10 @@
     <div v-else-if="isBasic" :class="cx('root')" v-bind="ptmi('root')">
         <FileUploadMessage v-for="msg of messages" :key="msg" severity="error" @close="onMessageClose" :unstyled="unstyled" :pt="ptm('messages')">{{ msg }}</FileUploadMessage>
         <span v-ripple :class="chooseButtonClass" :style="style" @mouseup="onBasicUploaderClick" @keydown.enter="choose" @focus="onFocus" @blur="onBlur" tabindex="0" v-bind="ptm('chooseButton')">
-            <slot v-if="!hasFiles || auto" name="uploadicon" :class="cx('uploadIcon')">
+            <slot v-if="!hasFiles || auto" name="uploadicon" :className="cx('uploadIcon')">
                 <component :is="uploadIcon ? 'span' : 'UploadIcon'" :class="[cx('uploadIcon'), uploadIcon]" aria-hidden="true" v-bind="ptm('uploadIcon')" />
             </slot>
-            <slot v-else name="chooseicon" :class="cx('chooseIcon')">
+            <slot v-else name="chooseicon" :className="cx('chooseIcon')">
                 <component :is="chooseIcon ? 'span' : 'PlusIcon'" :class="[cx('chooseIcon'), chooseIcon]" aria-hidden="true" v-bind="ptm('chooseIcon')" />
             </slot>
             <span :class="cx('label')" v-bind="ptm('label')">{{ basicChooseButtonLabel }}</span>

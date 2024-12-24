@@ -29,6 +29,7 @@ import DataView from 'primevue2/dataview'
 import DataViewLayoutOptions from 'primevue2/dataviewlayoutoptions'
 import DeferredContent from 'primevue2/deferredcontent'
 import Dialog from 'primevue2/dialog'
+import DialogService from 'primevue2/dialogservice'
 import Divider from 'primevue2/divider'
 import Dock from 'primevue2/dock'
 import Dropdown from 'primevue2/dropdown'
@@ -103,6 +104,7 @@ export default {
 
     Vue.use(ToastService)
     Vue.use(ConfirmationService)
+    Vue.use(DialogService)
 
     Vue.directive('badge', BadgeDirective)
     Vue.directive('tooltip', Tooltip)

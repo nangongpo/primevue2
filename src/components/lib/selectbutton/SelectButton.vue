@@ -18,7 +18,7 @@
             :data-p-highlight="isSelected(option)"
             :data-p-disabled="isOptionDisabled(option)"
         >
-            <slot name="option" :option="option" :index="i" :class="cx('label')">
+            <slot name="option" :option="option" :index="i" :className="cx('label')">
                 <span :class="cx('label')" v-bind="getPTOptions(option, 'label')">{{ getOptionLabel(option) }}</span>
             </slot>
         </div>

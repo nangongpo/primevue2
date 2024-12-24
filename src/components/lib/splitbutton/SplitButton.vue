@@ -17,7 +17,7 @@
             :unstyled="unstyled"
         >
             <template v-if="$slots.icon" #icon="slotProps">
-                <slot name="icon" :class="slotProps.class">
+                <slot name="icon" :className="slotProps.class">
                     <span :class="[icon, slotProps.class]" v-bind="ptm('button')['icon']" data-pc-section="buttonicon" />
                 </slot>
             </template>
@@ -44,14 +44,14 @@
             :unstyled="unstyled"
         >
             <template #icon="slotProps">
-                <slot name="menubuttonicon" :class="slotProps.class">
+                <slot name="menubuttonicon" :className="slotProps.class">
                     <component :is="menuButtonIcon ? 'span' : 'ChevronDownIcon'" :class="[menuButtonIcon, slotProps.class]" v-bind="ptm('menuButton')['icon']" data-pc-section="menubuttonicon" />
                 </slot>
             </template>
         </PVSButton>
         <PVSMenu ref="menu" :id="id + '_overlay'" :model="model" :popup="true" :autoZIndex="autoZIndex" :baseZIndex="baseZIndex" :appendTo="appendTo" :unstyled="unstyled" :pt="ptm('menu')">
             <template v-if="$slots.menuitemicon" #itemicon="slotProps">
-                <slot name="menuitemicon" :item="slotProps.item" :class="slotProps.class" />
+                <slot name="menuitemicon" :item="slotProps.item" :className="slotProps.class" />
             </template>
             <template v-if="$slots.item" #item="slotProps">
                 <slot name="item" :item="slotProps.item" :hasSubmenu="slotProps.hasSubmenu" :label="slotProps.label" :props="slotProps.props"></slot>

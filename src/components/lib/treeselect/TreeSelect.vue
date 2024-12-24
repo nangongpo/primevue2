@@ -38,7 +38,7 @@
             </div>
         </div>
         <div :class="cx('trigger')" role="button" aria-haspopup="tree" :aria-expanded="overlayVisible" v-bind="ptm('trigger')">
-            <slot name="triggericon" :class="cx('triggerIcon')">
+            <slot name="triggericon" :className="cx('triggerIcon')">
                 <component :is="'ChevronDownIcon'" :class="cx('triggerIcon')" v-bind="ptm('triggerIcon')" />
             </slot>
         </div>
@@ -77,10 +77,10 @@
                             :pt="ptm('tree')"
                         >
                             <template v-if="$slots.itemtogglericon" #togglericon="iconProps">
-                                <slot name="itemtogglericon" :node="iconProps.node" :expanded="iconProps.expanded" :class="iconProps.class" />
+                                <slot name="itemtogglericon" :node="iconProps.node" :expanded="iconProps.expanded" :className="iconProps.class" />
                             </template>
                             <template v-if="$slots.itemcheckboxicon" #checkboxicon="iconProps">
-                                <slot name="itemcheckboxicon" :checked="iconProps.checked" :partialChecked="iconProps.partialChecked" :class="iconProps.class" />
+                                <slot name="itemcheckboxicon" :checked="iconProps.checked" :partialChecked="iconProps.partialChecked" :className="iconProps.class" />
                             </template>
                         </TSTree>
                         <div v-if="emptyOptions" :class="cx('emptyMessage')" v-bind="ptm('emptyMessage')">

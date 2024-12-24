@@ -22,8 +22,33 @@
                     <h4>Ripple Effect</h4>
                     <InputSwitch :value="rippleActive" @input="onRippleChange"  />
 
-                    <h4>Free Themes</h4>
-                    <p>Built-in component themes created by the <a href="https://www.primefaces.org/designer/primevue">PrimeVue Theme Designer</a>.</p>
+                    <h5>Aura</h5>
+                    <div class="grid free-themes">
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-indigo')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-indigo.png')" alt="Aura Light Indigo" />
+                          </button>
+                          <span>Aura Light Indigo</span>
+                      </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-blue')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-blue.png')" alt="Aura Light Blue" />
+                          </button>
+                          <span>Aura Light Blue</span>
+                      </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-purple')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-purple.png')" alt="Aura Light Purple" />
+                          </button>
+                          <span>Aura Light Purple</span>
+                      </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-teal')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-teal.png')" alt="Aura Light Teal" />
+                          </button>
+                          <span>Aura Light Teal</span>
+                      </div>
+                    </div>
 
                     <h5>Bootstrap</h5>
                     <div class="grid free-themes">

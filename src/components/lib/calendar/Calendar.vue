@@ -40,16 +40,15 @@
             :aria-expanded="overlayVisible"
             :aria-controls="panelId"
             :unstyled="unstyled"
-            :pt="ptm('dropdownButton')"
-        >
+            :pt="ptm('dropdownButton')">
             <template #icon>
-                <slot name="dropdownicon" :class="icon">
+                <slot name="dropdownicon" :className="icon">
                     <component :is="icon ? 'span' : 'CalendarIcon'" :class="icon" v-bind="ptm('dropdownButton')['icon']" data-pc-section="dropdownicon" />
                 </slot>
             </template>
         </CalendarButton>
         <template v-else-if="showIcon && iconDisplay === 'input'">
-            <slot name="inputicon" :class="cx('inputIcon')" :clickCallback="onButtonClick">
+            <slot name="inputicon" :className="cx('inputIcon')" :clickCallback="onButtonClick">
                 <component :is="icon ? 'i' : 'CalendarIcon'" :class="[icon, cx('inputIcon')]" @click="onButtonClick" v-bind="ptm('inputicon')" />
             </slot>
         </template>
@@ -67,8 +66,7 @@
                     @click="onOverlayClick"
                     @keydown="onOverlayKeyDown"
                     @mouseup="onOverlayMouseUp"
-                    v-bind="{ ...panelProps, ...ptm('panel') }"
-                >
+                    v-bind="{ ...panelProps, ...ptm('panel') }">
                     <template v-if="!timeOnly">
                         <div :class="cx('groupContainer')" v-bind="ptm('groupContainer')">
                             <div v-for="(month, groupIndex) of months" :key="month.month + month.year" :class="cx('group')" v-bind="ptm('group')">
@@ -85,9 +83,8 @@
                                         :disabled="disabled"
                                         :aria-label="currentView === 'year' ? $primevue.config.locale.prevDecade : currentView === 'month' ? $primevue.config.locale.prevYear : $primevue.config.locale.prevMonth"
                                         v-bind="ptm('previousButton')"
-                                        data-pc-group-section="navigator"
-                                    >
-                                        <slot name="previousicon" :class="cx('previousIcon')">
+                                        data-pc-group-section="navigator">
+                                        <slot name="previousicon" :className="cx('previousIcon')">
                                             <component :is="previousIcon ? 'span' : 'ChevronLeftIcon'" :class="[cx('previousIcon'), previousIcon]" v-bind="ptm('previousIcon')" />
                                         </slot>
                                     </button>
@@ -102,8 +99,7 @@
                                                 :disabled="switchViewButtonDisabled"
                                                 :aria-label="$primevue.config.locale.chooseYear"
                                                 v-bind="ptm('yearTitle')"
-                                                data-pc-group-section="view"
-                                            >
+                                                data-pc-group-section="view">
                                                 {{ getYear(month) }}
                                             </button>
                                             <button
@@ -115,8 +111,7 @@
                                                 :disabled="switchViewButtonDisabled"
                                                 :aria-label="$primevue.config.locale.chooseMonth"
                                                 v-bind="ptm('monthTitle')"
-                                                data-pc-group-section="view"
-                                            >
+                                                data-pc-group-section="view">
                                                 {{ getMonthName(month.month) }}
                                             </button>
                                         </template>
@@ -130,8 +125,7 @@
                                                 :disabled="switchViewButtonDisabled"
                                                 :aria-label="$primevue.config.locale.chooseMonth"
                                                 v-bind="ptm('monthTitle')"
-                                                data-pc-group-section="view"
-                                            >
+                                                data-pc-group-section="view">
                                                 {{ getMonthName(month.month) }}
                                             </button>
                                             <button
@@ -143,8 +137,7 @@
                                                 :disabled="switchViewButtonDisabled"
                                                 :aria-label="$primevue.config.locale.chooseYear"
                                                 v-bind="ptm('yearTitle')"
-                                                data-pc-group-section="view"
-                                            >
+                                                data-pc-group-section="view">
                                                 {{ getYear(month) }}
                                             </button>
                                         </template>
@@ -163,10 +156,9 @@
                                         :disabled="disabled"
                                         :aria-label="currentView === 'year' ? $primevue.config.locale.nextDecade : currentView === 'month' ? $primevue.config.locale.nextYear : $primevue.config.locale.nextMonth"
                                         v-bind="ptm('nextButton')"
-                                        data-pc-group-section="navigator"
-                                    >
+                                        data-pc-group-section="navigator">
                                         <slot name="nexticon" :class="cx('nextIcon')">
-                                            <component :is="nextIcon ? 'span' : 'ChevronRightIcon'" :class="[cx('nextIcon'), nextIcon]" v-bind="ptm('nextIcon')" />
+                                            <component :is="nextIcon ? 'span' : 'ChevronRightIcon'" :className="[cx('nextIcon'), nextIcon]" v-bind="ptm('nextIcon')" />
                                         </slot>
                                     </button>
                                 </div>
@@ -214,8 +206,7 @@
                                                     "
                                                     :data-p-today="date.today"
                                                     :data-p-other-month="date.otherMonth"
-                                                    data-pc-group-section="tablebodycell"
-                                                >
+                                                    data-pc-group-section="tablebodycell">
                                                     <span
                                                         v-ripple
                                                         :class="cx('dayLabel', { date })"
@@ -460,7 +451,7 @@
                                 v-bind="ptm('incrementButton')"
                                 data-pc-group-section="timepickerbutton"
                             >
-                                <slot name="incrementicon" :class="cx('incrementIcon')">
+                                <slot name="incrementicon" :className="cx('incrementIcon')">
                                     <component :is="incrementIcon ? 'span' : 'ChevronUpIcon'" :class="cx('incrementIcon')" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
@@ -476,7 +467,7 @@
                                 v-bind="ptm('decrementButton')"
                                 data-pc-group-section="timepickerbutton"
                             >
-                                <slot name="decrementicon" :class="cx('decrementIcon')">
+                                <slot name="decrementicon" :className="cx('decrementIcon')">
                                     <component :is="decrementIcon ? 'span' : 'ChevronDownIcon'" :class="cx('decrementIcon')" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
@@ -521,7 +512,7 @@ import ChevronUpIcon from 'primevue2/icons/chevronup';
 import OverlayEventBus from 'primevue2/overlayeventbus';
 import Portal from 'primevue2/portal';
 import Ripple from 'primevue2/ripple';
-import { ConnectedOverlayScrollHandler, DomHandler, UniqueComponentId, ZIndexUtils } from 'primevue2/utils';
+import { ConnectedOverlayScrollHandler, ObjectUtils, DomHandler, UniqueComponentId, ZIndexUtils } from 'primevue2/utils';
 import BaseCalendar from './BaseCalendar.vue';
 
 export default {
@@ -1223,7 +1214,7 @@ export default {
             this.$emit('date-select', date);
         },
         updateModel(value) {
-            this.$emit('update:value', value);
+            this.$emit('input', value);
         },
         shouldSelectDate() {
             if (this.isMultipleSelection()) return this.maxDateCount != null ? this.maxDateCount > (this.value ? this.value.length : 0) : true;

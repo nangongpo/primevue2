@@ -20,13 +20,13 @@
         />
         <span role="status" class="p-hidden-accessible" aria-live="polite" v-bind="getPTOptions('hiddenValueLabel')" :data-p-hidden-accessible="true">{{ ariaValueLabel }}</span>
         <div :class="cx('box')" v-bind="getPTOptions('box')">
-            <slot v-if="value === true" name="checkicon" :class="cx('checkIcon')">
+            <slot v-if="value === true" name="checkicon" :className="cx('checkIcon')">
                 <CheckIcon :class="cx('checkIcon')" v-bind="getPTOptions('checkIcon')" />
             </slot>
-            <slot v-else-if="value === false" name="uncheckicon" :class="cx('uncheckIcon')">
+            <slot v-else-if="value === false" name="uncheckicon" :className="cx('uncheckIcon')">
                 <TimesIcon :class="cx('uncheckIcon')" v-bind="getPTOptions('uncheckIcon')" />
             </slot>
-            <slot v-else name="nullableicon" :class="cx('nullableIcon')" />
+            <slot v-else name="nullableicon" :className="cx('nullableIcon')" />
         </div>
     </div>
 </template>

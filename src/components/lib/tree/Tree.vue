@@ -2,7 +2,7 @@
     <div :class="cx('root')" v-bind="ptmi('root')">
         <template v-if="loading && loadingMode === 'mask'">
             <div :class="cx('loadingOverlay')" v-bind="ptm('loadingOverlay')">
-                <slot name="loadingicon" :class="cx('loadingIcon')">
+                <slot name="loadingicon" :className="cx('loadingIcon')">
                     <i v-if="loadingIcon" :class="[cx('loadingIcon'), 'pi-spin', loadingIcon]" v-bind="ptm('loadingIcon')" />
                     <SpinnerIcon v-else spin :class="cx('loadingIcon')" v-bind="ptm('loadingIcon')" />
                 </slot>
@@ -10,7 +10,7 @@
         </template>
         <div v-if="filter" :class="cx('filterContainer')" v-bind="ptm('filterContainer')">
             <input v-model="filterValue" type="text" autocomplete="off" :class="cx('input')" :placeholder="filterPlaceholder" @keydown="onFilterKeydown" v-bind="ptm('input')" />
-            <slot name="searchicon" :class="cx('searchIcon')">
+            <slot name="searchicon" :className="cx('searchIcon')">
                 <SearchIcon :class="cx('searchIcon')" v-bind="ptm('searchIcon')" />
             </slot>
         </div>

@@ -12,7 +12,7 @@
         data-pc-group-section="pagedropdown"
     >
         <template v-if="templates['rowsperpagedropdownicon']" #dropdownicon="slotProps">
-            <component :is="templates['rowsperpagedropdownicon']" :class="slotProps.class" />
+            <component :is="templates['rowsperpagedropdownicon']" :class="slotProps.className" />
         </template>
     </RPPDropdown>
 </template>

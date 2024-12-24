@@ -1,4 +1,5 @@
 import { FilterMatchMode } from 'primevue2/api'
+import { inject } from 'vue'
 
 export const defaultOptions = {
   ripple: false,
@@ -201,12 +202,13 @@ const PrimeVueSymbol = Symbol()
 let globalProperties = null
 
 export function usePrimeVue() {
-  if (!globalProperties) {
-    throw new Error('PrimeVue is not installed!')
-  }
-  const PrimeVue = globalProperties[PrimeVueSymbol]
+  const PrimeVue = inject(PrimeVueSymbol);
 
-  return PrimeVue
+  if (!PrimeVue) {
+      throw new Error('PrimeVue is not installed!');
+  }
+
+  return PrimeVue;
 }
 
 function switchTheme(currentTheme, newTheme, linkElementId, callback) {

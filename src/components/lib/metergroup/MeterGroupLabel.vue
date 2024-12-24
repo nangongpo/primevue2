@@ -1,7 +1,7 @@
 <template>
     <ol :class="cx('labellist')" v-bind="ptm('labellist')">
         <li v-for="(val, index) in value" :key="index + '_label'" :class="cx('labellistitem')" v-bind="ptm('labellistitem')">
-            <slot name="icon" :value="val" :class="cx('labelicon')">
+            <slot name="icon" :value="val" :className="cx('labelicon')">
                 <i v-if="val.icon" :class="[val.icon, cx('labelicon')]" :style="{ color: val.color }" v-bind="ptm('labelicon')" />
                 <span v-else :class="cx('labellisttype')" :style="{ backgroundColor: val.color }" v-bind="ptm('labellisttype')" />
             </slot>

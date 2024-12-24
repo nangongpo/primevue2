@@ -243,6 +243,23 @@
     </div>
 </template>
 
+<!-- <script>
+import { usePrimeVue } from 'primevue2/config'
+import { useToast } from 'primevue2/usetoast'
+import { useConfirm } from 'primevue2/useconfirm'
+import { useDialog } from 'primevue2/usedialog'
+export default {
+  render(h) {
+    console.log(this)
+    console.log('usePrimeVue', usePrimeVue())
+    console.log('useToast', useToast())
+    console.log('useConfirm', useConfirm())
+    console.log('useDialog', useDialog())
+    return null
+  }
+}
+</script> -->
+
 <script>
 import EventBus from '@/EventBus'
 

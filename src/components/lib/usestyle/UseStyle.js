@@ -41,6 +41,7 @@ export function useStyle(css, options = {}) {
         media,
         nonce: _nonce
       })
+      
       document.head.appendChild(styleRef.value)
       DomHandler.setAttribute(styleRef.value, 'data-primevue-style-id', name)
       DomHandler.setAttributes(styleRef.value, _styleProps)
