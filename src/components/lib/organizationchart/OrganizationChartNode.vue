@@ -4,10 +4,10 @@
             <tr v-if="node" v-bind="ptm('row')">
                 <td :colspan="colspan" v-bind="ptm('cell')">
                     <div :class="[cx('node'), node.styleClass]" @click="onNodeClick" v-bind="getPTOptions('node')">
-                        <component :is="templates[node.type] || templates['default']" :node="node" />
+                        <DynamicComponent :template="templates[node.type] || templates['default']" :node="node" />
                         <a v-if="toggleable" tabindex="0" :class="cx('nodeToggler')" @click="toggleNode" @keydown="onKeydown" v-bind="getPTOptions('nodeToggler')">
-                            <component v-if="templates.togglericon" :is="templates.togglericon" :expanded="expanded" class="p-node-toggler-icon" />
-                            <component v-else :is="expanded ? 'ChevronDownIcon' : 'ChevronUpIcon'" :class="cx('nodeTogglerIcon')" v-bind="getPTOptions('nodeTogglerIcon')" />
+                            <DynamicComponent v-if="templates.togglericon" :template="templates.togglericon" :expanded="expanded" className="p-node-toggler-icon" />
+                            <DynamicComponent v-else :template="expanded ? 'ChevronDownIcon' : 'ChevronUpIcon'" :className="cx('nodeTogglerIcon')" v-bind="getPTOptions('nodeTogglerIcon')" />
                         </a>
                     </div>
                 </td>
@@ -25,8 +25,8 @@
                 </template>
                 <template v-if="node.children && node.children.length > 1">
                     <template v-for="(child, i) of node.children">
-                        <td :key="'lineLeft' + child.key" :class="cx('lineLeft', { index: i })" v-bind="getNodeOptions(!(i === 0), 'lineLeft')">&nbsp;</td>
-                        <td :key="'lineRight' + child.key" :class="cx('lineRight', { index: i })" v-bind="getNodeOptions(!(i === node.children.length - 1), 'lineRight')">&nbsp;</td>
+                        <td :key="'lineLeft_' + i + child.key" :class="cx('lineLeft', { index: i })" v-bind="getNodeOptions(!(i === 0), 'lineLeft')">&nbsp;</td>
+                        <td :key="'lineRight_' + i + child.key" :class="cx('lineRight', { index: i })" v-bind="getNodeOptions(!(i === node.children.length - 1), 'lineRight')">&nbsp;</td>
                     </template>
                 </template>
             </tr>

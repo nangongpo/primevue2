@@ -1,7 +1,7 @@
 <template>
     <div :id="id" :class="cx('root')" v-bind="ptmi('root')">
         <template v-for="(item, index) of model">
-            <div v-if="isItemVisible(item)" :key="getPanelKey(index)" :style="getItemProp(item, 'style')" :class="[cx('panel'), getItemProp(item, 'class')]" v-bind="ptm('panel')">h
+            <div v-if="isItemVisible(item)" :key="getPanelKey(index)" :style="getItemProp(item, 'style')" :class="[cx('panel'), getItemProp(item, 'class')]" v-bind="ptm('panel')">
                 <div
                     :id="getHeaderId(index)"
                     :class="[cx('header', { item }), getItemProp(item, 'headerClass')]"
@@ -17,17 +17,17 @@
                     :data-p-highlight="isItemActive(item)"
                     :data-p-disabled="isItemDisabled(item)">
                     <div :class="cx('headerContent')" v-bind="getPTOptions('headerContent', item, index)">
-                        <template v-if="!$slots.item">
+                        <template v-if="!$scopedSlots.item">
                             <a :href="getItemProp(item, 'url')" :class="cx('headerAction')" :tabindex="-1" v-bind="getPTOptions('headerAction', item, index)">
                                 <slot v-if="getItemProp(item, 'items')" name="submenuicon" :active="isItemActive(item)">
-                                    <component :is="isItemActive(item) ? 'ChevronDownIcon' : 'ChevronRightIcon'" :class="cx('submenuIcon')" v-bind="getPTOptions('submenuIcon', item, index)" />
+                                    <DynamicComponent :template="isItemActive(item) ? 'ChevronDownIcon' : 'ChevronRightIcon'" :className="cx('submenuIcon')" v-bind="getPTOptions('submenuIcon', item, index)" />
                                 </slot>
-                                <component v-if="$slots.headericon" :is="$slots.headericon" :item="item" :class="[cx('headerIcon'), getItemProp(item, 'icon')]" />
+                                <DynamicComponent v-if="$scopedSlots.headericon" :template="$scopedSlots.headericon" :item="item" :className="[cx('headerIcon'), getItemProp(item, 'icon')]" />
                                 <span v-else-if="getItemProp(item, 'icon')" :class="[cx('headerIcon'), getItemProp(item, 'icon')]" v-bind="getPTOptions('headerIcon', item, index)" />
                                 <span :class="cx('headerLabel')" v-bind="getPTOptions('headerLabel', item, index)">{{ getItemLabel(item) }}</span>
                             </a>
                         </template>
-                        <component v-else :is="$slots.item" :item="item" :root="true" :active="isItemActive(item)" :hasSubmenu="getItemProp(item, 'items')" :label="getItemLabel(item)" :props="getMenuItemProps(item, index)"></component>
+                        <DynamicComponent v-else :template="$scopedSlots.item" :item="item" :root="true" :active="isItemActive(item)" :hasSubmenu="getItemProp(item, 'items')" :label="getItemLabel(item)" :props="getMenuItemProps(item, index)"></DynamicComponent>
                     </div>
                 </div>
                 <transition name="p-toggleable-content" v-bind="ptm('transition')">
@@ -36,7 +36,7 @@
                             <PanelMenuList
                                 :panelId="getPanelId(index)"
                                 :items="getItemProp(item, 'items')"
-                                :templates="$slots"
+                                :templates="$scopedSlots"
                                 :expandedKeys="expandedKeys"
                                 @item-toggle="changeExpandedKeys"
                                 @header-focus="updateFocusedHeader"

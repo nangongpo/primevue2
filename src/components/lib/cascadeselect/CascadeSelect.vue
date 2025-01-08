@@ -36,7 +36,7 @@
                 <SpinnerIcon v-else :class="cx('loadingIcon')" spin aria-hidden="true" v-bind="ptm('loadingIcon')" />
             </slot>
             <slot v-else name="dropdownicon" :className="cx('dropdownIcon')">
-                <component :is="dropdownIcon ? 'span' : 'ChevronDownIcon'" :class="[cx('dropdownIcon'), dropdownIcon]" aria-hidden="true" v-bind="ptm('dropdownIcon')" />
+                <DynamicComponent :template="dropdownIcon ? 'span' : 'ChevronDownIcon'" :className="[cx('dropdownIcon'), dropdownIcon]" aria-hidden="true" v-bind="ptm('dropdownIcon')" />
             </slot>
         </div>
         <span role="status" aria-live="polite" class="p-hidden-accessible" v-bind="ptm('hiddenSearchResult')" :data-p-hidden-accessible="true">
@@ -55,7 +55,7 @@
                             :options="processedOptions"
                             :activeOptionPath="activeOptionPath"
                             :level="0"
-                            :templates="$slots"
+                            :templates="$scopedSlots"
                             :optionLabel="optionLabel"
                             :optionValue="optionValue"
                             :optionDisabled="optionDisabled"
@@ -121,7 +121,7 @@ export default {
         this.id = this.id || UniqueComponentId();
         this.autoUpdateModel();
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindOutsideClickListener();
         this.unbindResizeListener();
 

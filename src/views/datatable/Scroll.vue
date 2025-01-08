@@ -8,13 +8,13 @@
     </div>
 
     <div class="content-section implementation">
-      <div class="card">
+      <!-- <div class="card">
         <h5>Vertical</h5>
-        <DataTable :value="customers1" :scrollable="true" scrollHeight="400px" :loading="loading">
-          <Column field="name" header="Name" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="country.name" header="Country" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="representative.name" header="Representative" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="status" header="Status" :styles="{ 'min-width': '200px' }"></Column>
+        <DataTable dataKey="id" :value="customers1" :scrollable="true" scrollHeight="400px" :loading="loading">
+          <Column field="name" header="Name" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="country.name" header="Country" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="representative.name" header="Representative" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="status" header="Status" :styleName="{ 'min-width': '200px' }"></Column>
         </DataTable>
       </div>
 
@@ -36,11 +36,11 @@
         :maximizable="true"
         :modal="true"
         :contentStyle="{ height: '300px' }">
-        <DataTable :value="customers1" :scrollable="true" scrollHeight="flex">
-          <Column field="name" header="Name" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="country.name" header="Country" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="representative.name" header="Representative" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="status" header="Status" :styles="{ 'min-width': '200px' }"></Column>
+        <DataTable dataKey="id" :value="customers1" :scrollable="true" scrollHeight="flex">
+          <Column field="name" header="Name" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="country.name" header="Country" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="representative.name" header="Representative" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="status" header="Status" :styleName="{ 'min-width': '200px' }"></Column>
         </DataTable>
         <template #footer>
           <Button label="Ok" icon="pi pi-check" @click="closeDialog" />
@@ -50,32 +50,33 @@
       <div class="card">
         <h5>Horizontal and Vertical with Footer</h5>
         <DataTable
+          dataKey="id"
           :value="customers2"
           :scrollable="true"
           scrollHeight="400px"
           :loading="loading"
           scrollDirection="both">
-          <Column field="id" header="Id" footer="Id" :styles="{ 'flex-grow': '1', 'flex-basis': '100px' }"></Column>
+          <Column field="id" header="Id" footer="Id" :styleName="{ 'flex-grow': '1', 'flex-basis': '100px' }"></Column>
           <Column
             field="name"
             header="Name"
             footer="Name"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
           <Column
             field="country.name"
             header="Country"
             footer="Country"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
           <Column
             field="date"
             header="Date"
             footer="Date"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
           <Column
             field="balance"
             header="Balance"
             footer="Balance"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }">
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }">
             <template #body="{ data }">
               {{ formatCurrency(data.balance) }}
             </template>
@@ -84,38 +85,39 @@
             field="company"
             header="Company"
             footer="Company"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
           <Column
             field="status"
             header="Status"
             footer="Status"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
           <Column
             field="activity"
             header="Activity"
             footer="Activity"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
           <Column
             field="representative.name"
             header="Representative"
             footer="Representative"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
+            :styleName="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
         </DataTable>
       </div>
 
       <div class="card">
         <h5>Frozen Rows</h5>
         <DataTable
+          dataKey="id"
           :value="unlockedCustomers"
           :frozenValue="lockedCustomers"
           :scrollable="true"
           scrollHeight="400px"
           :loading="loading">
-          <Column field="name" header="Name" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="country.name" header="Country" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="representative.name" header="Representative" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="status" header="Status" :styles="{ 'min-width': '200px' }"></Column>
-          <Column :styles="{ flex: '0 0 4rem' }">
+          <Column field="name" header="Name" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="country.name" header="Country" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="representative.name" header="Representative" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="status" header="Status" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column :styleName="{ flex: '0 0 4rem' }">
             <template #body="{ data, frozenRow, index }">
               <Button
                 type="button"
@@ -126,7 +128,7 @@
             </template>
           </Column>
         </DataTable>
-      </div>
+      </div> -->
 
       <div class="card">
         <h5>Frozen Columns</h5>
@@ -135,44 +137,30 @@
           onIcon="pi pi-lock"
           offIcon="pi pi-lock-open"
           onLabel="Unfreeze Balance"
-          offLabel="Freeze Balance"
-          style="flex-grow: 1; flex-basis: 12rem" />
-
-        <DataTable
-          :value="customers2"
-          :scrollable="true"
-          scrollHeight="400px"
-          :loading="loading"
-          scrollDirection="both"
-          class="mt-3">
-          <Column field="name" header="Name" :styles="{ 'flex-grow': '1', 'flex-basis': '160px' }" frozen></Column>
-          <Column field="id" header="Id" :styles="{ 'flex-grow': '1', 'flex-basis': '100px' }"></Column>
-          <Column field="name" header="Name" :styles="{ 'flex-grow': '1', 'flex-basis': '160px' }"></Column>
-          <Column field="country.name" header="Country" :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
-          <Column field="date" header="Date" :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
-          <Column field="company" header="Company" :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
-          <Column field="status" header="Status" :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
-          <Column field="activity" header="Activity" :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
-          <Column
-            field="representative.name"
-            header="Representative"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"></Column>
-          <Column
-            field="balance"
-            header="Balance"
-            :styles="{ 'flex-grow': '1', 'flex-basis': '200px' }"
-            alignFrozen="right"
-            :frozen="balanceFrozen">
-            <template #body="{ data }">
-              <span class="font-bold">{{ formatCurrency(data.balance) }}</span>
-            </template>
-          </Column>
+          offLabel="Freeze Balance" />
+        
+          <DataTable :value="customers2" scrollable scrollHeight="400px" class="mt-3">
+            <Column field="name" header="Name" :styleName="{'min-width': '200px'}" frozen class="font-bold"></Column>
+            <Column field="id" header="Id" :styleName="{'min-width': '100px'}"></Column>
+            <Column field="name" header="Name" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="country.name" header="Country" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="date" header="Date" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="company" header="Company" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="status" header="Status" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="activity" header="Activity" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="representative.name" header="Representative" :styleName="{'min-width': '200px'}"></Column>
+            <Column field="balance" header="Balance" :styleName="{'min-width': '200px'}" alignFrozen="right" :frozen="balanceFrozen">
+                <template #body="{ data }">
+                    <span class="font-bold">{{ formatCurrency(data.balance) }}</span>
+                </template>
+            </Column>
         </DataTable>
       </div>
 
-      <div class="card">
+      <!-- <div class="card">
         <h5>Subheader Grouping</h5>
         <DataTable
+          dataKey="id"
           :value="customersGrouped"
           rowGroupMode="subheader"
           groupRowsBy="representative.name"
@@ -182,23 +170,20 @@
           scrollable
           scrollHeight="400px">
           <Column field="representative.name" header="Representative"></Column>
-          <Column field="name" header="Name" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="country" header="Country" :styles="{ 'min-width': '200px' }">
+          <Column field="name" header="Name" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="country" header="Country" :styleName="{'min-width':'200px'}">
             <template #body="slotProps">
-              <img
-                src="../../assets/images/flag_placeholder.png"
-                :class="'flag flag-' + slotProps.data.country.code"
-                width="30" />
-              <span class="image-text">{{ slotProps.data.country.name }}</span>
+                <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + slotProps.data.country.code" width="30" />
+                <span class="image-text">{{slotProps.data.country.name}}</span>
             </template>
           </Column>
-          <Column field="company" header="Company" :styles="{ 'min-width': '200px' }"></Column>
-          <Column field="status" header="Status" :styles="{ 'min-width': '200px' }">
+          <Column field="company" header="Company" :styleName="{ 'min-width': '200px' }"></Column>
+          <Column field="status" header="Status" :styleName="{ 'min-width': '200px' }">
             <template #body="slotProps">
               <span :class="'customer-badge status-' + slotProps.data.status">{{ slotProps.data.status }}</span>
             </template>
           </Column>
-          <Column field="date" header="Date" :styles="{ 'min-width': '200px' }"></Column>
+          <Column field="date" header="Date" :styleName="{ 'min-width': '200px' }"></Column>
           <template #groupheader="slotProps">
             <img
               :alt="slotProps.data.representative.name"
@@ -213,7 +198,7 @@
             </td>
           </template>
         </DataTable>
-      </div>
+      </div> -->
     </div>
 
     <DataTableScrollDoc />

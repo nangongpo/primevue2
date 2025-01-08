@@ -11,8 +11,8 @@ export default {
             default: 'bottom'
         },
         model: null,
-        class: null,
-        style: null,
+        className: null,
+        styleName: null,
         tooltipOptions: null,
         menuId: {
             type: String,

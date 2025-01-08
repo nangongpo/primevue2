@@ -12,16 +12,15 @@
                     @keydown="onKeydownItem($event, item, i)"
                     v-bind="getPTOptions('menuitem', item, i)"
                     :data-p-highlight="d_activeIndex === i"
-                    :data-p-disabled="disabled(item)"
-                >
-                    <template v-if="!$slots.item">
+                    :data-p-disabled="disabled(item)">
+                    <template v-if="!$scopedSlots.item">
                         <a ref="tabLink" v-ripple role="menuitem" :href="item.url" :class="cx('action')" :target="item.target" :aria-label="label(item)" :aria-disabled="disabled(item)" :tabindex="-1" v-bind="getPTOptions('action', item, i)">
-                            <component v-if="$slots.itemicon" :is="$slots.itemicon" :item="item" :class="cx('icon')" />
+                            <DynamicComponent v-if="$scopedSlots.itemicon" :template="$scopedSlots.itemicon" :item="item" :className="cx('icon')" />
                             <span v-else-if="item.icon" :class="[cx('icon'), item.icon]" v-bind="getPTOptions('icon', item, i)" />
                             <span :class="cx('label')" v-bind="getPTOptions('label', item, i)">{{ label(item) }}</span>
                         </a>
                     </template>
-                    <component v-else :is="$slots.item" :item="item" :index="i" :active="i === d_activeIndex" :label="label(item)" :props="getMenuItemProps(item, i)"></component>
+                    <DynamicComponent v-else :template="$scopedSlots.item" :item="item" :index="i" :active="i === d_activeIndex" :label="label(item)" :props="getMenuItemProps(item, i)"></DynamicComponent>
                 </li>
             </template>
             <li ref="inkbar" role="none" :class="cx('inkbar')" v-bind="ptm('inkbar')"></li>
@@ -60,7 +59,7 @@ export default {
     updated() {
         this.updateInkBar();
     },
-    beforeUnmount() {
+    beforeDestroy() {
         clearTimeout(this.timeout);
     },
     methods: {

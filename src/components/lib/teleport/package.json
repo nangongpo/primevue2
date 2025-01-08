@@ -1,0 +1,9 @@
+{
+    "main": "./teleport.cjs.js",
+    "module": "./teleport.esm.js",
+    "unpkg": "./teleport.min.js",
+    "types": "./Teleport.d.ts",
+    "browser": {
+        "./sfc": "./Teleport.vue"
+    }
+}

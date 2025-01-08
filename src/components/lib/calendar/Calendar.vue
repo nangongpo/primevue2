@@ -43,13 +43,13 @@
             :pt="ptm('dropdownButton')">
             <template #icon>
                 <slot name="dropdownicon" :className="icon">
-                    <component :is="icon ? 'span' : 'CalendarIcon'" :class="icon" v-bind="ptm('dropdownButton')['icon']" data-pc-section="dropdownicon" />
+                    <DynamicComponent :template="icon ? 'span' : 'CalendarIcon'" :className="icon" v-bind="ptm('dropdownButton')['icon']" data-pc-section="dropdownicon" />
                 </slot>
             </template>
         </CalendarButton>
         <template v-else-if="showIcon && iconDisplay === 'input'">
             <slot name="inputicon" :className="cx('inputIcon')" :clickCallback="onButtonClick">
-                <component :is="icon ? 'i' : 'CalendarIcon'" :class="[icon, cx('inputIcon')]" @click="onButtonClick" v-bind="ptm('inputicon')" />
+                <DynamicComponent :template="icon ? 'i' : 'CalendarIcon'" :className="[icon, cx('inputIcon')]" @click="onButtonClick" v-bind="ptm('inputicon')" />
             </slot>
         </template>
         <Portal :appendTo="appendTo" :disabled="inline">
@@ -85,7 +85,7 @@
                                         v-bind="ptm('previousButton')"
                                         data-pc-group-section="navigator">
                                         <slot name="previousicon" :className="cx('previousIcon')">
-                                            <component :is="previousIcon ? 'span' : 'ChevronLeftIcon'" :class="[cx('previousIcon'), previousIcon]" v-bind="ptm('previousIcon')" />
+                                            <DynamicComponent :template="previousIcon ? 'span' : 'ChevronLeftIcon'" :className="[cx('previousIcon'), previousIcon]" v-bind="ptm('previousIcon')" />
                                         </slot>
                                     </button>
                                     <div :class="cx('title')" v-bind="ptm('title')">
@@ -158,7 +158,7 @@
                                         v-bind="ptm('nextButton')"
                                         data-pc-group-section="navigator">
                                         <slot name="nexticon" :class="cx('nextIcon')">
-                                            <component :is="nextIcon ? 'span' : 'ChevronRightIcon'" :className="[cx('nextIcon'), nextIcon]" v-bind="ptm('nextIcon')" />
+                                            <DynamicComponent :template="nextIcon ? 'span' : 'ChevronRightIcon'" :className="[cx('nextIcon'), nextIcon]" v-bind="ptm('nextIcon')" />
                                         </slot>
                                     </button>
                                 </div>
@@ -245,7 +245,7 @@
                         <div v-if="currentView === 'month'" :class="cx('monthPicker')" v-bind="ptm('monthPicker')">
                             <span
                                 v-for="(m, i) of monthPickerValues"
-                                :key="m"
+                                :key="m.value"
                                 v-ripple
                                 @click="onMonthSelect($event, i)"
                                 @keydown="onMonthCellKeydown($event, { month: m, index: i })"
@@ -315,7 +315,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="incrementicon">
-                                    <component :is="incrementIcon ? 'span' : 'ChevronUpIcon'" :class="incrementIcon" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="incrementIcon ? 'span' : 'ChevronUpIcon'" :className="incrementIcon" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                             <span v-bind="ptm('hour')" data-pc-group-section="timepickerlabel">{{ formattedCurrentHour }}</span>
@@ -336,7 +336,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="decrementicon">
-                                    <component :is="decrementIcon ? 'span' : 'ChevronDownIcon'" :class="decrementIcon" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="decrementIcon ? 'span' : 'ChevronDownIcon'" :className="decrementIcon" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                         </div>
@@ -362,7 +362,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="incrementicon">
-                                    <component :is="incrementIcon ? 'span' : 'ChevronUpIcon'" :class="incrementIcon" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="incrementIcon ? 'span' : 'ChevronUpIcon'" :className="incrementIcon" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                             <span v-bind="ptm('minute')" data-pc-group-section="timepickerlabel">{{ formattedCurrentMinute }}</span>
@@ -384,7 +384,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="decrementicon">
-                                    <component :is="decrementIcon ? 'span' : 'ChevronDownIcon'" :class="decrementIcon" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="decrementIcon ? 'span' : 'ChevronDownIcon'" :className="decrementIcon" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                         </div>
@@ -410,7 +410,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="incrementicon">
-                                    <component :is="incrementIcon ? 'span' : 'ChevronUpIcon'" :class="incrementIcon" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="incrementIcon ? 'span' : 'ChevronUpIcon'" :className="incrementIcon" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                             <span v-bind="ptm('second')" data-pc-group-section="timepickerlabel">{{ formattedCurrentSecond }}</span>
@@ -432,7 +432,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="decrementicon">
-                                    <component :is="decrementIcon ? 'span' : 'ChevronDownIcon'" :class="decrementIcon" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="decrementIcon ? 'span' : 'ChevronDownIcon'" :className="decrementIcon" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                         </div>
@@ -452,7 +452,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="incrementicon" :className="cx('incrementIcon')">
-                                    <component :is="incrementIcon ? 'span' : 'ChevronUpIcon'" :class="cx('incrementIcon')" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="incrementIcon ? 'span' : 'ChevronUpIcon'" :className="cx('incrementIcon')" v-bind="ptm('incrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                             <span v-bind="ptm('ampm')" data-pc-group-section="timepickerlabel">{{ pm ? $primevue.config.locale.pm : $primevue.config.locale.am }}</span>
@@ -468,7 +468,7 @@
                                 data-pc-group-section="timepickerbutton"
                             >
                                 <slot name="decrementicon" :className="cx('decrementIcon')">
-                                    <component :is="decrementIcon ? 'span' : 'ChevronDownIcon'" :class="cx('decrementIcon')" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
+                                    <DynamicComponent :template="decrementIcon ? 'span' : 'ChevronDownIcon'" :className="cx('decrementIcon')" v-bind="ptm('decrementIcon')" data-pc-group-section="timepickerlabel" />
                                 </slot>
                             </button>
                         </div>
@@ -634,7 +634,7 @@ export default {
             this.selectionEnd = null;
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (this.timePickerTimer) {
             clearTimeout(this.timePickerTimer);
         }
@@ -2267,6 +2267,7 @@ export default {
             }
         },
         navigateToMonth(event, prev, groupIndex) {
+          console.log('navigateToMonth', prev, groupIndex)
             if (prev) {
                 if (this.numberOfMonths === 1 || groupIndex === 0) {
                     this.navigationState = { backward: true };
@@ -2483,11 +2484,15 @@ export default {
         updateFocus() {
             let cell;
 
+            if (this.value) {
+
+            }
+
             if (this.navigationState) {
                 if (this.navigationState.button) {
                     this.initFocusableCell();
 
-                    if (this.navigationState.backward) this.previousButton.focus();
+                    if (this.navigationState.backward) this.previousButton?.focus();
                     else this.nextButton.focus();
                 } else {
                     if (this.navigationState.backward) {
@@ -2777,7 +2782,9 @@ export default {
 
             if (propValue && Array.isArray(propValue)) {
                 if (this.isRangeSelection()) {
-                    propValue = this.inline ? propValue[0] : propValue[1] || propValue[0];
+                    // 多选时展示第一个值对应的年月
+                    propValue = propValue[0]
+                    // propValue = this.inline ? propValue[0] : propValue[1] || propValue[0];
                 } else if (this.isMultipleSelection()) {
                     propValue = propValue[propValue.length - 1];
                 }

@@ -15,6 +15,7 @@
           class="p-datatable-customers"
           :rows="10"
           dataKey="id"
+          selectionMode="single" 
           :rowHover="true"
           :selection.sync="selectedCustomers"
           :filters.sync="filters"
@@ -30,14 +31,14 @@
               <h5 class="m-0">Customers</h5>
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
-                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                <!-- filters['global'].value -->
+                <InputText v-model="filterText" placeholder="Keyword Search" />
               </span>
             </div>
           </template>
           <template #empty> No customers found. </template>
           <template #loading> Loading customers data. Please wait. </template>
-          <Column selectionMode="multiple" :styles="{ 'min-width': '3rem' }"></Column>
-          <Column field="name" header="Name" sortable :styles="{ 'min-width': '14rem' }">
+          <Column field="name" header="Name" sortable :styleName="{ 'min-width': '14rem' }">
             <template #body="{ data }">
               {{ data.name }}
             </template>
@@ -50,7 +51,7 @@
             header="Country"
             sortable
             filterMatchMode="contains"
-            :styles="{ 'min-width': '14rem' }">
+            :styleName="{ 'min-width': '14rem' }">
             <template #body="{ data }">
               <img
                 src="../../assets/images/flag_placeholder.png"
@@ -73,7 +74,7 @@
             sortField="representative.name"
             :showFilterMatchModes="false"
             :filterMenuStyle="{ width: '14rem' }"
-            :styles="{ 'min-width': '14rem' }">
+            :styleName="{ 'min-width': '14rem' }">
             <template #body="{ data }">
               <img
                 :alt="data.representative.name"
@@ -103,7 +104,7 @@
               </MultiSelect>
             </template>
           </Column>
-          <Column field="date" header="Date" sortable dataType="date" :styles="{ 'min-width': '8rem' }">
+          <Column field="date" header="Date" sortable dataType="date" :styleName="{ 'min-width': '8rem' }">
             <template #body="{ data }">
               {{ formatDate(data.date) }}
             </template>
@@ -111,7 +112,7 @@
               <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
             </template>
           </Column>
-          <Column field="balance" header="Balance" sortable dataType="numeric" :styles="{ 'min-width': '8rem' }">
+          <Column field="balance" header="Balance" sortable dataType="numeric" :styleName="{ 'min-width': '8rem' }">
             <template #body="{ data }">
               {{ formatCurrency(data.balance) }}
             </template>
@@ -124,7 +125,7 @@
             header="Status"
             sortable
             :filterMenuStyle="{ width: '14rem' }"
-            :styles="{ 'min-width': '10rem' }">
+            :styleName="{ 'min-width': '10rem' }">
             <template #body="{ data }">
               <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
             </template>
@@ -149,7 +150,7 @@
             header="Activity"
             sortable
             :showFilterMatchModes="false"
-            :styles="{ 'min-width': '10rem' }">
+            :styleName="{ 'min-width': '10rem' }">
             <template #body="{ data }">
               <ProgressBar :value="data.activity" :showValue="false" />
             </template>
@@ -177,14 +178,15 @@
 </template>
 
 <script>
-import FilterMatchMode from '../../components/api/FilterMatchMode'
-import FilterOperator from '../../components/api/FilterOperator'
+import FilterMatchMode from '../../components/lib/api/FilterMatchMode'
+import FilterOperator from '../../components/lib/api/FilterOperator'
 import CustomerService from '../../service/CustomerService'
 import DataTableDoc from '@/doc/datatable/index.vue'
 
 export default {
   data() {
     return {
+      filterText: '',
       customers: null,
       selectedCustomers: null,
       filters: {

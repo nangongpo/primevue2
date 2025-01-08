@@ -1,7 +1,7 @@
 <template>
     <Checkbox :modelValue="checked" :binary="true" :disabled="$attrs.disabled" :aria-label="checkboxAriaLabel" @change="onChange" :unstyled="unstyled" :pt="getColumnPT('rowCheckbox')">
         <template #icon="slotProps">
-            <component v-if="rowCheckboxIconTemplate" :is="rowCheckboxIconTemplate" :checked="slotProps.checked" :class="slotProps.className" />
+            <DynamicComponent v-if="rowCheckboxIconTemplate" :template="rowCheckboxIconTemplate" :checked="slotProps.checked" :className="slotProps.className" />
             <CheckIcon v-else-if="!rowCheckboxIconTemplate && slotProps.checked" :class="slotProps.className" v-bind="getColumnPT('rowCheckbox.icon')" />
         </template>
     </Checkbox>
@@ -35,7 +35,7 @@ export default {
     methods: {
         getColumnPT(key) {
             const columnMetaData = {
-                props: this.column.props,
+                props: this.column.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -51,7 +51,7 @@ export default {
             return mergeProps(this.ptm(`column.${key}`, { column: columnMetaData }), this.ptm(`column.${key}`, columnMetaData), this.ptmo(this.getColumnProp(), key, columnMetaData));
         },
         getColumnProp() {
-            return this.column.props && this.column.props.pt ? this.column.props.pt : undefined; //@todo:
+          return this.column?.pt //@todo:
         },
         onChange(event) {
             if (!this.$attrs.disabled) {

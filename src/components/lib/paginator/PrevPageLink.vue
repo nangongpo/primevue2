@@ -1,6 +1,7 @@
 <template>
-    <button v-ripple :class="cx('previousPageButton')" type="button" v-bind="getPTOptions('previousPageButton')" data-pc-group-section="pagebutton">
-        <component :is="template || 'AngleLeftIcon'" :class="cx('previousPageIcon')" v-bind="getPTOptions('previousPageIcon')" />
+    <button v-ripple :class="cx('previousPageButton')" type="button" v-bind="getPTOptions('previousPageButton')" 
+    v-on="$listeners" data-pc-group-section="pagebutton">
+        <DynamicComponent :template="template || 'AngleLeftIcon'" :className="cx('previousPageIcon')" v-bind="getPTOptions('previousPageIcon')" />
     </button>
 </template>
 

@@ -43,7 +43,7 @@
           </div>
           <div class="field col-12 md:col-4">
             <label for="range">Range</label>
-            <Calendar id="range" v-model="dates2" selectionMode="range" :manualInput="false" />
+            <Calendar id="range" v-model="dates2" selectionMode="range" :manualInput="false" :numberOfMonths="2" :selectOtherMonths="true" :hideOnRangeSelection="true" />
           </div>
           <div class="field col-12 md:col-4">
             <label for="buttonbar">Button Bar</label>
@@ -67,7 +67,7 @@
           </div>
           <div class="field col-12 md:col-4">
             <label for="multiplemonths">Multiple Months</label>
-            <Calendar id="multiplemonths" v-model="date11" :numberOfMonths="3" :responsiveOptions="responsiveOptions" />
+            <Calendar id="multiplemonths" v-model="date11" :numberOfMonths="2" :responsiveOptions="responsiveOptions" />
           </div>
           <div class="field col-12 md:col-4">
             <label for="datetemplate">Date Template</label>
@@ -120,6 +120,7 @@ export default {
   },
   data() {
     return {
+      date: null,
       date1: null,
       date2: null,
       date3: null,
@@ -141,11 +142,11 @@ export default {
       invalidDates: null,
       responsiveOptions: [
         {
-          breakpoint: '1400px',
+          breakpoint: '1200px',
           numMonths: 2
         },
         {
-          breakpoint: '1200px',
+          breakpoint: '768px',
           numMonths: 1
         }
       ]

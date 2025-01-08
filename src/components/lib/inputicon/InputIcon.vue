@@ -13,7 +13,7 @@ export default {
     inheritAttrs: false,
     computed: {
         containerClass() {
-            return [this.cx('root'), this.class];
+            return [this.cx('root'), this.className];
         }
     }
 };

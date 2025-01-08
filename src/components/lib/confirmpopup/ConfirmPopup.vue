@@ -2,18 +2,18 @@
     <Portal>
         <transition name="p-confirm-popup" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" @after-leave="onAfterLeave" v-bind="ptm('transition')">
             <div v-if="visible" :ref="containerRef" v-focustrap role="alertdialog" :class="cx('root')" :aria-modal="visible" @click="onOverlayClick" @keydown="onOverlayKeydown" v-bind="ptmi('root')">
-                <slot v-if="$slots.container" name="container" :message="confirmation" :onAccept="accept" :onReject="reject" :acceptCallback="accept" :rejectCallback="reject"></slot>
+                <slot v-if="$scopedSlots.container" name="container" :message="confirmation" :onAccept="accept" :onReject="reject" :acceptCallback="accept" :rejectCallback="reject"></slot>
                 <template v-else>
                     <template v-if="!$slots.message">
                         <div :class="cx('content')" v-bind="ptm('content')">
                             <slot name="icon">
-                                <component v-if="$slots.icon" :is="$slots.icon" :class="cx('icon')" />
+                                <DynamicComponent v-if="$scopedSlots.icon" :template="$slots.icon" :className="cx('icon')" />
                                 <span v-else-if="confirmation.icon" :class="[confirmation.icon, cx('icon')]" v-bind="ptm('icon')" />
                             </slot>
                             <span :class="cx('message')" v-bind="ptm('message')">{{ confirmation.message }}</span>
                         </div>
                     </template>
-                    <component v-else :is="$slots.message" :message="confirmation"></component>
+                    <DynamicComponent v-else :template="$slots.message" :message="confirmation"></DynamicComponent>
                     <div :class="cx('footer')" v-bind="ptm('footer')">
                         <CPButton :label="rejectLabel" @click="reject()" @keydown="onRejectKeydown" :autofocus="autoFocusReject" :class="[cx('rejectButton'), confirmation.rejectClass]" :unstyled="unstyled" :pt="ptm('rejectButton')">
                             <template v-if="rejectIcon || $slots.rejecticon" #icon="iconProps">
@@ -91,7 +91,7 @@ export default {
         ConfirmationEventBus.on('confirm', this.confirmListener);
         ConfirmationEventBus.on('close', this.closeListener);
     },
-    beforeUnmount() {
+    beforeDestroy() {
         ConfirmationEventBus.off('confirm', this.confirmListener);
         ConfirmationEventBus.off('close', this.closeListener);
 

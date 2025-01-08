@@ -34,11 +34,11 @@ export default {
             type: Boolean,
             default: false
         },
-        class: {
+        className: {
             type: null,
             default: null
         },
-        style: {
+        styleName: {
             type: null,
             default: null
         },

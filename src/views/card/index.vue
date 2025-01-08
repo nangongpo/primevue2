@@ -54,6 +54,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.p-card-header img {
+  width: 100%;
+}
 p {
   line-height: 1.5;
   margin: 0;

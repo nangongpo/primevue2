@@ -1,5 +1,5 @@
 <template>
-    <component v-if="template" :is="template" :class="separatorClass" :index="index" :active="active" :highlighted="highlighted" />
+    <DynamicComponent v-if="template" :template="template" :className="separatorClass" :index="index" :active="active" :highlighted="highlighted" />
     <span v-else :class="separatorClass" aria-hidden="true" v-bind="getStepPT" />
 </template>
 

@@ -10,8 +10,7 @@
             :aria-current="pageLink - 1 === page ? 'page' : undefined"
             @click="onPageLinkClick($event, pageLink)"
             v-bind="getPTOptions(pageLink - 1, 'pageButton')"
-            :data-p-highlight="pageLink - 1 === page"
-        >
+            :data-p-highlight="pageLink - 1 === page">
             {{ pageLink }}
         </button>
     </span>

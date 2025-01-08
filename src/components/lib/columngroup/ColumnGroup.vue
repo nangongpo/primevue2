@@ -1,19 +1,28 @@
+<template>
+  <div>
+    <slot></slot>
+  </div>
+</template>
+
 <script>
-import BaseColumnGroup from './BaseColumnGroup.vue';
+import BaseColumnGroup from './BaseColumnGroup.vue'
 
 export default {
-    name: 'ColumnGroup',
-    extends: BaseColumnGroup,
-    inheritAttrs: false,
-    inject: ['$columnGroups'],
-    mounted() {
-        this.$columnGroups?.add(this.$);
-    },
-    unmounted() {
-        this.$columnGroups?.delete(this.$);
-    },
-    render() {
-        return null;
+  name: 'ColumnGroup',
+  extends: BaseColumnGroup,
+  inheritAttrs: false,
+  data() {
+    return {
+      children: null
     }
-};
+  },
+  mounted() {
+    this.children = this.$children
+  },
+  computed: {
+    rows() {
+      return this.children
+    }
+  }
+}
 </script>

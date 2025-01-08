@@ -2,13 +2,13 @@
     <td :style="containerStyle" :class="containerClass" role="cell" v-bind="{ ...getColumnPT('root'), ...getColumnPT('bodyCell') }" :data-p-frozen-column="columnProp('frozen')">
         <button v-if="columnProp('expander')" v-ripple type="button" :class="cx('rowToggler')" @click="toggle" :style="togglerStyle" tabindex="-1" v-bind="getColumnPT('rowToggler')" data-pc-group-section="rowactionbutton">
             <template v-if="node.loading && loadingMode === 'icon'">
-                <component v-if="templates['nodetogglericon']" :is="templates['nodetogglericon']" :class="cx('nodetogglericon')" />
+                <DynamicComponent v-if="templates['nodetogglericon']" :template="templates['nodetogglericon']" :className="cx('nodetogglericon')" />
                 <SpinnerIcon v-else spin :class="cx('nodetogglericon')" v-bind="ptm('nodetogglericon')" />
             </template>
             <template v-else>
-                <component v-if="column.children && column.children.rowtogglericon" :is="column.children && column.children.rowtogglericon" :node="node" :expanded="expanded" :class="cx('rowTogglerIcon')" />
-                <component v-else-if="expanded" :is="node.expandedIcon ? 'span' : 'ChevronDownIcon'" :class="cx('rowTogglerIcon')" v-bind="getColumnPT('rowTogglerIcon')" />
-                <component v-else :is="node.collapsedIcon ? 'span' : 'ChevronRightIcon'" :class="cx('rowTogglerIcon')" v-bind="getColumnPT('rowTogglerIcon')" />
+                <DynamicComponent v-if="column.children && column.children.rowtogglericon" :template="column.children && column.children.rowtogglericon" :node="node" :expanded="expanded" :className="cx('rowTogglerIcon')" />
+                <DynamicComponent v-else-if="expanded" :template="node.expandedIcon ? 'span' : 'ChevronDownIcon'" :className="cx('rowTogglerIcon')" v-bind="getColumnPT('rowTogglerIcon')" />
+                <DynamicComponent v-else :template="node.collapsedIcon ? 'span' : 'ChevronRightIcon'" :className="cx('rowTogglerIcon')" v-bind="getColumnPT('rowTogglerIcon')" />
             </template>
         </button>
         <Checkbox
@@ -25,11 +25,11 @@
             :data-p-partialchecked="partialChecked"
         >
             <template #icon="slotProps">
-                <component v-if="templates['checkboxicon']" :is="templates['checkboxicon']" :checked="slotProps.checked" :partialChecked="partialChecked" :class="slotProps.className" />
-                <component v-else :is="checked ? 'CheckIcon' : partialChecked ? 'MinusIcon' : null" :class="slotProps.className" v-bind="getColumnCheckboxPT('rowCheckbox.icon')" />
+                <DynamicComponent v-if="templates['checkboxicon']" :template="templates['checkboxicon']" :checked="slotProps.checked" :partialChecked="partialChecked" :className="slotProps.className" />
+                <DynamicComponent v-else :template="checked ? 'CheckIcon' : partialChecked ? 'MinusIcon' : null" :className="slotProps.className" v-bind="getColumnCheckboxPT('rowCheckbox.icon')" />
             </template>
         </Checkbox>
-        <component v-if="column.children && column.children.body" :is="column.children.body" :node="node" :column="column" />
+        <DynamicComponent v-if="column.children && column.children.body" :template="column.children.body" :node="node" :column="column" />
         <template v-else>
             <span v-bind="getColumnPT('bodyCellContent')">{{ resolveFieldData(node.data, columnProp('field')) }}</span>
         </template>
@@ -105,7 +105,7 @@ export default {
     },
     data() {
         return {
-            styleObject: {}
+            styleName: {}
         };
     },
     mounted() {
@@ -178,7 +178,7 @@ export default {
                         right = DomHandler.getOuterWidth(next) + parseFloat(next.style.right || 0);
                     }
 
-                    this.styleObject.right = right + 'px';
+                    this.styleName.right = right + 'px';
                 } else {
                     let left = 0;
                     let prev = DomHandler.getPreviousElementSibling(this.$el, '[data-p-frozen-column="true"]');
@@ -187,7 +187,7 @@ export default {
                         left = DomHandler.getOuterWidth(prev) + parseFloat(prev.style.left || 0);
                     }
 
-                    this.styleObject.left = left + 'px';
+                    this.styleName.left = left + 'px';
                 }
             }
         },
@@ -206,7 +206,7 @@ export default {
             let bodyStyle = this.columnProp('bodyStyle');
             let columnStyle = this.columnProp('style');
 
-            return this.columnProp('frozen') ? [columnStyle, bodyStyle, this.styleObject] : [columnStyle, bodyStyle];
+            return this.columnProp('frozen') ? [columnStyle, bodyStyle, this.styleName] : [columnStyle, bodyStyle];
         },
         togglerStyle() {
             return {

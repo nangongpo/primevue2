@@ -21,7 +21,9 @@ export default {
       sourceCode1: {
         basic: `
 <h3>Inline</h3>
-<TieredMenu :model="items" />
+<div class="flex justify-center">
+    <TieredMenu :model="items" />
+</div>
 
 <h3>Overlay</h3>
 <Button type="button" label="Toggle" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />

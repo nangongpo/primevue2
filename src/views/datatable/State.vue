@@ -30,7 +30,7 @@
               <InputText v-model="filters1['global'].value" placeholder="Global Search" />
             </span>
           </template>
-          <Column field="name" header="Name" :sortable="true" :styles="{ width: '25%' }">
+          <Column field="name" header="Name" :sortable="true" :styleName="{ width: '25%' }">
             <template #filter>
               <InputText type="text" v-model="filters1['name']" class="p-column-filter" placeholder="Search by name" />
             </template>
@@ -41,7 +41,7 @@
             sortField="country.name"
             filterField="country.name"
             filterMatchMode="contains"
-            :styles="{ width: '25%' }">
+            :styleName="{ width: '25%' }">
             <template #body="slotProps">
               <img
                 src="../../assets/images/flag_placeholder.png"
@@ -63,7 +63,7 @@
             sortField="representative.name"
             filterField="representative.name"
             filterMatchMode="in"
-            :styles="{ width: '25%' }">
+            :styleName="{ width: '25%' }">
             <template #body="slotProps">
               <img
                 :alt="slotProps.data.representative.name"
@@ -93,7 +93,7 @@
               </MultiSelect>
             </template>
           </Column>
-          <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styles="{ width: '25%' }">
+          <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styleName="{ width: '25%' }">
             <template #body="slotProps">
               <span :class="'customer-badge status-' + slotProps.data.status">{{ slotProps.data.status }}</span>
             </template>
@@ -133,7 +133,7 @@
               <InputText v-model="filters2['global'].value" placeholder="Global Search" />
             </span>
           </template>
-          <Column field="name" header="Name" :sortable="true" :styles="{ width: '25%' }">
+          <Column field="name" header="Name" :sortable="true" :styleName="{ width: '25%' }">
             <template #filter>
               <InputText type="text" v-model="filters2['name']" class="p-column-filter" placeholder="Search by name" />
             </template>
@@ -144,7 +144,7 @@
             sortField="country.name"
             filterField="country.name"
             filterMatchMode="contains"
-            :styles="{ width: '25%' }">
+            :styleName="{ width: '25%' }">
             <template #body="slotProps">
               <img
                 src="../../assets/images/flag_placeholder.png"
@@ -166,7 +166,7 @@
             sortField="representative.name"
             filterField="representative.name"
             filterMatchMode="in"
-            :styles="{ width: '25%' }">
+            :styleName="{ width: '25%' }">
             <template #body="slotProps">
               <img
                 :alt="slotProps.data.representative.name"
@@ -196,7 +196,7 @@
               </MultiSelect>
             </template>
           </Column>
-          <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styles="{ width: '25%' }">
+          <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styleName="{ width: '25%' }">
             <template #body="slotProps">
               <span :class="'customer-badge status-' + slotProps.data.status">{{ slotProps.data.status }}</span>
             </template>
@@ -224,7 +224,7 @@
 
 <script>
 import DataTableStateDoc from '@/doc/datatable/State.vue'
-import FilterMatchMode from '../../components/api/FilterMatchMode'
+import FilterMatchMode from '../../components/lib/api/FilterMatchMode'
 import CustomerService from '../../service/CustomerService'
 
 export default {

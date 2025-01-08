@@ -42,7 +42,7 @@
           </template>
           <template #empty> No customers found. </template>
           <template #loading> Loading customers data. Please wait. </template>
-          <Column field="name" header="Name" :styles="{ 'min-width': '12rem' }">
+          <Column field="name" header="Name" :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               {{ data.name }}
             </template>
@@ -50,7 +50,7 @@
               <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name" />
             </template>
           </Column>
-          <Column header="Country" filterField="country.name" :styles="{ 'min-width': '12rem' }">
+          <Column header="Country" filterField="country.name" :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               <img
                 src="../../assets/images/flag_placeholder.png"
@@ -80,7 +80,7 @@
             filterField="representative"
             :showFilterMatchModes="false"
             :filterMenuStyle="{ width: '14rem' }"
-            :styles="{ 'min-width': '14rem' }">
+            :styleName="{ 'min-width': '14rem' }">
             <template #body="{ data }">
               <img
                 :alt="data.representative.name"
@@ -110,7 +110,7 @@
               </MultiSelect>
             </template>
           </Column>
-          <Column header="Date" filterField="date" dataType="date" :styles="{ 'min-width': '10rem' }">
+          <Column header="Date" filterField="date" dataType="date" :styleName="{ 'min-width': '10rem' }">
             <template #body="{ data }">
               {{ formatDate(data.date) }}
             </template>
@@ -118,7 +118,7 @@
               <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
             </template>
           </Column>
-          <Column header="Balance" filterField="balance" dataType="numeric" :styles="{ 'min-width': '10rem' }">
+          <Column header="Balance" filterField="balance" dataType="numeric" :styleName="{ 'min-width': '10rem' }">
             <template #body="{ data }">
               {{ formatCurrency(data.balance) }}
             </template>
@@ -130,7 +130,7 @@
             field="status"
             header="Status"
             :filterMenuStyle="{ width: '14rem' }"
-            :styles="{ 'min-width': '12rem' }">
+            :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
             </template>
@@ -153,7 +153,7 @@
               </Dropdown>
             </template>
           </Column>
-          <Column field="activity" header="Activity" :showFilterMatchModes="false" :styles="{ 'min-width': '12rem' }">
+          <Column field="activity" header="Activity" :showFilterMatchModes="false" :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               <ProgressBar :value="data.activity" :showValue="false"></ProgressBar>
             </template>
@@ -170,7 +170,7 @@
             header="Verified"
             dataType="boolean"
             bodyClass="text-center"
-            :styles="{ 'min-width': '8rem' }">
+            :styleName="{ 'min-width': '8rem' }">
             <template #body="{ data }">
               <i
                 class="pi"
@@ -210,7 +210,7 @@
           </template>
           <template #empty> No customers found. </template>
           <template #loading> Loading customers data. Please wait. </template>
-          <Column field="name" header="Name" :styles="{ 'min-width': '12rem' }">
+          <Column field="name" header="Name" :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               {{ data.name }}
             </template>
@@ -224,7 +224,7 @@
                 v-tooltip.top.focus="'Hit enter key to filter'" />
             </template>
           </Column>
-          <Column header="Country" filterField="country.name" :styles="{ 'min-width': '12rem' }">
+          <Column header="Country" filterField="country.name" :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               <img
                 src="../../assets/images/flag_placeholder.png"
@@ -246,7 +246,7 @@
             header="Agent"
             filterField="representative"
             :showFilterMenu="false"
-            :styles="{ 'min-width': '14rem' }">
+            :styleName="{ 'min-width': '14rem' }">
             <template #body="{ data }">
               <img
                 :alt="data.representative.name"
@@ -276,7 +276,7 @@
               </MultiSelect>
             </template>
           </Column>
-          <Column field="status" header="Status" :showFilterMenu="false" :styles="{ 'min-width': '12rem' }">
+          <Column field="status" header="Status" :showFilterMenu="false" :styleName="{ 'min-width': '12rem' }">
             <template #body="{ data }">
               <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
             </template>
@@ -300,7 +300,7 @@
               </Dropdown>
             </template>
           </Column>
-          <Column field="verified" header="Verified" dataType="boolean" :styles="{ 'min-width': '6rem' }">
+          <Column field="verified" header="Verified" dataType="boolean" :styleName="{ 'min-width': '6rem' }">
             <template #body="{ data }">
               <i
                 class="pi"
@@ -324,8 +324,8 @@
 <script>
 import DataTableFilterDoc from '@/doc/datatable/Filter.vue'
 import CustomerService from '../../service/CustomerService'
-import FilterMatchMode from '../../components/api/FilterMatchMode'
-import FilterOperator from '../../components/api/FilterOperator'
+import FilterMatchMode from '../../components/lib/api/FilterMatchMode'
+import FilterOperator from '../../components/lib/api/FilterOperator'
 
 export default {
   components: { DataTableFilterDoc },

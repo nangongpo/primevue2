@@ -80,7 +80,7 @@
             <td>Footer content of the column.</td>
           </tr>
           <tr>
-            <td>styles</td>
+            <td>styleName</td>
             <td>object</td>
             <td>null</td>
             <td>Inline style of header, body and footer cells.</td>
@@ -2447,7 +2447,7 @@ export default {
     <Column field="vin" header="Vin"></Column>
     <Column field="year" header="Year">
         <template #editor="slotProps">
-            <InputText v-model="slotProps.data[slotProps.field]" autofocus/>
+            <InputText v-model="slotProps.data[slotProps.field]" />
         </template>
     </Column>
     <Column field="brand" header="Brand">

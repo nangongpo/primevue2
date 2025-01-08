@@ -1,6 +1,6 @@
 <template>
     <div :class="cx('root')" role="tablist" v-bind="ptmi('root')">
-        <slot v-if="$slots.start" name="start" />
+        <slot v-if="$scopedSlots.start" name="start" />
 
         <template v-if="orientation === 'horizontal'">
             <ul ref="nav" :class="cx('nav')" v-bind="ptm('nav')">
@@ -15,8 +15,7 @@
                     :data-p-highlight="isStepActive(index)"
                     :data-p-disabled="isItemDisabled(index)"
                     :data-pc-index="index"
-                    :data-p-active="isStepActive(index)"
-                >
+                    :data-p-active="isStepActive(index)">
                     <slot name="header">
                         <StepperHeader
                             :id="getStepHeaderActionId(index)"
@@ -80,8 +79,7 @@
                 :data-p-highlight="isStepActive(index)"
                 :data-p-disabled="isItemDisabled(index)"
                 :data-pc-index="index"
-                :data-p-active="isStepActive(index)"
-            >
+                :data-p-active="isStepActive(index)">
                 <div :class="cx('stepper.header', { step, index })" v-bind="getStepPT(step, 'header', index)">
                     <slot name="header">
                         <StepperHeader
@@ -133,7 +131,7 @@
                 </transition>
             </div>
         </template>
-        <slot v-if="$slots.end" name="end" />
+        <slot v-if="$scopedSlots.end" name="end" />
     </div>
 </template>
 
@@ -169,13 +167,13 @@ export default {
     },
     methods: {
         isStep(child) {
-            return child.type.name === 'StepperPanel';
+            return child.componentOptions.Ctor.extendOptions.name === 'StepperPanel';
         },
         isStepActive(index) {
             return this.d_activeStep === index;
         },
         getStepProp(step, name) {
-            return step.props ? step.props[name] : undefined;
+          return step.componentOptions ? step.componentOptions.propsData[name] : undefined;
         },
         getStepKey(step, index) {
             return this.getStepProp(step, 'header') || index;
@@ -244,7 +242,7 @@ export default {
     },
     computed: {
         stepperpanels() {
-            return this.$slots.default().reduce((stepperpanels, child) => {
+            return (this.$slots.default || []).reduce((stepperpanels, child) => {
                 if (this.isStep(child)) {
                     stepperpanels.push(child);
                 } else if (child.children && child.children instanceof Array) {

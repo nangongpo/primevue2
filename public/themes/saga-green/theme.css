@@ -3948,6 +3948,9 @@
   .p-datatable-table {
     border-spacing: 0px;
     width: 100%;
+  } {
+    border-spacing: 0px;
+    width: 100%;
   }
 
   .p-datatable .p-sortable-column {

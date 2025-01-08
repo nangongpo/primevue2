@@ -36,7 +36,7 @@ import Editor from 'lib/editor'
 import Fieldset from 'lib/fieldset'
 import FileUpload from 'lib/fileupload'
 import FullCalendar from 'lib/fullcalendar'
-import ImagePreview from 'lib/imagepreview'
+import Image from 'lib/image'
 import InlineMessage from 'lib/inlinemessage'
 import Inplace from 'lib/inplace'
 import InputMask from 'lib/inputmask'
@@ -144,7 +144,7 @@ export default {
     Vue.component('Fieldset', Fieldset)
     Vue.component('FileUpload', FileUpload)
     Vue.component('FullCalendar', FullCalendar)
-    Vue.component('ImagePreview', ImagePreview)
+    Vue.component('Image', Image)
     Vue.component('InlineMessage', InlineMessage)
     Vue.component('Inplace', Inplace)
     Vue.component('InputMask', InputMask)

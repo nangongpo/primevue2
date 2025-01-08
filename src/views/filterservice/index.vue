@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import FilterMatchMode from '../../components/api/FilterMatchMode'
-import FilterService from '../../components/api/FilterService'
+import FilterMatchMode from '../../components/lib/api/FilterMatchMode'
+import FilterService from '../../components/lib/api/FilterService'
 import CustomerService from '../../service/CustomerService'
 import FilterServiceDoc from '@/doc/filterservice/index.vue'
 

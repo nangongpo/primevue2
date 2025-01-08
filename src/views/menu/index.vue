@@ -10,7 +10,10 @@
     <div class="content-section implementation">
       <div class="card">
         <h5>Inline</h5>
-        <Menu :model="items" />
+        <div class="flex">
+          <Menu :model="items" />
+        </div>
+
 
         <h5>Overlay</h5>
         <Button type="button" label="Toggle" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
@@ -52,7 +55,7 @@ export default {
           items: [{
             label: 'Vue Website',
             icon: 'pi pi-external-link',
-            url: 'https://vuejs.org/'
+            url: 'https://v2.vuejs.org/'
           },
           {
             label: 'Router',

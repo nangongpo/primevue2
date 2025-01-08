@@ -6,8 +6,7 @@
                 :class="[cx('tab.header', { tab, index: i }), getTabProp(tab, 'headerClass')]"
                 v-bind="{ ...getTabProp(tab, 'headerProps'), ...getTabPT(tab, 'header', i) }"
                 :data-p-highlight="isTabActive(i)"
-                :data-p-disabled="getTabProp(tab, 'disabled')"
-            >
+                :data-p-disabled="getTabProp(tab, 'disabled')">
                 <a
                     :id="getTabHeaderActionId(i)"
                     :class="cx('tab.headerAction')"
@@ -18,19 +17,18 @@
                     :aria-controls="getTabContentId(i)"
                     @click="onTabClick($event, tab, i)"
                     @keydown="onTabKeyDown($event, tab, i)"
-                    v-bind="{ ...getTabProp(tab, 'headeractionprops'), ...getTabPT(tab, 'headeraction', i) }"
-                >
-                    <component v-if="tab.children && tab.children.headericon" :is="tab.children.headericon" :isTabActive="isTabActive(i)" :active="isTabActive(i)" :index="i"></component>
-                    <component
+                    v-bind="{ ...getTabProp(tab, 'headeractionprops'), ...getTabPT(tab, 'headeraction', i) }">
+                    <DynamicComponent v-if="tab.data.scopedSlots && tab.data.scopedSlots.headericon" :template="tab.data.scopedSlots.headericon" :isTabActive="isTabActive(i)" :active="isTabActive(i)" :index="i"></DynamicComponent>
+                    <DynamicComponent
                         v-else-if="isTabActive(i)"
-                        :is="$slots.collapseicon ? $slots.collapseicon : collapseIcon ? 'span' : 'ChevronDownIcon'"
-                        :class="[cx('tab.headerIcon'), collapseIcon]"
+                        :template="$scopedSlots.collapseicon ? $scopedSlots.collapseicon : collapseIcon ? 'span' : 'ChevronDownIcon'"
+                        :className="[cx('tab.headerIcon'), collapseIcon]"
                         aria-hidden="true"
                         v-bind="getTabPT(tab, 'headericon', i)"
                     />
-                    <component v-else :is="$slots.expandicon ? $slots.expandicon : expandIcon ? 'span' : 'ChevronRightIcon'" :class="[cx('tab.headerIcon'), expandIcon]" aria-hidden="true" v-bind="getTabPT(tab, 'headericon', i)" />
-                    <span v-if="tab.props && tab.props.header" :class="cx('tab.headerTitle')" v-bind="getTabPT(tab, 'headertitle', i)">{{ tab.props.header }}</span>
-                    <component v-if="tab.children && tab.children.header" :is="tab.children.header"></component>
+                    <DynamicComponent v-else :template="$scopedSlots.expandicon ? $scopedSlots.expandicon : expandIcon ? 'span' : 'ChevronRightIcon'" :className="[cx('tab.headerIcon'), expandIcon]" aria-hidden="true" v-bind="getTabPT(tab, 'headericon', i)" />
+                    <span v-if="tab.componentOptions && tab.componentOptions.propsData.header" :class="cx('tab.headerTitle')" v-bind="getTabPT(tab, 'headertitle', i)">{{ tab.componentOptions.propsData.header }}</span>
+                    <DynamicComponent :template="tab.data?.scopedSlots?.header"></DynamicComponent>
                 </a>
             </div>
             <transition name="p-toggleable-content" v-bind="getTabPT(tab, 'transition', i)">
@@ -42,10 +40,9 @@
                     :class="[cx('tab.toggleableContent'), getTabProp(tab, 'contentClass')]"
                     role="region"
                     :aria-labelledby="getTabHeaderActionId(i)"
-                    v-bind="{ ...getTabProp(tab, 'contentProps'), ...getTabPT(tab, 'toggleablecontent', i) }"
-                >
+                    v-bind="{ ...getTabProp(tab, 'contentProps'), ...getTabPT(tab, 'toggleablecontent', i) }">
                     <div :class="cx('tab.content')" v-bind="getTabPT(tab, 'content', i)">
-                        <component :is="tab"></component>
+                        <DynamicComponent :template="tab"></DynamicComponent>
                     </div>
                 </div>
             </transition>
@@ -85,13 +82,13 @@ export default {
     },
     methods: {
         isAccordionTab(child) {
-            return child.type.name === 'AccordionTab';
+            return child.componentOptions.Ctor.extendOptions.name === 'AccordionTab';
         },
         isTabActive(index) {
             return this.multiple ? this.d_activeIndex && this.d_activeIndex.includes(index) : this.d_activeIndex === index;
         },
         getTabProp(tab, name) {
-            return tab.props ? tab.props[name] : undefined;
+          return tab.componentOptions ? tab.componentOptions.propsData[name] : undefined;
         },
         getKey(tab, index) {
             return this.getTabProp(tab, 'header') || index;
@@ -236,7 +233,7 @@ export default {
     },
     computed: {
         tabs() {
-            return this.$slots.default().reduce((tabs, child) => {
+            return (this.$slots.default || []).reduce((tabs, child) => {
                 if (this.isAccordionTab(child)) {
                     tabs.push(child);
                 } else if (child.children && child.children instanceof Array) {

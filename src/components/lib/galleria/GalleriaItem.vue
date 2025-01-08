@@ -2,16 +2,16 @@
     <div :class="cx('itemWrapper')" v-bind="ptm('itemWrapper')">
         <div :class="cx('itemContainer')" v-bind="ptm('itemContainer')">
             <button v-if="showItemNavigators" v-ripple type="button" :class="cx('previousItemButton')" @click="navBackward($event)" :disabled="isNavBackwardDisabled()" v-bind="ptm('previousItemButton')" data-pc-group-section="itemnavigator">
-                <component :is="templates.previousitemicon || 'ChevronLeftIcon'" :class="cx('previousItemIcon')" v-bind="ptm('previousItemIcon')" />
+                <DynamicComponent :template="templates.previousitemicon || 'ChevronLeftIcon'" :className="cx('previousItemIcon')" v-bind="ptm('previousItemIcon')" />
             </button>
             <div :id="id + '_item_' + activeIndex" :class="cx('item')" role="group" :aria-label="ariaSlideNumber(activeIndex + 1)" :aria-roledescription="ariaSlideLabel" v-bind="ptm('item')">
-                <component v-if="templates.item" :is="templates.item" :item="activeItem" />
+                <DynamicComponent v-if="templates.item" :template="templates.item" :item="activeItem" />
             </div>
             <button v-if="showItemNavigators" v-ripple type="button" :class="cx('nextItemButton')" @click="navForward($event)" :disabled="isNavForwardDisabled()" v-bind="ptm('nextItemButton')" data-pc-group-section="itemnavigator">
-                <component :is="templates.nextitemicon || 'ChevronRightIcon'" :class="cx('nextItemIcon')" v-bind="ptm('nextItemIcon')" />
+                <DynamicComponent :template="templates.nextitemicon || 'ChevronRightIcon'" :className="cx('nextItemIcon')" v-bind="ptm('nextItemIcon')" />
             </button>
             <div v-if="templates['caption']" :class="cx('caption')" v-bind="ptm('caption')">
-                <component v-if="templates.caption" :is="templates.caption" :item="activeItem" />
+                <DynamicComponent v-if="templates.caption" :template="templates.caption" :item="activeItem" />
             </div>
         </div>
         <ul v-if="showIndicators" ref="indicatorContent" :class="cx('indicators')" v-bind="ptm('indicators')">
@@ -29,7 +29,7 @@
                 :data-p-highlight="isIndicatorItemActive(index)"
             >
                 <button v-if="!templates['indicator']" type="button" :tabindex="activeIndex === index ? '0' : '-1'" :class="cx('indicatorButton')" v-bind="ptm('indicatorButton', getIndicatorPTOptions(index))"></button>
-                <component v-if="templates.indicator" :is="templates.indicator" :index="index" />
+                <DynamicComponent v-if="templates.indicator" :template="templates.indicator" :index="index" />
             </li>
         </ul>
     </div>

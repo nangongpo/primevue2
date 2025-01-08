@@ -18,7 +18,7 @@
                 v-bind="{ ...toggleButtonProps, ...ptm('toggler') }"
             >
                 <slot name="togglericon" :collapsed="d_collapsed">
-                    <component :is="d_collapsed ? 'PlusIcon' : 'MinusIcon'" :class="cx('togglericon')" v-bind="ptm('togglericon')" />
+                    <DynamicComponent :template="d_collapsed ? 'PlusIcon' : 'MinusIcon'" :className="cx('togglericon')" v-bind="ptm('togglericon')" />
                 </slot>
                 <slot name="legend">
                     <span :class="cx('legendtitle')" v-bind="ptm('legendtitle')">{{ legend }}</span>

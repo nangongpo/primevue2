@@ -61,7 +61,7 @@ export default {
             }
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindOutsideClickListener();
         this.unbindDragListeners();
         this.unbindResizeListener();

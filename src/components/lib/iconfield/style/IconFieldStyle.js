@@ -1,4 +1,4 @@
-import BaseStyle from 'primevue/base/style';
+import BaseStyle from 'primevue2/base/style';
 
 const classes = {
     root: ({ props }) => [

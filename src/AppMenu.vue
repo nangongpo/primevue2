@@ -35,6 +35,7 @@
 
             <div class="menu-category">Form</div>
             <div class="menu-items">
+                <router-link to="/teleport">Teleport</router-link>
                 <router-link to="/autocomplete">AutoComplete</router-link>
                 <router-link to="/calendar">Calendar</router-link>
                 <router-link to="/cascadeselect">CascadeSelect</router-link>

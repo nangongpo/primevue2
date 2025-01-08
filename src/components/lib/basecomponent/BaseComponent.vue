@@ -1,6 +1,6 @@
 <script>
 import BaseStyle from 'primevue2/base/style'
-import { ObjectUtils, VueUtils } from 'primevue2/utils'
+import { ObjectUtils, VueUtils, DynamicComponent } from 'primevue2/utils'
 import BaseComponentStyle from './style/BaseComponentStyle'
 
 const { mergeProps } = VueUtils
@@ -39,8 +39,8 @@ export default {
   },
   created() {
     const _usept = this.pt?.['_usept']
-    const originalValue = _usept ? this.pt?.originalValue?.[this.$vnode.componentOptions.tag] : undefined
-    const value = _usept ? this.pt?.value?.[this.$vnode.componentOptions.tag] : this.pt;
+    const originalValue = _usept ? this.pt?.originalValue?.[this.$vnode.componentOptions.Ctor.extendOptions.name] : undefined
+    const value = _usept ? this.pt?.value?.[this.$vnode.componentOptions.Ctor.extendOptions.name] : this.pt;
 
     (value || originalValue)?.hooks?.['onBeforeCreate']?.()
 
@@ -48,7 +48,7 @@ export default {
     const originalValueInConfig = _useptInConfig ? this.$primevue?.config?.pt?.originalValue : undefined
     const valueInConfig = _useptInConfig ? this.$primevue?.config?.pt?.value : this.$primevue?.config?.pt;
 
-    (valueInConfig || originalValueInConfig)?.[this.$vnode.componentOptions.tag]?.hooks?.['onBeforeCreate']?.()
+    (valueInConfig || originalValueInConfig)?.[this.$vnode.componentOptions.Ctor.extendOptions.name]?.hooks?.['onBeforeCreate']?.()
     this._hook('onCreated')
   },
   beforeMount() {
@@ -74,7 +74,7 @@ export default {
   methods: {
     _hook(hookName) {
       if (!this.$options.hostName) {
-        const selfHook = this._usePT(this._getPT(this.pt, this.$vnode.componentOptions.tag), this._getOptionValue, `hooks.${hookName}`)
+        const selfHook = this._usePT(this._getPT(this.pt, this.$vnode.componentOptions.Ctor.extendOptions.name), this._getOptionValue, `hooks.${hookName}`)
         const defaultHook = this._useDefaultPT(this._getOptionValue, `hooks.${hookName}`)
 
         selfHook?.()
@@ -100,7 +100,7 @@ export default {
       ObjectUtils.isNotEmpty(globalCSS) && BaseComponentStyle.loadGlobalStyle(globalCSS, { nonce: this.$primevueConfig?.csp?.nonce })
     },
     _getHostInstance(instance) {
-      return instance ? (this.$options.hostName ? (instance.$vnode.componentOptions.tag === this.$options.hostName ? instance : this._getHostInstance(instance.$parentInstance)) : instance.$parentInstance) : undefined
+      return instance ? (this.$options.hostName ? (instance.$vnode.componentOptions.Ctor.extendOptions.name === this.$options.hostName ? instance : this._getHostInstance(instance.$parentInstance)) : instance.$parentInstance) : undefined
     },
     _getPropValue(name) {
       return this[name] || this._getHostInstance(this)?.[name]
@@ -126,8 +126,8 @@ export default {
     },
     _getPTSelf(obj = {}, ...args) {
       return mergeProps(
-        this._usePT(this._getPT(obj, this.$name), ...args), // Exp; <component :pt="{}"
-        this._usePT(this.$_attrsPT, ...args) // Exp; <component :pt:[passthrough_key]:[attribute]="{value}" or <component :pt:[passthrough_key]="() =>{value}"
+        this._usePT(this._getPT(obj, this.$name), ...args), // Exp; <DynamicComponent :pt="{}"
+        this._usePT(this.$_attrsPT, ...args) // Exp; <DynamicComponent :pt:[passthrough_key]:[attribute]="{value}" or <DynamicComponent :pt:[passthrough_key]="() =>{value}"
       )
     },
     _getPTDatasets(key = '') {
@@ -137,8 +137,8 @@ export default {
       return (
         key !== 'transition' && {
           ...(key === 'root' && {
-            [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(isExtended ? this.pt?.['data-pc-section'] : this.$vnode.componentOptions.tag),
-            ...(isExtended && { [`${datasetPrefix}extend`]: ObjectUtils.toFlatCase(this.$vnode.componentOptions.tag) })
+            [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(isExtended ? this.pt?.['data-pc-section'] : this.$vnode.componentOptions.Ctor.extendOptions.name),
+            ...(isExtended && { [`${datasetPrefix}extend`]: ObjectUtils.toFlatCase(this.$vnode.componentOptions.Ctor.extendOptions.name) })
           }),
           [`${datasetPrefix}section`]: ObjectUtils.toFlatCase(key)
         }
@@ -231,13 +231,11 @@ export default {
         props: this.$props,
         state: this.$data,
         attrs: this.$attrs,
-        listeners: this.$listeners,
         parent: {
           instance: parentInstance,
           props: parentInstance?.$props,
           state: parentInstance?.$data,
-          attrs: parentInstance?.$attrs,
-          listeners: parentInstance?.$listeners
+          attrs: parentInstance?.$attrs
         }
       }
     },
@@ -248,7 +246,7 @@ export default {
       return this.$primevue?.config
     },
     $name() {
-      return this.$options.hostName || this.$vnode.componentOptions.tag
+      return this.$options.hostName || this.$vnode.componentOptions.Ctor.extendOptions.name
     },
     $_attrsPT() {
       return Object.entries(this.$attrs || {})
@@ -276,8 +274,8 @@ export default {
         }, {})
     }
   },
-  render() {
-    return null
+  components: {
+    DynamicComponent: DynamicComponent
   }
 }
 </script>

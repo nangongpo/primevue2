@@ -21,7 +21,7 @@
                     v-bind="{ ...toggleButtonProps, ...ptm('toggler') }"
                 >
                     <slot name="togglericon" :collapsed="d_collapsed">
-                        <component :is="d_collapsed ? 'PlusIcon' : 'MinusIcon'" v-bind="ptm('togglericon')" />
+                        <DynamicComponent :template="d_collapsed ? 'PlusIcon' : 'MinusIcon'" v-bind="ptm('togglericon')" />
                     </slot>
                 </button>
             </div>
@@ -31,7 +31,7 @@
                 <div :class="cx('content')" v-bind="ptm('content')">
                     <slot></slot>
                 </div>
-                <div v-if="$slots.footer" :class="cx('footer')" v-bind="ptm('footer')">
+                <div v-if="$scopedSlots.footer" :class="cx('footer')" v-bind="ptm('footer')">
                     <slot name="footer"></slot>
                 </div>
             </div>

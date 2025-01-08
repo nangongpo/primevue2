@@ -13,7 +13,7 @@
           v-bind="{ ...previousButtonProps, ...ptm('previousButton') }"
           data-pc-group-section="navbutton">
           <slot name="previousicon">
-              <component :is="prevIcon ? 'span' : 'ChevronLeftIcon'" aria-hidden="true" :class="prevIcon" v-bind="ptm('previousIcon')" />
+              <DynamicComponent :template="prevIcon ? 'span' : 'ChevronLeftIcon'" aria-hidden="true" :className="prevIcon" v-bind="ptm('previousIcon')" />
           </slot>
       </button>
       <div div ref="content" :class="cx('navContent')" @scroll="onScroll" v-bind="ptm('navContent')">
@@ -45,7 +45,7 @@
               <span class="p-tabview-title" v-if="tab.componentOptions.propsData.header">
                 {{ tab.componentOptions.propsData.header }}
               </span>
-              <TabPanelHeaderSlot :tab="tab" v-if="tab.data?.scopedSlots?.header" />
+              <DynamicComponent :template="tab.data?.scopedSlots?.header" />
             </a>
           </li>
           <li ref="inkbar" :class="cx('inkbar')" role="presentation" aria-hidden="true" v-bind="ptm('inkbar')"></li>
@@ -63,7 +63,7 @@
           v-bind="{ ...nextButtonProps, ...ptm('nextButton') }"
           data-pc-group-section="navbutton">
           <slot name="nexticon">
-              <component :is="nextIcon ? 'span' : 'ChevronRightIcon'" aria-hidden="true" :class="nextIcon" v-bind="ptm('nextIcon')" />
+              <DynamicComponent :template="nextIcon ? 'span' : 'ChevronRightIcon'" aria-hidden="true" :className="nextIcon" v-bind="ptm('nextIcon')" />
           </slot>
       </button>
     </div>
@@ -82,7 +82,7 @@
             data-pc-name="tabpanel"
             :data-pc-index="index"
             :data-p-active="d_activeIndex === index">
-            <TablePanelDefaultSlot :tab="tab" />
+            <DynamicComponent :template="tab" />
         </div>
       </template>
     </div>
@@ -96,32 +96,6 @@ import Ripple from 'primevue2/ripple'
 import { DomHandler, ObjectUtils, KeyboardHandler, UniqueComponentId, VueUtils } from 'primevue2/utils'
 import BaseTabView from './BaseTabView.vue';
 const { mergeProps } = VueUtils
-
-const TabPanelHeaderSlot = {
-  functional: true,
-  props: {
-    tab: {
-      type: null,
-      default: null
-    }
-  },
-  render(h, context) {
-    return [context.props.tab.data.scopedSlots['header']()]
-  }
-}
-
-const TablePanelDefaultSlot = {
-  functional: true,
-  props: {
-    tab: {
-      type: null,
-      default: null
-    }
-  },
-  render(h, context) {
-    return Array.isArray(context.props.tab) ? context.props.tab : [context.props.tab];
-  }
-}
 
 export default {
   name: 'TabView',
@@ -157,7 +131,7 @@ export default {
   },
   methods: {
     isTabPanel(child) {
-        return child.componentOptions.tag === 'TabPanel';
+        return child.componentOptions.Ctor.extendOptions.name === 'TabPanel';
     },
     isTabActive(index) {
         return this.d_activeIndex === index;
@@ -397,8 +371,6 @@ export default {
     }
   },
   components: {
-    'TabPanelHeaderSlot': TabPanelHeaderSlot,
-    'TablePanelDefaultSlot': TablePanelDefaultSlot,
     ChevronLeftIcon,
     ChevronRightIcon
   },

@@ -7,19 +7,18 @@
         v-bind="{ ...getStepPT(stepperpanel, 'root', index), ...getStepPT(stepperpanel, 'content', index) }"
         data-pc-name="stepperpanel"
         :data-pc-index="index"
-        :data-p-active="active"
-    >
-        <component
+        :data-p-active="active">
+        <DynamicComponent
             v-if="template"
-            :is="template"
+            :template="template"
             :index="index"
             :active="active"
             :highlighted="highlighted"
             :clickCallback="(event) => onItemClick(event, index)"
             :prevCallback="(event) => prevCallback(event, index)"
-            :nextCallback="(event) => nextCallback(event, index)"
-        ></component>
-        <component v-else :is="stepperpanel"></component>
+            :nextCallback="(event) => nextCallback(event, index)">
+        </DynamicComponent>
+        <DynamicComponent v-else :template="stepperpanel"></DynamicComponent>
     </div>
 </template>
 

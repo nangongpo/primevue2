@@ -37,6 +37,14 @@ export default {
         closeOnEscape: {
             type: Boolean,
             default: true
+        },
+        styleName: {
+          type: Object,
+          default: null
+        },
+        className: {
+          type: String,
+          default: ''
         }
     },
     style: OverlayPanelStyle,

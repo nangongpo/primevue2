@@ -1,7 +1,7 @@
 <template>
     <div role="alert" aria-live="assertive" aria-atomic="true" :class="cx('root')" v-bind="ptmi('root')">
         <slot name="icon">
-            <component :is="icon ? 'span' : iconComponent" :class="cx('icon')" v-bind="ptm('icon')"></component>
+            <DynamicComponent :template="icon ? 'span' : iconComponent" :className="cx('icon')" v-bind="ptm('icon')"></DynamicComponent>
         </slot>
         <span :class="cx('text')" v-bind="ptm('text')">
             <slot>&nbsp;</slot>

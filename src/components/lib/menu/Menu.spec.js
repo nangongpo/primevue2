@@ -41,7 +41,7 @@ describe('Menu.vue', () => {
                             {
                                 label: 'Vue Website',
                                 icon: 'pi pi-external-link',
-                                url: 'https://vuejs.org/'
+                                url: 'https://v2.vuejs.org/'
                             },
                             {
                                 label: 'Router',
@@ -61,7 +61,7 @@ describe('Menu.vue', () => {
         expect(wrapper.findAll('.p-submenu-header')[0].text()).toBe('Options');
         expect(wrapper.findAll('.p-menuitem').length).toBe(4);
         expect(wrapper.findAll('.p-menuitem')[0].find('span.p-menuitem-text').text()).toBe('Update');
-        expect(wrapper.findAll('.p-menuitem')[2].find('a').attributes().href).toBe('https://vuejs.org/');
+        expect(wrapper.findAll('.p-menuitem')[2].find('a').attributes().href).toBe('https://v2.vuejs.org/');
     });
 
     it('should popup work', async () => {

@@ -2,16 +2,16 @@ import { DomHandler } from 'primevue2/utils';
 import BaseStyleClass from './BaseStyleClass';
 
 const StyleClass = BaseStyleClass.extend('styleclass', {
-    mounted(el, binding) {
+    inserted(el, binding) {
         el.setAttribute('data-pd-styleclass', true);
 
-        this.bind(el, binding);
+        this._bind(el, binding);
     },
-    unmounted(el) {
-        this.unbind(el);
+    unbind(el) {
+        this._unbind(el);
     },
     methods: {
-        bind(el, binding) {
+        _bind(el, binding) {
             const target = this.resolveTarget(el, binding);
 
             this.$el = target;
@@ -28,7 +28,7 @@ const StyleClass = BaseStyleClass.extend('styleclass', {
 
             el.addEventListener('click', el.$_pstyleclass_clicklistener);
         },
-        unbind(el) {
+        _unbind(el) {
             if (el.$_pstyleclass_clicklistener) {
                 el.removeEventListener('click', el.$_pstyleclass_clicklistener);
                 el.$_pstyleclass_clicklistener = null;

@@ -9,10 +9,9 @@
         :disabled="disabled"
         :unstyled="unstyled"
         :pt="ptm('rowPerPageDropdown')"
-        data-pc-group-section="pagedropdown"
-    >
+        data-pc-group-section="pagedropdown">
         <template v-if="templates['rowsperpagedropdownicon']" #dropdownicon="slotProps">
-            <component :is="templates['rowsperpagedropdownicon']" :class="slotProps.className" />
+            <DynamicComponent :template="templates['rowsperpagedropdownicon']" :className="slotProps.className" />
         </template>
     </RPPDropdown>
 </template>

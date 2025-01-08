@@ -888,7 +888,7 @@ describe('DataTable.vue', () => {
 
         await wrapper.vm.onColumnResizeStart({ target: resizer.element });
 
-        expect(wrapper.componentVM.columnResizing).toBe(true);
+        expect(wrapper.DynamicComponentVM.columnResizing).toBe(true);
         expect(wrapper.find('.p-column-resizer-helper').attributes().style).toContain('display: none;');
     });
 
@@ -973,7 +973,7 @@ describe('DataTable.vue', () => {
 
         await wrapper.vm.onColumnResizeStart({ target: resizer.element });
 
-        expect(wrapper.componentVM.columnResizing).toBe(true);
+        expect(wrapper.DynamicComponentVM.columnResizing).toBe(true);
         expect(wrapper.find('.p-column-resizer-helper').attributes().style).toContain('display: none;');
     });
 

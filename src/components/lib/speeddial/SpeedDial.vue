@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :ref="containerRef" :class="containerClass" :style="[style, sx('root')]" v-bind="ptmi('root')">
+    <div :ref="containerRef" :class="containerClass" :style="[styleName, ...sx('root')]" v-bind="ptmi('root')">
         <slot name="button" :onClick="onClick" :toggleCallback="onClick">
             <SDButton
                 type="button"
@@ -14,12 +14,11 @@
                 :aria-label="ariaLabel"
                 :aria-labelledby="ariaLabelledby"
                 :pt="ptm('button')"
-                :unstyled="unstyled"
-            >
+                :unstyled="unstyled">
                 <template #icon>
                     <slot name="icon" :visible="d_visible">
-                        <component v-if="d_visible && !!hideIcon" :is="hideIcon ? 'span' : 'PlusIcon'" :class="[hideIcon, cx('buttonIcon')]" v-bind="ptm('button')['icon']" data-pc-section="icon" />
-                        <component v-else :is="showIcon ? 'span' : 'PlusIcon'" :class="d_visible && !!hideIcon ? hideIcon : showIcon" v-bind="ptm('button')['icon']" data-pc-section="icon" />
+                        <DynamicComponent v-if="d_visible && !!hideIcon" :template="hideIcon ? 'span' : 'PlusIcon'" :className="[hideIcon, cx('buttonIcon')]" v-bind="ptm('button')['icon']" data-pc-section="icon" />
+                        <DynamicComponent v-else :template="showIcon ? 'span' : 'PlusIcon'" :className="d_visible && !!hideIcon ? hideIcon : showIcon" v-bind="ptm('button')['icon']" data-pc-section="icon" />
                     </slot>
                 </template>
             </SDButton>
@@ -43,7 +42,7 @@
                             <span v-if="item.icon" :class="[cx('actionIcon'), item.icon]" v-bind="getPTOptions(`${id}_${index}`, 'actionIcon')"></span>
                         </a>
                     </template>
-                    <component v-else :is="$slots.item" :item="item" :onClick="(event) => onItemClick(event, item)"></component>
+                    <DynamicComponent v-else :template="$slots.item" :item="item" :onClick="(event) => onItemClick(event, item)"></DynamicComponent>
                 </li>
             </template>
         </ul>
@@ -107,7 +106,7 @@ export default {
             this.bindDocumentClickListener();
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindDocumentClickListener();
     },
     methods: {
@@ -450,7 +449,7 @@ export default {
     },
     computed: {
         containerClass() {
-            return [this.cx('root'), this.class];
+            return [this.cx('root'), this.className];
         },
         focusedOptionId() {
             return this.focusedOptionIndex !== -1 ? this.focusedOptionIndex : null;

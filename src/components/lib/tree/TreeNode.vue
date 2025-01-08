@@ -17,25 +17,25 @@
         <div :class="cx('content')" @click="onClick" @touchend="onTouchEnd" :style="node.style" v-bind="getPTOptions('content')" :data-p-highlight="checkboxMode ? checked : selected" :data-p-selectable="selectable">
             <button v-ripple type="button" :class="cx('toggler')" @click="toggle" tabindex="-1" aria-hidden="true" v-bind="getPTOptions('toggler')">
                 <template v-if="node.loading && loadingMode === 'icon'">
-                    <component v-if="templates['nodetogglericon']" :is="templates['nodetogglericon']" :class="cx('nodetogglericon')" />
+                    <DynamicComponent v-if="templates['nodetogglericon']" :template="templates['nodetogglericon']" :className="cx('nodetogglericon')" />
                     <SpinnerIcon v-else spin :class="cx('nodetogglericon')" v-bind="ptm('nodetogglericon')" />
                 </template>
                 <template v-else>
-                    <component v-if="templates['togglericon']" :is="templates['togglericon']" :node="node" :expanded="expanded" :class="cx('togglerIcon')" />
-                    <component v-else-if="expanded" :is="node.expandedIcon ? 'span' : 'ChevronDownIcon'" :class="cx('togglerIcon')" v-bind="getPTOptions('togglerIcon')" />
-                    <component v-else :is="node.collapsedIcon ? 'span' : 'ChevronRightIcon'" :class="cx('togglerIcon')" v-bind="getPTOptions('togglerIcon')" />
+                    <DynamicComponent v-if="templates['togglericon']" :template="templates['togglericon']" :node="node" :expanded="expanded" :className="cx('togglerIcon')" />
+                    <DynamicComponent v-else-if="expanded" :template="node.expandedIcon ? 'span' : 'ChevronDownIcon'" :className="cx('togglerIcon')" v-bind="getPTOptions('togglerIcon')" />
+                    <DynamicComponent v-else :template="node.collapsedIcon ? 'span' : 'ChevronRightIcon'" :className="cx('togglerIcon')" v-bind="getPTOptions('togglerIcon')" />
                 </template>
             </button>
             <Checkbox v-if="checkboxMode" :modelValue="checked" :binary="true" :class="cx('nodeCheckbox')" :tabindex="-1" :unstyled="unstyled" :pt="getPTOptions('nodeCheckbox')" :data-p-checked="checked" :data-p-partialchecked="partialChecked">
                 <template #icon="slotProps">
-                    <component v-if="templates['checkboxicon']" :is="templates['checkboxicon']" :checked="slotProps.checked" :partialChecked="partialChecked" :class="slotProps.className" />
-                    <component v-else :is="checked ? 'CheckIcon' : partialChecked ? 'MinusIcon' : null" :class="slotProps.className" v-bind="getPTOptions('nodeCheckbox.icon')" />
+                    <DynamicComponent v-if="templates['checkboxicon']" :template="templates['checkboxicon']" :checked="slotProps.checked" :partialChecked="partialChecked" :className="slotProps.className" />
+                    <DynamicComponent v-else :template="checked ? 'CheckIcon' : partialChecked ? 'MinusIcon' : null" :className="slotProps.className" v-bind="getPTOptions('nodeCheckbox.icon')" />
                 </template>
             </Checkbox>
-            <component v-if="templates['nodeicon']" :is="templates['nodeicon']" :node="node" :class="[cx('nodeIcon')]" v-bind="getPTOptions('nodeIcon')"></component>
+            <DynamicComponent v-if="templates['nodeicon']" :template="templates['nodeicon']" :node="node" :className="[cx('nodeIcon')]" v-bind="getPTOptions('nodeIcon')"></DynamicComponent>
             <span v-else :class="[cx('nodeIcon'), node.icon]" v-bind="getPTOptions('nodeIcon')"></span>
             <span :class="cx('label')" v-bind="getPTOptions('label')" @keydown.stop>
-                <component v-if="templates[node.type] || templates['default']" :is="templates[node.type] || templates['default']" :node="node" />
+                <DynamicComponent v-if="templates[node.type] || templates['default']" :template="templates[node.type] || templates['default']" :node="node" />
                 <template v-else>{{ label(node) }}</template>
             </span>
         </div>

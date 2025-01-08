@@ -55,8 +55,8 @@
           </template>
 
           <Column selectionMode="multiple" :styless="{ width: '3rem' }" :exportable="false"></Column>
-          <Column field="code" header="Code" :sortable="true" :styles="{ 'min-width': '12rem' }"></Column>
-          <Column field="name" header="Name" :sortable="true" :styles="{ 'min-width': '16rem' }"></Column>
+          <Column field="code" header="Code" :sortable="true" :styleName="{ 'min-width': '12rem' }"></Column>
+          <Column field="name" header="Name" :sortable="true" :styleName="{ 'min-width': '16rem' }"></Column>
           <Column header="Image">
             <template #body="slotProps">
               <img
@@ -65,18 +65,18 @@
                 class="product-image" />
             </template>
           </Column>
-          <Column field="price" header="Price" :sortable="true" :styles="{ 'min-width': '8rem' }">
+          <Column field="price" header="Price" :sortable="true" :styleName="{ 'min-width': '8rem' }">
             <template #body="slotProps">
               {{ formatCurrency(slotProps.data.price) }}
             </template>
           </Column>
-          <Column field="category" header="Category" :sortable="true" :styles="{ 'min-width': '10rem' }"></Column>
-          <Column field="rating" header="Reviews" :sortable="true" :styles="{ 'min-width': '12rem' }">
+          <Column field="category" header="Category" :sortable="true" :styleName="{ 'min-width': '10rem' }"></Column>
+          <Column field="rating" header="Reviews" :sortable="true" :styleName="{ 'min-width': '12rem' }">
             <template #body="slotProps">
               <Rating :value="slotProps.data.rating" :readonly="true" :cancel="false" />
             </template>
           </Column>
-          <Column field="inventoryStatus" header="Status" :sortable="true" :styles="{ 'min-width': '12rem' }">
+          <Column field="inventoryStatus" header="Status" :sortable="true" :styleName="{ 'min-width': '12rem' }">
             <template #body="slotProps">
               <span
                 :class="
@@ -87,7 +87,7 @@
               >
             </template>
           </Column>
-          <Column :exportable="false" :styles="{ 'min-width': '8rem' }">
+          <Column :exportable="false" :styleName="{ 'min-width': '8rem' }">
             <template #body="slotProps">
               <Button
                 icon="pi pi-pencil"
@@ -119,7 +119,6 @@
             id="name"
             v-model.trim="product.name"
             required="true"
-            autofocus
             :class="{ 'p-invalid': submitted && !product.name }" />
           <small class="p-invalid" v-if="submitted && !product.name">Name is required.</small>
         </div>
@@ -198,7 +197,7 @@
 
 <script>
 import DataTableCrudDoc from '@/doc/datatable/Crud.vue'
-import FilterMatchMode from '../../components/api/FilterMatchMode'
+import FilterMatchMode from '../../components/lib/api/FilterMatchMode'
 import ProductService from '../../service/ProductService'
 
 export default {

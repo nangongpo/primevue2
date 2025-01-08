@@ -4,7 +4,7 @@ const { mergeProps } = VueUtils
 
 const BaseDirective = {
     _getMeta: (...args) => [ObjectUtils.isObject(args[0]) ? undefined : args[0], ObjectUtils.getItemValue(ObjectUtils.isObject(args[0]) ? args[0] : args[1])],
-    _getConfig: (binding, vnode) => (binding?.instance?.$primevue || vnode?.ctx?.appContext?.config?.globalProperties?.$primevue)?.config,
+    _getConfig: (binding, vnode) => (binding?.instance?.$primevue || vnode?.context?.$primevue)?.config,
     _getOptionValue: (options, key = '', params = {}) => {
         const fKeys = ObjectUtils.toFlatCase(key).split('.');
         const fKey = fKeys.shift();
@@ -45,7 +45,7 @@ const BaseDirective = {
             return computedValue?.[_key] ?? computedValue;
         };
 
-        return pt?.hasOwnProperty('_usept')
+        return pt && Object.prototype.hasOwnProperty.call(pt, '_usept')
             ? {
                   _usept: pt['_usept'],
                   originalValue: getValue(pt.originalValue),
@@ -56,7 +56,7 @@ const BaseDirective = {
     _usePT: (instance = {}, pt, callback, key, params) => {
         const fn = (value) => callback(value, key, params);
 
-        if (pt?.hasOwnProperty('_usept')) {
+        if (pt && Object.prototype.hasOwnProperty.call(pt, '_usept')) {
             const { mergeSections = true, mergeProps: useMergeProps = false } = pt['_usept'] || instance.$primevueConfig?.ptOptions || {};
             const originalValue = fn(pt.originalValue);
             const value = fn(pt.value);
@@ -90,7 +90,6 @@ const BaseDirective = {
     _extend: (name, options = {}) => {
         const handleHook = (hook, el, binding, vnode, prevVnode) => {
             el._$instances = el._$instances || {};
-
             const config = BaseDirective._getConfig(binding, vnode);
             const $prevInstance = el._$instances[name] || {};
             const $options = ObjectUtils.isEmpty($prevInstance) ? { ...options, ...options?.methods } : {};
@@ -107,13 +106,30 @@ const BaseDirective = {
                 $style: { classes: undefined, inlineStyles: undefined, loadStyle: () => {}, ...options?.style },
                 $primevueConfig: config,
                 /* computed instance variables */
-                defaultPT: () => BaseDirective._getPT(config?.pt, undefined, (value) => value?.directives?.[name]),
-                isUnstyled: () => (el.$instance?.$binding?.value?.unstyled !== undefined ? el.$instance?.$binding?.value?.unstyled : config?.unstyled),
+                defaultPT: () => {
+                  return BaseDirective._getPT(config?.pt, undefined, (value) => value?.directives?.[name])
+                },
+                isUnstyled: () => {
+                  const instance = el._$instances?.[name]
+                  return (instance?.$binding?.value?.unstyled !== undefined ? instance?.$binding?.value?.unstyled : config?.unstyled)
+                },
                 /* instance's methods */
-                ptm: (key = '', params = {}) => BaseDirective._getPTValue(el.$instance, el.$instance?.$binding?.value?.pt, key, { ...params }),
-                ptmo: (obj = {}, key = '', params = {}) => BaseDirective._getPTValue(el.$instance, obj, key, params, false),
-                cx: (key = '', params = {}) => (!el.$instance?.isUnstyled() ? BaseDirective._getOptionValue(el.$instance?.$style?.classes, key, { ...params }) : undefined),
-                sx: (key = '', when = true, params = {}) => (when ? BaseDirective._getOptionValue(el.$instance?.$style?.inlineStyles, key, { ...params }) : undefined),
+                ptm: (key = '', params = {}) => {
+                  const instance = el._$instances?.[name]
+                  return BaseDirective._getPTValue(instance, instance?.$binding?.value?.pt, key, { ...params })
+                },
+                ptmo: (obj = {}, key = '', params = {}) => {
+                  const instance = el._$instances?.[name]
+                  return BaseDirective._getPTValue(instance, obj, key, params, false)
+                },
+                cx: (key = '', params = {}) => {
+                  const instance = el._$instances?.[name]
+                  return (!instance?.isUnstyled() ? BaseDirective._getOptionValue(instance?.$style?.classes, key, { ...params }) : undefined)
+                },
+                sx: (key = '', when = true, params = {}) => {
+                  const instance = el._$instances?.[name]
+                  return (when ? BaseDirective._getOptionValue(instance?.$style?.inlineStyles, key, { ...params }) : undefined)
+                },
                 ...$options
             };
 
@@ -124,34 +140,36 @@ const BaseDirective = {
         };
 
         return {
-            created: (el, binding, vnode, prevVnode) => {
-                handleHook('created', el, binding, vnode, prevVnode);
-            },
-            beforeMount: (el, binding, vnode, prevVnode) => {
+            bind: (el, binding, vnode, prevVnode) => {
+                if (!el._$instances?.[binding.name]) {
+                  // 初始化变量
+                  handleHook('created', el, binding, vnode, prevVnode);
+                }
+
+
+                // 执行bind方法
                 const config = BaseDirective._getConfig(binding, vnode);
 
                 BaseStyle.loadStyle({ nonce: config?.csp?.nonce });
                 !el.$instance?.isUnstyled() && el.$instance?.$style?.loadStyle({ nonce: config?.csp?.nonce });
-                handleHook('beforeMount', el, binding, vnode, prevVnode);
+                handleHook('bind', el, binding, vnode, prevVnode);
             },
-            mounted: (el, binding, vnode, prevVnode) => {
+            inserted: (el, binding, vnode, prevVnode) => {
                 const config = BaseDirective._getConfig(binding, vnode);
 
                 BaseStyle.loadStyle({ nonce: config?.csp?.nonce });
                 !el.$instance?.isUnstyled() && el.$instance?.$style?.loadStyle({ nonce: config?.csp?.nonce });
-                handleHook('mounted', el, binding, vnode, prevVnode);
+                handleHook('inserted', el, binding, vnode, prevVnode);
             },
-            beforeUpdate: (el, binding, vnode, prevVnode) => {
-                handleHook('beforeUpdate', el, binding, vnode, prevVnode);
+            update: (el, binding, vnode, prevVnode) => {
+                handleHook('update', el, binding, vnode, prevVnode);
             },
-            updated: (el, binding, vnode, prevVnode) => {
-                handleHook('updated', el, binding, vnode, prevVnode);
+            componentUpdated: (el, binding, vnode, prevVnode) => {
+                handleHook('componentUpdated', el, binding, vnode, prevVnode);
             },
-            beforeUnmount: (el, binding, vnode, prevVnode) => {
-                handleHook('beforeUnmount', el, binding, vnode, prevVnode);
-            },
-            unmounted: (el, binding, vnode, prevVnode) => {
-                handleHook('unmounted', el, binding, vnode, prevVnode);
+            unbind: (el, binding, vnode, prevVnode) => {
+                handleHook('unbind', el, binding, vnode, prevVnode);
+                el._$instances[binding.name] = null
             }
         };
     },

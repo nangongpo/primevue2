@@ -1,6 +1,6 @@
 <template>
     <td :style="containerStyle" :class="containerClass" role="cell" :colspan="columnProp('colspan')" :rowspan="columnProp('rowspan')" v-bind="{ ...getColumnPT('root'), ...getColumnPT('footerCell') }" :data-p-frozen-column="columnProp('frozen')">
-        <component v-if="column.children && column.children.footer" :is="column.children.footer" :column="column" />
+        <DynamicComponent v-if="column.$scopedSlots && column.$scopedSlots.footer" :template="column.$scopedSlots.footer" :column="column" />
         {{ columnProp('footer') }}
     </td>
 </template>
@@ -45,7 +45,7 @@ export default {
         },
         getColumnPT(key) {
             const columnMetaData = {
-                props: this.column.props,
+                props: this.column.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -61,7 +61,7 @@ export default {
             return mergeProps(this.ptm(`column.${key}`, { column: columnMetaData }), this.ptm(`column.${key}`, columnMetaData), this.ptmo(this.getColumnProp(), key, columnMetaData));
         },
         getColumnProp() {
-            return this.column.props && this.column.props.pt ? this.column.props.pt : undefined;
+          return this.column?.pt //@todo:
         },
         updateStickyPosition() {
             if (this.columnProp('frozen')) {
@@ -91,13 +91,19 @@ export default {
     },
     computed: {
         containerClass() {
-            return [this.columnProp('footerClass'), this.columnProp('class'), this.cx('footerCell')];
+            return ObjectUtils.toFlattenArray(
+              this.columnProp('footerClass'), 
+              this.columnProp('className'), 
+              this.cx('footerCell')
+            )
         },
         containerStyle() {
             let bodyStyle = this.columnProp('footerStyle');
-            let columnStyle = this.columnProp('style');
+            let columnStyle = this.columnProp('styleName');
 
-            return this.columnProp('frozen') ? [columnStyle, bodyStyle, this.styleObject] : [columnStyle, bodyStyle];
+            return this.columnProp('frozen') 
+              ? ObjectUtils.toFlattenArray(columnStyle, bodyStyle, this.styleObject)
+              : ObjectUtils.toFlattenArray(columnStyle, bodyStyle)
         }
     }
 };

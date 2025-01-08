@@ -1,6 +1,6 @@
 <template>
     <div :class="cx('root')" :style="sx('root')" role="separator" :aria-orientation="layout" v-bind="ptmi('root')">
-        <div v-if="$slots.default" :class="cx('content')" v-bind="ptm('content')">
+        <div v-if="$scopedSlots.default" :class="cx('content')" v-bind="ptm('content')">
             <slot></slot>
         </div>
     </div>

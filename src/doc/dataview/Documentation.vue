@@ -334,15 +334,15 @@ export default {
       layoutsCode: {
         basic: `
 <template #list="slotProps">
-	<div class="col-12">
+    <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
         <div class="car-details">
             <div>
-                <img :src="'demo/images/car/' + slotProps.data.brand + '.png'" :alt="slotProps.data.brand"/>
+                <img :src="'demo/images/car/' + item.brand + '.png'" :alt="item.brand"/>
                 <div class="grid">
-                    <div class="col-12">Vin: <b>{{slotProps.data.vin}}</b></div>
-                    <div class="col-12">Year: <b>{{slotProps.data.year}}</b></div>
-                    <div class="col-12">Brand: <b>{{slotProps.data.brand}}</b></div>
-                    <div class="col-12">Color: <b>{{slotProps.data.color}}</b></div>
+                    <div class="col-12">Vin: <b>{{item.vin}}</b></div>
+                    <div class="col-12">Year: <b>{{item.year}}</b></div>
+                    <div class="col-12">Brand: <b>{{item.brand}}</b></div>
+                    <div class="col-12">Color: <b>{{item.color}}</b></div>
                 </div>
             </div>
             <Button icon="pi pi-search"></Button>
@@ -350,12 +350,14 @@ export default {
     </div>
 </template>
 <template #grid="slotProps">
-	<div style="padding: .5em" class="col-12 md:col-3">
-		<Panel :header="slotProps.data.vin" style="text-align: center">
-			<img :src="'demo/images/car/' + slotProps.data.brand + '.png'" :alt="slotProps.data.brand"/>
-			<div class="car-detail">{{slotProps.data.year}} - {{slotProps.data.color}}</div>
-			<Button icon="pi pi-search"></Button>
-		</Panel>
+  <div class="grid">
+    <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 md:col-3" style="padding: .5em" >
+      <Panel :header="item.vin" style="text-align: center">
+        <img :src="'demo/images/car/' + item.brand + '.png'" :alt="item.brand"/>
+        <div class="car-detail">{{item.year}} - {{item.color}}</div>
+        <Button icon="pi pi-search"></Button>
+      </Panel>
+    </div>
 	</div>
 </template>
         `
@@ -378,10 +380,14 @@ export default {
 		<DataViewLayoutOptions v-model="layout"></DataViewLayoutOptions>
 	</template>
 	<template #list="slotProps" >
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 	<template #grid="slotProps">
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 </DataView>
         `
@@ -396,10 +402,14 @@ export default {
 		<Button type="button" icon="pi pi-search" />
 	</template>
 	<template #list="slotProps" >
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 	<template #grid="slotProps">
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 </DataView>
         `
@@ -417,11 +427,15 @@ export default {
             </div>
         </div>
     </template>
-	<template #list="slotProps" >
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+	<template #list="slotProps">
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 	<template #grid="slotProps">
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 </DataView>
         `
@@ -474,10 +488,14 @@ export default {
         basic: `
 <DataView :value="cars" :layout="layout" :paginator="true" :rows="20" :lazy="true" @page="onPage($event)">
 	<template #list="slotProps" >
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 	<template #grid="slotProps">
-		<div>Vin: <b>{{slotProps.data.vin}}</b></div>
+    <template v-for="(item, index) in slotProps.items">
+      <div :key="index">Vin: <b>{{item.vin}}</b></div>
+    </template>
 	</template>
 </DataView>
         `

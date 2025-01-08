@@ -2,7 +2,7 @@
     <div :class="cx('root')" :aria-labelledby="ariaLabelledby" :aria-label="ariaLabel" v-bind="ptmi('root')">
         <slot>
             <span v-if="label" :class="cx('label')" v-bind="ptm('label')">{{ label }}</span>
-            <component v-else-if="$slots.icon" :is="$slots.icon" :class="cx('icon')" />
+            <DynamicComponent v-else-if="$slots.icon" :template="$slots.icon" :className="cx('icon')" />
             <span v-else-if="icon" :class="[cx('icon'), icon]" v-bind="ptm('icon')" />
             <img v-else-if="image" :src="image" :alt="ariaLabel" @error="onError" v-bind="ptm('image')" />
         </slot>

@@ -10,8 +10,8 @@
         <div :class="cx('actions')" v-bind="ptm('actions')">
             <FileUploadButton @click="$emit('remove', index)" text rounded severity="danger" :class="cx('removeButton')" :unstyled="unstyled" :pt="ptm('removeButton')">
                 <template #icon="iconProps">
-                    <component v-if="templates.fileremoveicon" :is="templates.fileremoveicon" :class="iconProps.class" :file="file" :index="index" />
-                    <TimesIcon v-else :class="iconProps.class" aria-hidden="true" v-bind="ptm('removeButton')['icon']" />
+                    <DynamicComponent v-if="templates.fileremoveicon" :template="templates.fileremoveicon" :className="iconProps.className" :file="file" :index="index" />
+                    <TimesIcon v-else :class="iconProps.className" aria-hidden="true" v-bind="ptm('removeButton')['icon']" />
                 </template>
             </FileUploadButton>
         </div>

@@ -1,12 +1,12 @@
 <template>
     <Portal v-if="fullScreen">
-        <div v-if="containerVisible" :ref="maskRef" :class="[cx('mask'), maskClass]" role="dialog" :aria-modal="fullScreen ? 'true' : undefined" v-bind="ptm('mask')">
+        <div v-if="containerVisible || visible" :ref="maskRef" :class="[cx('mask'), maskClass]" role="dialog" :aria-modal="fullScreen ? 'true' : undefined" v-bind="ptm('mask')">
             <transition name="p-galleria" @before-enter="onBeforeEnter" @enter="onEnter" @before-leave="onBeforeLeave" @after-leave="onAfterLeave" appear v-bind="ptm('transition')">
-                <GalleriaContent v-if="visible" :ref="containerRef" v-focustrap @mask-hide="maskHide" :templates="$slots" @activeitem-change="onActiveItemChange" :pt="pt" :unstyled="unstyled" v-bind="$props" />
+                <GalleriaContent v-if="visible" :ref="containerRef" v-focustrap @mask-hide="maskHide" :templates="$scopedSlots" @activeitem-change="onActiveItemChange" :pt="pt" :unstyled="unstyled" v-bind="$props" />
             </transition>
         </div>
     </Portal>
-    <GalleriaContent v-else :templates="$slots" @activeitem-change="onActiveItemChange" :pt="pt" :unstyled="unstyled" v-bind="$props" />
+    <GalleriaContent v-else :templates="$scopedSlots" @activeitem-change="onActiveItemChange" :pt="pt" :unstyled="unstyled" v-bind="$props" />
 </template>
 
 <script>
@@ -33,7 +33,7 @@ export default {
             this.containerVisible = this.visible;
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (this.fullScreen) {
             DomHandler.unblockBodyScroll();
         }

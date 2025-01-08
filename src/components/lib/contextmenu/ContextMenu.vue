@@ -14,7 +14,7 @@
                     :menuId="id"
                     :focusedItemId="focused ? focusedItemIdx : undefined"
                     :items="processedItems"
-                    :templates="$slots"
+                    :templates="$scopedSlots"
                     :activeItemPath="activeItemPath"
                     :aria-labelledby="ariaLabelledby"
                     :aria-label="ariaLabel"
@@ -84,7 +84,7 @@ export default {
             this.bindDocumentContextMenuListener();
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindResizeListener();
         this.unbindOutsideClickListener();
         this.unbindDocumentContextMenuListener();

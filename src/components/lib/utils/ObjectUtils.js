@@ -1,51 +1,52 @@
 export default {
   equals(obj1, obj2, field) {
     if (field)
-      return (this.resolveFieldData(obj1, field) === this.resolveFieldData(obj2, field))
-    else
-      return this.deepEquals(obj1, obj2)
+      return (
+        this.resolveFieldData(obj1, field) ===
+        this.resolveFieldData(obj2, field)
+      )
+    else return this.deepEquals(obj1, obj2)
   },
 
   deepEquals(a, b) {
     if (a === b) return true
 
     if (a && b && typeof a == 'object' && typeof b == 'object') {
-      var arrA = Array.isArray(a)
-        , arrB = Array.isArray(b)
-        , i
-        , length
-        , key
+      var arrA = Array.isArray(a),
+        arrB = Array.isArray(b),
+        i,
+        length,
+        key
 
       if (arrA && arrB) {
         length = a.length
         if (length != b.length) return false
-        for (i = length; i-- !== 0;)
+        for (i = length; i-- !== 0; )
           if (!this.deepEquals(a[i], b[i])) return false
         return true
       }
 
       if (arrA != arrB) return false
 
-      var dateA = a instanceof Date
-        , dateB = b instanceof Date
+      var dateA = a instanceof Date,
+        dateB = b instanceof Date
       if (dateA != dateB) return false
       if (dateA && dateB) return a.getTime() == b.getTime()
 
-      var regexpA = a instanceof RegExp
-        , regexpB = b instanceof RegExp
+      var regexpA = a instanceof RegExp,
+        regexpB = b instanceof RegExp
       if (regexpA != regexpB) return false
       if (regexpA && regexpB) return a.toString() == b.toString()
 
       var keys = Object.keys(a)
       length = keys.length
 
-      if (length !== Object.keys(b).length)
-        return false
+      if (length !== Object.keys(b).length) return false
 
-      for (i = length; i-- !== 0;)
+      for (i = length; i-- !== 0; )
         if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false
 
-      for (i = length; i-- !== 0;) {
+      for (i = length; i-- !== 0; ) {
         key = keys[i]
         if (!this.deepEquals(a[key], b[key])) return false
       }
@@ -60,14 +61,12 @@ export default {
     if (data && Object.keys(data).length && field) {
       if (this.isFunction(field)) {
         return field(data)
-      }
-      else if(field.indexOf('.') === -1) {
+      } else if (field.indexOf('.') === -1) {
         return data[field]
-      }
-      else {
+      } else {
         let fields = field.split('.')
         let value = data
-        for(var i = 0, len = fields.length; i < len; ++i) {
+        for (var i = 0, len = fields.length; i < len; ++i) {
           if (value == null) {
             return null
           }
@@ -75,8 +74,7 @@ export default {
         }
         return value
       }
-    }
-    else {
+    } else {
       return null
     }
   },
@@ -91,7 +89,11 @@ export default {
     if (value) {
       for (let item of value) {
         for (let field of fields) {
-          if (String(this.resolveFieldData(item, field)).toLowerCase().indexOf(filterValue.toLowerCase()) > -1) {
+          if (
+            String(this.resolveFieldData(item, field))
+              .toLowerCase()
+              .indexOf(filterValue.toLowerCase()) > -1
+          ) {
             filteredItems.push(item)
             break
           }
@@ -104,10 +106,10 @@ export default {
 
   reorderArray(value, from, to) {
     let target
-    if (value && (from !== to)) {
+    if (value && from !== to) {
       if (to >= value.length) {
         target = to - value.length
-        while ((target--) + 1) {
+        while (target-- + 1) {
           value.push(undefined)
         }
       }
@@ -133,8 +135,7 @@ export default {
   contains(value, list) {
     if (value != null && list && list.length) {
       for (let val of list) {
-        if (this.equals(value, val))
-          return true
+        if (this.equals(value, val)) return true
       }
     }
 
@@ -156,8 +157,7 @@ export default {
       if (!injected) {
         arr.push(item)
       }
-    }
-    else {
+    } else {
       arr.push(item)
     }
   },
@@ -192,11 +192,17 @@ export default {
   },
 
   getVNodeProp(vnode, prop) {
-    let props = vnode._props
+    let props = vnode._props || vnode?.componentOptions?.propsData
     if (props) {
       let kebapProp = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-      let propName = Object.prototype.hasOwnProperty.call(props, kebapProp) ? kebapProp : prop
+      let propName = Object.prototype.hasOwnProperty.call(props, kebapProp)
+        ? kebapProp
+        : prop
 
+      // if (Object.prototype.hasOwnProperty.call(props, 'frozen'), props.field === 'balance1') {
+      //   console.log(props.frozen)
+      // }
+      
       return props[propName]
     }
 
@@ -212,18 +218,28 @@ export default {
     // convert snake, camel and pascal cases to kebab case
     return this.isString(str)
       ? str
-        .replace(/(_)/g, '-')
-        .replace(/[A-Z]/g, (c, i) => (i === 0 ? c : '-' + c.toLowerCase()))
-        .toLowerCase()
+          .replace(/(_)/g, '-')
+          .replace(/[A-Z]/g, (c, i) => (i === 0 ? c : '-' + c.toLowerCase()))
+          .toLowerCase()
       : str
   },
 
   toCapitalCase(str) {
-    return this.isString(str, { empty: false }) ? str[0].toUpperCase() + str.slice(1) : str
+    return this.isString(str, { empty: false })
+      ? str[0].toUpperCase() + str.slice(1)
+      : str
   },
 
   isEmpty(value) {
-    return value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0) || (!(value instanceof Date) && typeof value === 'object' && Object.keys(value).length === 0)
+    return (
+      value === null ||
+      value === undefined ||
+      value === '' ||
+      (Array.isArray(value) && value.length === 0) ||
+      (!(value instanceof Date) &&
+        typeof value === 'object' &&
+        Object.keys(value).length === 0)
+    )
   },
 
   isNotEmpty(value) {
@@ -235,7 +251,11 @@ export default {
   },
 
   isObject(value, empty = true) {
-    return value instanceof Object && value.constructor === Object && (empty || Object.keys(value).length !== 0)
+    return (
+      value instanceof Object &&
+      value.constructor === Object &&
+      (empty || Object.keys(value).length !== 0)
+    )
   },
 
   isDate(value) {
@@ -310,7 +330,8 @@ export default {
     if (emptyValue1 && emptyValue2) result = 0
     else if (emptyValue1) result = order
     else if (emptyValue2) result = -order
-    else if (typeof value1 === 'string' && typeof value2 === 'string') result = comparator(value1, value2)
+    else if (typeof value1 === 'string' && typeof value2 === 'string')
+      result = comparator(value1, value2)
     else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0
 
     return result
@@ -325,7 +346,9 @@ export default {
     return Object.entries(obj).reduce((o, [key, value]) => {
       const currentKey = parentKey ? `${parentKey}.${key}` : key
 
-      this.isObject(value) ? (o = o.concat(this.nestedKeys(value, currentKey))) : o.push(currentKey)
+      this.isObject(value)
+        ? (o = o.concat(this.nestedKeys(value, currentKey)))
+        : o.push(currentKey)
 
       return o
     }, [])
@@ -336,7 +359,13 @@ export default {
     const nextIndentStr = ' '.repeat(currentIndent + indent)
 
     if (this.isArray(value)) {
-      return '[' + value.map((v) => this.stringify(v, indent, currentIndent + indent)).join(', ') + ']'
+      return (
+        '[' +
+        value
+          .map((v) => this.stringify(v, indent, currentIndent + indent))
+          .join(', ') +
+        ']'
+      )
     } else if (this.isDate(value)) {
       return value.toISOString()
     } else if (this.isFunction(value)) {
@@ -344,11 +373,18 @@ export default {
     } else if (this.isObject(value)) {
       return (
         '{\n' +
-                Object.entries(value)
-                  .map(([k, v]) => `${nextIndentStr}${k}: ${this.stringify(v, indent, currentIndent + indent)}`)
-                  .join(',\n') +
-                `\n${currentIndentStr}` +
-                '}'
+        Object.entries(value)
+          .map(
+            ([k, v]) =>
+              `${nextIndentStr}${k}: ${this.stringify(
+                v,
+                indent,
+                currentIndent + indent
+              )}`
+          )
+          .join(',\n') +
+        `\n${currentIndentStr}` +
+        '}'
       )
     } else {
       return JSON.stringify(value)
@@ -364,18 +400,24 @@ export default {
       // 创建一个新的目标对象，以避免修改原始对象
       const result = { ...target }
 
-      Object.keys(source).forEach(key => {
+      Object.keys(source).forEach((key) => {
         const targetValue = target[key]
         const sourceValue = source[key]
 
         // 如果源值是对象且目标值也是对象，则递归合并
-        if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue) &&
-            targetValue && typeof targetValue === 'object' && !Array.isArray(targetValue)) {
+        if (
+          sourceValue &&
+          typeof sourceValue === 'object' &&
+          !Array.isArray(sourceValue) &&
+          targetValue &&
+          typeof targetValue === 'object' &&
+          !Array.isArray(targetValue)
+        ) {
           result[key] = merge(targetValue, sourceValue) // 递归合并
         }
         // 如果源值是数组，则合并数组（这里是简单的替换，可根据需求修改）
         else if (Array.isArray(sourceValue)) {
-          result[key] = [...sourceValue]  // 使用新数组替换
+          result[key] = [...sourceValue] // 使用新数组替换
         }
         // 否则直接覆盖目标值
         else {
@@ -387,11 +429,31 @@ export default {
     }
 
     // 合并所有源对象，返回新的目标对象
-    return sources.reduce((accumulated, source) => {
-      if (source != null) {
-        return merge(accumulated, source)
+    return sources.reduce(
+      (accumulated, source) => {
+        if (source != null) {
+          return merge(accumulated, source)
+        }
+        return accumulated
+      },
+      { ...target }
+    ) // 使用一个新的目标对象来避免修改原始目标
+  },
+
+  toFlattenArray(...args) {
+    // 递归展平数组
+    const flatten = (arr) => {
+      let result = []
+      for (let item of arr) {
+        if (Array.isArray(item)) {
+          result = result.concat(flatten(item))
+        } else {
+          result.push(item)
+        }
       }
-      return accumulated
-    }, { ...target })  // 使用一个新的目标对象来避免修改原始目标
+      return result
+    }
+
+    return flatten(args)
   }
 }

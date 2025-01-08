@@ -25,7 +25,7 @@ export default {
             else this.bindScrollListener();
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindScrollListener();
     },
     methods: {

@@ -29,7 +29,7 @@ export interface DirectiveHooks<T = any, V = any> {
     onMounted?: (instance: DirectiveInstance<T, V> | undefined, options: DirectiveOptions<T, null, V>) => void;
     onBeforeUpdate?: (instance: DirectiveInstance<T, V> | undefined, options: DirectiveOptions<T, VNode<any, T>, V>) => void;
     onUpdated?: (instance: DirectiveInstance<T, V> | undefined, options: DirectiveOptions<T, VNode<any, T>, V>) => void;
-    onBeforeUnmount?: (instance: DirectiveInstance<T, V> | undefined, options: DirectiveOptions<T, null, V>) => void;
+    onbeforeDestroy?: (instance: DirectiveInstance<T, V> | undefined, options: DirectiveOptions<T, null, V>) => void;
     onUnmounted?: (instance: DirectiveInstance<T, V> | undefined, options: DirectiveOptions<T, null, V>) => void;
 }
 

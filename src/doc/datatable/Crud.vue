@@ -44,30 +44,30 @@ export default {
         </template>
 
         <Column selectionMode="multiple" :styless="{width: '3rem'}" :exportable="false"></Column>
-        <Column field="code" header="Code" :sortable="true" :styles="{'min-width':'12rem'}"></Column>
-        <Column field="name" header="Name" :sortable="true" :styles="{'min-width':'16rem'}"></Column>
+        <Column field="code" header="Code" :sortable="true" :styleName="{'min-width':'12rem'}"></Column>
+        <Column field="name" header="Name" :sortable="true" :styleName="{'min-width':'16rem'}"></Column>
         <Column header="Image">
             <template #body="slotProps">
                 <img :src="'demo/images/product/' + slotProps.data.image" :alt="slotProps.data.image" class="product-image" />
             </template>
         </Column>
-        <Column field="price" header="Price" :sortable="true" :styles="{'min-width':'8rem'}">
+        <Column field="price" header="Price" :sortable="true" :styleName="{'min-width':'8rem'}">
             <template #body="slotProps">
                 {{formatCurrency(slotProps.data.price)}}
             </template>
         </Column>
-        <Column field="category" header="Category" :sortable="true" :styles="{'min-width':'10rem'}"></Column>
-        <Column field="rating" header="Reviews" :sortable="true" :styles="{'min-width':'12rem'}">
+        <Column field="category" header="Category" :sortable="true" :styleName="{'min-width':'10rem'}"></Column>
+        <Column field="rating" header="Reviews" :sortable="true" :styleName="{'min-width':'12rem'}">
             <template #body="slotProps">
                 <Rating :value="slotProps.data.rating" :readonly="true" :cancel="false" />
             </template>
         </Column>
-        <Column field="inventoryStatus" header="Status" :sortable="true" :styles="{'min-width':'12rem'}">
+        <Column field="inventoryStatus" header="Status" :sortable="true" :styleName="{'min-width':'12rem'}">
             <template #body="slotProps">
                 <span :class="'product-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{slotProps.data.inventoryStatus}}</span>
             </template>
         </Column>
-        <Column :exportable="false" :styles="{'min-width':'8rem'}">
+        <Column :exportable="false" :styleName="{'min-width':'8rem'}">
             <template #body="slotProps">
                 <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editProduct(slotProps.data)" />
                 <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteProduct(slotProps.data)" />
@@ -80,7 +80,7 @@ export default {
     <img :src="'demo/images/product/' + product.image" :alt="product.image" class="product-image" v-if="product.image" />
     <div class="field">
         <label for="name">Name</label>
-        <InputText id="name" v-model.trim="product.name" required="true" autofocus :class="{'p-invalid': submitted && !product.name}" />
+        <InputText id="name" v-model.trim="product.name" required="true" :class="{'p-invalid': submitted && !product.name}" />
         <small class="p-invalid" v-if="submitted && !product.name">Name is required.</small>
     </div>
     <div class="field">
@@ -126,7 +126,7 @@ export default {
     </template>
 </Dialog>
 
-<Dialog :visible.sync="deleteProductDialog" :styles="{width: '450px'}" header="Confirm" :modal="true">
+<Dialog :visible.sync="deleteProductDialog" :styleName="{width: '450px'}" header="Confirm" :modal="true">
     <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
         <span v-if="product">Are you sure you want to delete <b>{{product.name}}</b>?</span>
@@ -137,7 +137,7 @@ export default {
     </template>
 </Dialog>
 
-<Dialog :visible.sync="deleteProductsDialog" :styles="{width: '450px'}" header="Confirm" :modal="true">
+<Dialog :visible.sync="deleteProductsDialog" :styleName="{width: '450px'}" header="Confirm" :modal="true">
     <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
         <span v-if="product">Are you sure you want to delete the selected products?</span>

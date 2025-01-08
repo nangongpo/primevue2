@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="!disabled">
-        <div :ref="elementRef" :class="containerClass" :tabindex="tabindex" :style="styleObject" @scroll="onScroll" v-bind="ptmi('root')">
+        <div :ref="elementRef" :class="containerClass" :tabindex="tabindex" :style="styleName" @scroll="onScroll" v-bind="ptmi('root')">
             <slot
                 name="content"
                 :styleClass="contentClass"
@@ -26,7 +26,7 @@
             </slot>
             <div v-if="showSpacer" class="p-virtualscroller-spacer" :style="spacerStyle" v-bind="ptm('spacer')"></div>
             <div v-if="!loaderDisabled && showLoader && d_loading" :class="loaderClass" v-bind="ptm('loader')">
-                <template v-if="$slots && $slots.loader">
+                <template v-if="$scopedSlots && $scopedSlots.loader">
                     <template v-for="(_, index) of loaderArr">
                         <slot name="loader" :index="index" :options="getLoaderOptions(index, isBoth() && { numCols: d_numItemsInViewport.cols })"></slot>
                     </template>
@@ -52,7 +52,6 @@ import BaseVirtualScroller from './BaseVirtualScroller.vue';
 export default {
     name: 'VirtualScroller',
     extends: BaseVirtualScroller,
-    inheritAttrs: false,
     emits: ['update:numToleratedItems', 'scroll', 'scroll-index-change', 'lazy-load'],
     data() {
         const both = this.isBoth();
@@ -123,7 +122,7 @@ export default {
     updated() {
         !this.initialized && this.viewInit();
     },
-    unmounted() {
+    destroyed() {
         this.unbindResizeListener();
 
         this.initialized = false;
@@ -658,7 +657,7 @@ export default {
             return [
                 'p-virtualscroller-loader',
                 {
-                    'p-component-overlay': !this.$slots.loader
+                    'p-component-overlay': !this.$scopedSlots.loader
                 }
             ];
         },

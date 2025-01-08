@@ -1,6 +1,6 @@
 <template>
     <CDialog
-        v-model:visible="visible"
+        :visible="visible"
         role="alertdialog"
         :class="cx('root')"
         :modal="true"
@@ -12,33 +12,32 @@
         :draggable="draggable"
         @update:visible="onHide"
         :pt="pt"
-        :unstyled="unstyled"
-    >
+        :unstyled="unstyled">
         <template v-if="$slots.container" #container="slotProps">
             <slot name="container" :message="confirmation" :onClose="slotProps.onClose" :onAccept="accept" :onReject="reject" :closeCallback="slotProps.onclose" :acceptCallback="accept" :rejectCallback="reject" />
         </template>
         <template v-if="!$slots.container">
             <template v-if="!$slots.message">
                 <slot name="icon">
-                    <component v-if="$slots.icon" :is="$slots.icon" :class="cx('icon')" />
-                    <span v-else-if="confirmation.icon" :class="[confirmation.icon, cx('icon')]" v-bind="ptm('icon')" />
+                    <DynamicComponent v-if="$scopedSlots.icon" :template="$scopedSlots.icon" :className="cx('icon')" />
+                    <span v-else-if="confirmation?.icon" :className="[confirmation.icon, cx('icon')]" v-bind="ptm('icon')" />
                 </slot>
                 <span :class="cx('message')" v-bind="ptm('message')">{{ message }}</span>
             </template>
-            <component v-else :is="$slots.message" :message="confirmation"></component>
+            <DynamicComponent v-else :template="$scopedSlots.message" :message="confirmation"></DynamicComponent>
         </template>
         <template v-if="!$slots.container" #footer>
             <CDButton :label="rejectLabel" :class="[cx('rejectButton'), confirmation.rejectClass]" @click="reject()" :autofocus="autoFocusReject" :unstyled="unstyled" :pt="ptm('rejectButton')">
                 <template v-if="rejectIcon || $slots.rejecticon" #icon="iconProps">
                     <slot name="rejecticon">
-                        <span :class="[rejectIcon, iconProps.class]" v-bind="ptm('rejectButton')['icon']" data-pc-section="rejectbuttonicon" />
+                        <span :class="[rejectIcon, iconProps.className]" v-bind="ptm('rejectButton')['icon']" data-pc-section="rejectbuttonicon" />
                     </slot>
                 </template>
             </CDButton>
             <CDButton :label="acceptLabel" :class="[cx('acceptButton'), confirmation.acceptClass]" @click="accept()" :autofocus="autoFocusAccept" :unstyled="unstyled" :pt="ptm('acceptButton')">
                 <template v-if="acceptIcon || $slots.accepticon" #icon="iconProps">
                     <slot name="accepticon">
-                        <span :class="[acceptIcon, iconProps.class]" v-bind="ptm('acceptButton')['icon']" data-pc-section="acceptbuttonicon" />
+                        <span :class="[acceptIcon, iconProps.className]" v-bind="ptm('acceptButton')['icon']" data-pc-section="acceptbuttonicon" />
                     </slot>
                 </template>
             </CDButton>
@@ -88,7 +87,7 @@ export default {
         ConfirmationEventBus.on('confirm', this.confirmListener);
         ConfirmationEventBus.on('close', this.closeListener);
     },
-    beforeUnmount() {
+    beforeDestroy() {
         ConfirmationEventBus.off('confirm', this.confirmListener);
         ConfirmationEventBus.off('close', this.closeListener);
     },

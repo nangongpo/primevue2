@@ -2,7 +2,7 @@
     <div :class="cx('root')" v-bind="ptmi('root')">
         <OrganizationChartNode
             :node="value"
-            :templates="$slots"
+            :templates="$scopedSlots"
             @node-toggle="onNodeToggle"
             :collapsedKeys="d_collapsedKeys"
             :collapsible="collapsible"

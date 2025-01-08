@@ -14,9 +14,9 @@
                 <h5>Cell Editing</h5>
                 <p>Validations, dynamic columns and reverting values with the escape key.</p>
                 <DataTable :value="products1" editMode="cell" @cell-edit-complete="onCellEditComplete" class="editable-cells-table" responsiveLayout="scroll">
-                    <Column v-for="col of columns" :field="col.field" :header="col.header" :key="col.field" :styles="{width: '25%'}">
-                        <template #editor="slotProps">
-                            <InputText v-model="slotProps.data[slotProps.column.field]" autofocus />
+                    <Column v-for="col of columns" :field="col.field" :header="col.header" :key="col.field" :styleName="{width: '25%'}">
+                        <template #editor="{ data, field }">
+                            <InputText v-model="data[field]" />
                         </template>
                     </Column>
                 </DataTable>
@@ -25,17 +25,17 @@
             <div class="card">
                 <h5>Row Editing</h5>
                 <DataTable :value="products2" editMode="row" dataKey="id" :editingRows.sync="editingRows" @row-edit-save="onRowEditSave" responsiveLayout="scroll">
-                    <Column field="code" header="Code" :styles="{width:'20%'}">
-                        <template #editor="slotProps">
-                            <InputText v-model="slotProps.data[slotProps.column.field]" autofocus />
-                        </template>
-                    </Column>
-                    <Column field="name" header="Name" :styles="{width:'20%'}">
+                    <Column field="code" header="Code" :styleName="{width:'20%'}">
                         <template #editor="slotProps">
                             <InputText v-model="slotProps.data[slotProps.column.field]" />
                         </template>
                     </Column>
-                    <Column field="inventoryStatus" header="Status" :styles="{width:'20%'}">
+                    <Column field="name" header="Name" :styleName="{width:'20%'}">
+                        <template #editor="slotProps">
+                            <InputText v-model="slotProps.data[slotProps.column.field]" />
+                        </template>
+                    </Column>
+                    <Column field="inventoryStatus" header="Status" :styleName="{width:'20%'}">
                         <template #editor="{ data, field }">
                             <Dropdown v-model="data[field]" :options="statuses" optionLabel="label" optionValue="value" placeholder="Select a Status">
                                 <template #option="slotProps">
@@ -47,12 +47,12 @@
                             {{getStatusLabel(slotProps.data.inventoryStatus)}}
                         </template>
                     </Column>
-                    <Column field="price" header="Price" :styles="{width:'20%'}">
+                    <Column field="price" header="Price" :styleName="{width:'20%'}">
                         <template #editor="slotProps">
                             <InputText v-model="slotProps.data[slotProps.column.field]" />
                         </template>
                     </Column>
-                    <Column :rowEditor="true" :styles="{width:'10%', 'min-width':'8rem'}" :bodyStyle="{'text-align':'center'}"></Column>
+                    <Column :rowEditor="true" :styleName="{width:'10%', 'min-width':'8rem'}" :bodyStyle="{'text-align':'center'}"></Column>
                 </DataTable>
             </div>
 
@@ -64,7 +64,7 @@
                             <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" v-tooltip.top.focus="'Hit enter key to filter'"/>
                         </template>
                         <template #editor="{ data, field }">
-                            <InputText v-model="data[field]" autofocus />
+                            <InputText v-model="data[field]" />
                         </template>
                     </Column>
                 </DataTable>
@@ -77,7 +77,7 @@
 
 <script>
 import DataTableEditDoc from '@/doc/datatable/Edit.vue'
-import FilterMatchMode from '../../components/api/FilterMatchMode'
+import FilterMatchMode from '../../components/lib/api/FilterMatchMode'
 import ProductService from '../../service/ProductService'
 
 export default {

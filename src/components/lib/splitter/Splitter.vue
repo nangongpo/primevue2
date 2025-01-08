@@ -1,7 +1,7 @@
 <template>
     <div :class="cx('root')" :style="sx('root')" :data-p-resizing="false" v-bind="ptmi('root', getPTOptions)">
         <template v-for="(panel, i) of panels">
-            <component :is="panel" :key="i" tabindex="-1"></component>
+            <DynamicComponent :template="panel" :key="i" tabindex="-1"></DynamicComponent>
             <div
                 v-if="i !== panels.length - 1"
                 ref="gutter"
@@ -75,13 +75,13 @@ export default {
             }
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.clear();
         this.unbindMouseListeners();
     },
     methods: {
         isSplitterPanel(child) {
-            return child.type.name === 'SplitterPanel';
+            return child.componentOptions.Ctor.extendOptions.name === 'SplitterPanel';
         },
         onResizeStart(event, index, isKeyDown) {
             this.gutterElement = event.currentTarget || event.target.parentElement;
@@ -352,7 +352,7 @@ export default {
         panels() {
             const panels = [];
 
-            this.$slots.default().forEach((child) => {
+            (this.$slots.default || []).forEach((child) => {
                 if (this.isSplitterPanel(child)) {
                     panels.push(child);
                 } else if (child.children instanceof Array) {

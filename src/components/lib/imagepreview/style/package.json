@@ -1,0 +1,6 @@
+{
+    "main": "./imagepreviewstyle.cjs.js",
+    "module": "./imagepreviewstyle.esm.js",
+    "unpkg": "./imagepreviewstyle.min.js",
+    "types": "./ImagePreviewStyle.d.ts"
+}

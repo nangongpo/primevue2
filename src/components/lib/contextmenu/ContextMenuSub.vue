@@ -29,16 +29,16 @@
                     >
                         <template v-if="!templates.item">
                             <a v-ripple :href="getItemProp(processedItem, 'url')" :class="cx('action')" :target="getItemProp(processedItem, 'target')" tabindex="-1" aria-hidden="true" v-bind="getPTOptions('action', processedItem, index)">
-                                <component v-if="templates.itemicon" :is="templates.itemicon" :item="processedItem.item" :class="cx('icon')" />
+                                <DynamicComponent v-if="templates.itemicon" :template="templates.itemicon" :item="processedItem.item" :className="cx('icon')" />
                                 <span v-else-if="getItemProp(processedItem, 'icon')" :class="[cx('icon'), getItemProp(processedItem, 'icon')]" v-bind="getPTOptions('icon', processedItem, index)" />
                                 <span :id="getItemLabelId(processedItem)" :class="cx('label')" v-bind="getPTOptions('label', processedItem, index)">{{ getItemLabel(processedItem) }}</span>
                                 <template v-if="getItemProp(processedItem, 'items')">
-                                    <component v-if="templates.submenuicon" :is="templates.submenuicon" :active="isItemActive(processedItem)" :class="cx('submenuIcon')" />
+                                    <DynamicComponent v-if="templates.submenuicon" :template="templates.submenuicon" :active="isItemActive(processedItem)" :className="cx('submenuIcon')" />
                                     <AngleRightIcon v-else :class="cx('submenuIcon')" v-bind="getPTOptions('submenuicon', processedItem, index)" />
                                 </template>
                             </a>
                         </template>
-                        <component v-else :is="templates.item" :item="processedItem.item" :hasSubmenu="getItemProp(processedItem, 'items')" :label="getItemLabel(processedItem)" :props="getMenuItemProps(processedItem, index)"></component>
+                        <DynamicComponent v-else :template="templates.item" :item="processedItem.item" :hasSubmenu="getItemProp(processedItem, 'items')" :label="getItemLabel(processedItem)" :props="getMenuItemProps(processedItem, index)"></DynamicComponent>
                     </div>
                     <ContextMenuSub
                         v-if="isItemVisible(processedItem) && isItemGroup(processedItem)"
@@ -117,7 +117,7 @@ export default {
             default: null
         },
         activeItemPath: {
-            type: Object,
+            type: Array,
             default: null
         },
         tabindex: {

@@ -8,7 +8,7 @@
             <IPButton v-if="closable" :aria-label="closeAriaLabel" @click="close" :unstyled="unstyled" :pt="ptm('closeButton')" v-bind="closeButtonProps">
                 <template #icon>
                     <slot name="closeicon">
-                        <component :is="closeIcon ? 'span' : 'TimesIcon'" :class="closeIcon" v-bind="ptm('closeButton')['icon']" data-pc-section="closebuttonicon"></component>
+                        <DynamicComponent :template="closeIcon ? 'span' : 'TimesIcon'" :className="closeIcon" v-bind="ptm('closeButton')['icon']" data-pc-section="closebuttonicon"></DynamicComponent>
                     </slot>
                 </template>
             </IPButton>

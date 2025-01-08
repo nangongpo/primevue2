@@ -8,7 +8,7 @@
  *
  */
 import { InputHTMLAttributes, TableHTMLAttributes, TransitionProps, VNode } from 'vue';
-import { ComponentHooks } from '../basecomponent';
+import { ComponentHooks } from '../baseDynamicComponent';
 import { ColumnPassThroughOptionType } from '../column';
 import { ColumnGroupPassThroughOptionType } from '../columngroup';
 import { PaginatorPassThroughOptionType } from '../paginator';
@@ -601,7 +601,7 @@ export interface DataTablePassThroughOptions {
      */
     header?: DataTablePassThroughOptionType;
     /**
-     * Used to pass attributes to the Paginator component.
+     * Used to pass attributes to the Paginator DynamicComponent.
      * @see {@link PaginatorPassThroughOptionType}
      */
     paginator?: PaginatorPassThroughOptionType<DataTableSharedPassThroughMethodOptions>;
@@ -610,7 +610,7 @@ export interface DataTablePassThroughOptions {
      */
     wrapper?: DataTablePassThroughOptionType;
     /**
-     * Used to pass attributes to the VirtualScroller component.
+     * Used to pass attributes to the VirtualScroller DynamicComponent.
      * @see {@link VirtualScrollerPassThroughOptionType}
      */
     virtualScroller?: VirtualScrollerPassThroughOptionType;
@@ -695,15 +695,15 @@ export interface DataTablePassThroughOptions {
      */
     reorderIndicatorDown?: DataTablePassThroughOptionType;
     /**
-     * Used to pass attributes to the ColumnGroup helper components.
+     * Used to pass attributes to the ColumnGroup helper DynamicComponents.
      */
     columnGroup?: ColumnGroupPassThroughOptionType;
     /**
-     * Used to pass attributes to the Row helper components.
+     * Used to pass attributes to the Row helper DynamicComponents.
      */
     row?: RowPassThroughOptionType;
     /**
-     * Used to pass attributes to the Column helper components.
+     * Used to pass attributes to the Column helper DynamicComponents.
      */
     column?: ColumnPassThroughOptionType;
     /**
@@ -725,7 +725,7 @@ export interface DataTablePassThroughAttributes {
 }
 
 /**
- * Defines current inline state in DataTable component.
+ * Defines current inline state in DataTable DynamicComponent.
  */
 export interface DataTableState {
     /**
@@ -784,7 +784,7 @@ export interface DataTableState {
 }
 
 /**
- * Defines current options in DataTable component.
+ * Defines current options in DataTable DynamicComponent.
  */
 export interface DataTableContext {
     /**
@@ -809,7 +809,7 @@ export interface DataTableContext {
 }
 
 /**
- * Defines valid properties in DataTable component.
+ * Defines valid properties in DataTable DynamicComponent.
  */
 export interface DataTableProps {
     /**
@@ -1085,7 +1085,7 @@ export interface DataTableProps {
      */
     scrollHeight?: HintedString<'flex'> | undefined;
     /**
-     * Whether to use the virtualScroller feature. The properties of VirtualScroller component can be used like an object in it.
+     * Whether to use the virtualScroller feature. The properties of VirtualScroller DynamicComponent can be used like an object in it.
      * Note: Currently only vertical orientation mode is supported.
      */
     virtualScrollerOptions?: VirtualScrollerProps;
@@ -1126,32 +1126,32 @@ export interface DataTableProps {
      */
     tableClass?: string | object | undefined;
     /**
-     * Used to pass all properties of the TableHTMLAttributes to table element inside the component.
+     * Used to pass all properties of the TableHTMLAttributes to table element inside the DynamicComponent.
      */
     tableProps?: TableHTMLAttributes | undefined;
     /**
-     * Used to pass all properties of the HTMLInputElement to the focusable filter input element inside the component.
+     * Used to pass all properties of the HTMLInputElement to the focusable filter input element inside the DynamicComponent.
      */
     filterInputProps?: InputHTMLAttributes | undefined;
     /**
-     * Used to pass attributes to DOM elements inside the component.
+     * Used to pass attributes to DOM elements inside the DynamicComponent.
      * @type {DataTablePassThroughOptions}
      */
     pt?: PassThrough<DataTablePassThroughOptions>;
     /**
-     * Used to configure passthrough(pt) options of the component.
+     * Used to configure passthrough(pt) options of the DynamicComponent.
      * @type {PassThroughOptions}
      */
     ptOptions?: PassThroughOptions;
     /**
-     * When enabled, it removes component related styles in the core.
+     * When enabled, it removes DynamicComponent related styles in the core.
      * @defaultValue false
      */
     unstyled?: boolean;
 }
 
 /**
- * Defines valid slots in DataTable component.
+ * Defines valid slots in DataTable DynamicComponent.
  */
 export interface DataTableSlots {
     /**
@@ -1305,7 +1305,7 @@ export interface DataTableSlots {
     }): VNode[];
 }
 /**
- * Defines valid emits in Datatable component.
+ * Defines valid emits in Datatable DynamicComponent.
  */
 export interface DataTableEmits {
     /**

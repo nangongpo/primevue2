@@ -22,12 +22,26 @@ export default {
       sourceCode1: {
         basic: `
 <h5>Basic</h5>
-<div class="dock-window">
-    <Dock :model="dockBasicItems" position="bottom"/>
-    <Dock :model="dockBasicItems" position="top"/>
-    <Dock :model="dockBasicItems" position="left"/>
-    <Dock :model="dockBasicItems" position="right"/>
-</div>
+<Dock :model="dockBasicItems" position="bottom">
+  <template #icon="{ item }">
+    <img :alt="item.label" :src="item.icon" style="width: 100%" />
+  </template>
+</Dock>
+<Dock :model="dockBasicItems" position="top">
+  <template #icon="{ item }">
+    <img :alt="item.label" :src="item.icon" style="width: 100%" />
+  </template>
+</Dock>
+<Dock :model="dockBasicItems" position="left">
+  <template #icon="{ item }">
+    <img :alt="item.label" :src="item.icon" style="width: 100%" />
+  </template>
+</Dock>
+<Dock :model="dockBasicItems" position="right">
+  <template #icon="{ item }">
+    <img :alt="item.label" :src="item.icon" style="width: 100%" />
+  </template>
+</Dock>
 
 <h5>Advanced</h5>
 <Menubar :model="menubarItems">
@@ -45,28 +59,48 @@ export default {
 </Menubar>
 
 <div class="dock-window dock-advanced">
-    <Dock :model="dockItems">
-        <template #item="slotProps">
-            <a href="#" class="p-dock-action" v-tooltip.top="slotProps.item.label" @click="onDockItemClick($event, slotProps.item)">
-                <img :alt="slotProps.item.label" :src="slotProps.item.icon" style="width: 100%" />
-            </a>
-        </template>
-    </Dock>
+  <Dock :model="dockItems">
+      <template #item="{ item }">
+          <a v-tooltip.top="item.label" href="#" class="p-dock-link" @click="onDockItemClick($event, item)">
+              <img :alt="item.label" :src="item.icon" style="width: 100%" />
+          </a>
+      </template>
+  </Dock>
 
-    <Dialog :visible.sync="displayTerminal" header="Terminal" :breakpoints="{ '960px': '50vw' }" :style="{ width: '40vw' }" :maximizable="true">
-        <Terminal welcomeMessage="Welcome to PrimeVue(cmd: 'date', 'greet {0}', 'random' and 'clear')" prompt="primevue $" />
-    </Dialog>
+  <Dialog
+    :visible.sync="displayTerminal"
+    header="Terminal"
+    :breakpoints="{ '960px': '50vw' }"
+    :styleName="{ width: '40vw' }"
+    :maximizable="true">
+    <Terminal
+      welcomeMessage="Welcome to PrimeVue(cmd: 'date', 'greet {0}', 'random' and 'clear')"
+      prompt="primevue $" />
+  </Dialog>
 
-    <Dialog :visible.sync="displayFinder" header="Finder" :breakpoints="{ '960px': '50vw' }" :style="{ width: '40vw' }" :maximizable="true">
-        <Tree :value="nodes" />
-    </Dialog>
+  <Dialog
+    :visible.sync="displayFinder"
+    header="Finder"
+    :breakpoints="{ '960px': '50vw' }"
+    :styleName="{ width: '40vw' }"
+    :maximizable="true">
+    <Tree :value="nodes" />
+  </Dialog>
 
-    <Galleria :visible.sync="displayPhotos" :value="images" :responsiveOptions="responsiveOptions" :numVisible="2" containerStyle="width: 400px"
-        :circular="true" :fullScreen="true" :showThumbnails="false" :showItemNavigators="true">
-        <template #item="slotProps">
-            <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" style="width: 100%" />
-        </template>
-    </Galleria>
+  <Galleria
+    :visible.sync="displayPhotos"
+    :value="images"
+    :responsiveOptions="responsiveOptions"
+    :numVisible="2"
+    containerStyle="width: 400px"
+    :circular="true"
+    :fullScreen="true"
+    :showThumbnails="false"
+    :showItemNavigators="true">
+    <template #item="slotProps">
+      <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt" style="width: 100%" />
+    </template>
+  </Galleria>
 </div>
         `
       },
@@ -131,22 +165,22 @@ export default {
                 }
             ],
             dockBasicItems: [
-                {
-                    label: 'Finder',
-                    icon: () => <img alt="Finder" src={getPublicUrl('demo/images/dock/finder.svg')} style="width: 100%" />
-                },
-                {
-                    label: 'App Store',
-                    icon: () => <img alt="App Store" src={getPublicUrl('demo/images/dock/appstore.svg')} style="width: 100%" />
-                },
-                {
-                    label: 'Photos',
-                    icon: () => <img alt="Photos" src={getPublicUrl('demo/images/dock/photos.svg')} style="width: 100%" />
-                },
-                {
-                    label: 'Trash',
-                    icon: () => <img alt="trash" src={getPublicUrl('demo/images/dock/trash.png')} style="width: 100%" />
-                }
+              {
+                label: 'Finder',
+                icon: getPublicUrl('demo/images/dock/finder.svg')
+              },
+              {
+                label: 'App Store',
+                icon: getPublicUrl('demo/images/dock/appstore.svg')
+              },
+              {
+                label: 'Photos',
+                icon: getPublicUrl('demo/images/dock/photos.svg')
+              },
+              {
+                label: 'Trash',
+                icon: getPublicUrl('demo/images/dock/trash.png')
+              }
             ],
             menubarItems: [
                 {

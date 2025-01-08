@@ -22,21 +22,21 @@
                 :data-p-disabled="isItemDisabled(processedItem)">
                 <div :class="cx('content')" @click="onItemClick($event, processedItem)" @mouseenter="onItemMouseEnter($event, processedItem)" v-bind="getPTOptions(processedItem, index, 'content')">
                     <template v-if="!templates.item">
-                        <a v-ripple :href="getItemProp(processedItem, 'url')" :class="cx('action')" :target="getItemProp(processedItem, 'target')" tabindex="-1" aria-hidden="true" v-bind="getPTOptions(processedItem, index, 'action')">
-                            <component v-if="templates.itemicon" :is="templates.itemicon" :item="processedItem.item" :class="cx('icon')" />
+                        <a v-ripple :href="getItemProp(processedItem, 'url')" :class="cx('action')" :target="getItemProp(processedItem, 'target')" tabindex="-1" v-bind="getPTOptions(processedItem, index, 'action')">
+                            <DynamicComponent v-if="templates.itemicon" :template="templates.itemicon" :item="processedItem.item" :className="cx('icon')" />
                             <span v-else-if="getItemProp(processedItem, 'icon')" :class="[cx('icon'), getItemProp(processedItem, 'icon')]" v-bind="getPTOptions(processedItem, index, 'icon')" />
                             <span :class="level === 0 ? cx('label') : cx('submenuLabel')" v-bind="level === 0 ? getPTOptions(processedItem, index, 'label') : getPTOptions(processedItem, index, 'submenuLabel')">{{ getItemLabel(processedItem) }}</span>
                             <template v-if="isItemGroup(processedItem)">
-                                <component v-if="templates.submenuicon" :is="templates.submenuicon" :active="isItemActive(processedItem)" :class="cx('submenuIcon')" v-bind="getPTOptions(processedItem, index, 'submenuIcon')" />
-                                <component v-else :is="horizontal || mobileActive ? 'AngleDownIcon' : 'AngleRightIcon'" :class="cx('submenuIcon')" v-bind="getPTOptions(processedItem, index, 'submenuIcon')" />
+                                <DynamicComponent v-if="templates.submenuicon" :template="templates.submenuicon" :active="isItemActive(processedItem)" :className="cx('submenuIcon')" v-bind="getPTOptions(processedItem, index, 'submenuIcon')" />
+                                <DynamicComponent v-else :template="horizontal || mobileActive ? 'AngleDownIcon' : 'AngleRightIcon'" :className="cx('submenuIcon')" v-bind="getPTOptions(processedItem, index, 'submenuIcon')" />
                             </template>
                         </a>
                     </template>
-                    <component v-else :is="templates.item" :item="processedItem.item" :hasSubmenu="isItemGroup(processedItem)" :label="getItemLabel(processedItem)" :props="getMenuItemProps(processedItem, index)"></component>
+                    <DynamicComponent v-else :template="templates.item" :item="processedItem.item" :hasSubmenu="isItemGroup(processedItem)" :label="getItemLabel(processedItem)" :props="getMenuItemProps(processedItem, index)"></DynamicComponent>
                 </div>
                 <div v-if="isItemVisible(processedItem) && isItemGroup(processedItem)" :class="cx('panel')" v-bind="ptm('panel')">
                     <div :class="cx('grid')" v-bind="ptm('grid')">
-                        <div v-for="col of processedItem.items" :key="getItemKey(col)" :class="cx('column', { processedItem })" v-bind="ptm('column')">
+                        <div v-for="(col, colIndex) of processedItem.items" :key="getItemKey(col) + '_' + colIndex" :class="cx('column', { processedItem })" v-bind="ptm('column')">
                             <MegaMenuSub
                                 v-for="submenu of col"
                                 :key="getSubListKey(submenu)"

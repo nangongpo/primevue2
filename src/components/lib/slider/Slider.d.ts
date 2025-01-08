@@ -100,7 +100,7 @@ export interface SliderProps {
     /**
      * Value of the component.
      */
-    value?: number | number[] | undefined;
+    modelValue?: number | number[] | undefined;
     /**
      * Mininum boundary value.
      * @defaultValue 0
@@ -173,7 +173,7 @@ export interface SliderEmits {
      * Emitted when the value changes.
      * @param {number | number[]} value - New value.
      */
-    'input'(value: number | number[]): void;
+    'update:modelValue'(value: number | number[]): void;
     /**
      * Callback to invoke on value change.
      * @param {number} value - New value
@@ -193,7 +193,7 @@ export interface SliderEmits {
  *
  * [Live Demo](https://www.primevue.org/slider/)
  * --- ---
- * ![PrimeVue](https://primefaces.org/cdn/primevue2/images/logo-100.png)
+ * ![PrimeVue](https://primefaces.org/cdn/primevue/images/logo-100.png)
  *
  * @group Component
  *

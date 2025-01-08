@@ -1,10 +1,10 @@
 <template>
     <transition name="p-message" appear v-bind="ptmi('transition')">
         <div v-show="visible" :class="cx('root')" role="alert" aria-live="assertive" aria-atomic="true" v-bind="ptm('root')">
-            <slot v-if="$slots.container" name="container" :onClose="close" :closeCallback="close"></slot>
+            <slot v-if="$scopedSlots.container" name="container" :onClose="close" :closeCallback="close"></slot>
             <div v-else :class="cx('wrapper')" v-bind="ptm('wrapper')">
                 <slot name="messageicon" className="p-message-icon">
-                    <component :is="icon ? 'span' : iconComponent" :class="[cx('icon'), icon]" v-bind="ptm('icon')"></component>
+                    <DynamicComponent :template="icon ? 'span' : iconComponent" :className="[cx('icon'), icon]" v-bind="ptm('icon')"></DynamicComponent>
                 </slot>
                 <div class="p-message-text" :class="cx('text')" v-bind="ptm('text')">
                     <slot></slot>

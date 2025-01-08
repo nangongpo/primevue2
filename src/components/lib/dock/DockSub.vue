@@ -37,15 +37,14 @@
                                 :target="processedItem.target"
                                 tabindex="-1"
                                 aria-hidden="true"
-                                v-bind="getPTOptions('action', processedItem, index)"
-                            >
+                                v-bind="getPTOptions('action', processedItem, index)">
                                 <template v-if="!templates['icon']">
                                     <span v-ripple :class="[cx('icon'), processedItem.icon]" v-bind="getPTOptions('icon', processedItem, index)"></span>
                                 </template>
-                                <component v-else :is="templates['icon']" :item="processedItem" :class="cx('icon')"></component>
+                                <DynamicComponent v-else :template="templates['icon']" :item="processedItem" :className="cx('icon')"></DynamicComponent>
                             </a>
                         </template>
-                        <component v-else :is="templates['item']" :item="processedItem" :index="index" :label="processedItem.label" :props="getMenuItemProps(processedItem, index)"></component>
+                        <DynamicComponent v-else :template="templates['item']" :item="processedItem" :index="index" :label="processedItem.label" :props="getMenuItemProps(processedItem, index)"></DynamicComponent>
                     </div>
                 </li>
             </template>

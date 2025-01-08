@@ -17,7 +17,7 @@
                 />
             </span>
             <slot name="cancelicon" :className="cx('cancelIcon')">
-                <component :is="cancelIcon ? 'span' : 'BanIcon'" :class="[cx('cancelIcon'), cancelIcon]" v-bind="ptm('cancelIcon')" />
+                <DynamicComponent :template="cancelIcon ? 'span' : 'BanIcon'" :className="[cx('cancelIcon'), cancelIcon]" v-bind="ptm('cancelIcon')" />
             </slot>
         </div>
         <template v-for="value in stars">
@@ -38,10 +38,10 @@
                     />
                 </span>
                 <slot v-if="value <= value" name="onicon" :value="value" :className="cx('onIcon')">
-                    <component :is="onIcon ? 'span' : 'StarFillIcon'" :class="[cx('onIcon'), onIcon]" v-bind="ptm('onIcon')" />
+                    <DynamicComponent :template="onIcon ? 'span' : 'StarFillIcon'" :className="[cx('onIcon'), onIcon]" v-bind="ptm('onIcon')" />
                 </slot>
                 <slot v-else name="officon" :value="value" :className="cx('offIcon')">
-                    <component :is="offIcon ? 'span' : 'StarIcon'" :class="[cx('offIcon'), offIcon]" v-bind="ptm('offIcon')" />
+                    <DynamicComponent :template="offIcon ? 'span' : 'StarIcon'" :className="[cx('offIcon'), offIcon]" v-bind="ptm('offIcon')" />
                 </slot>
             </div>
         </template>

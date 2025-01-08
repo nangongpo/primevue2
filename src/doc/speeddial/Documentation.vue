@@ -316,7 +316,7 @@ items: [
         label: 'Vue Website',
         icon: 'pi pi-external-link',
         command: () => {
-            window.location.href = 'https://vuejs.org/'
+            window.location.href = 'https://v2.vuejs.org/'
         }
     }
 ]

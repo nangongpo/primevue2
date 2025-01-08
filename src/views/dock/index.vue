@@ -12,10 +12,26 @@
 
       <h5>Basic</h5>
       <div class="dock-window">
-        <Dock :model="dockBasicItems" position="bottom" />
-        <Dock :model="dockBasicItems" position="top" />
-        <Dock :model="dockBasicItems" position="left" />
-        <Dock :model="dockBasicItems" position="right" />
+        <Dock :model="dockBasicItems" position="bottom">
+          <template #icon="{ item }">
+            <img :alt="item.label" :src="item.icon" style="width: 100%" />
+          </template>
+        </Dock>
+        <Dock :model="dockBasicItems" position="top">
+          <template #icon="{ item }">
+            <img :alt="item.label" :src="item.icon" style="width: 100%" />
+          </template>
+        </Dock>
+        <Dock :model="dockBasicItems" position="left">
+          <template #icon="{ item }">
+            <img :alt="item.label" :src="item.icon" style="width: 100%" />
+          </template>
+        </Dock>
+        <Dock :model="dockBasicItems" position="right">
+          <template #icon="{ item }">
+            <img :alt="item.label" :src="item.icon" style="width: 100%" />
+          </template>
+        </Dock>
       </div>
 
       <h5>Advanced</h5>
@@ -35,22 +51,18 @@
 
       <div class="dock-window dock-advanced">
         <Dock :model="dockItems">
-          <template #item="slotProps">
-            <a
-              href="#"
-              class="p-dock-action"
-              v-tooltip.top="slotProps.item.label"
-              @click="onDockItemClick($event, slotProps.item)">
-              <img :alt="slotProps.item.label" :src="slotProps.item.icon" style="width: 100%" />
-            </a>
-          </template>
+            <template #item="{ item }">
+                <a v-tooltip.top="item.label" href="#" class="p-dock-link" @click="onDockItemClick($event, item)">
+                    <img :alt="item.label" :src="item.icon" style="width: 100%" />
+                </a>
+            </template>
         </Dock>
 
         <Dialog
           :visible.sync="displayTerminal"
           header="Terminal"
           :breakpoints="{ '960px': '50vw' }"
-          :style="{ width: '40vw' }"
+          :styleName="{ width: '40vw' }"
           :maximizable="true">
           <Terminal
             welcomeMessage="Welcome to PrimeVue(cmd: 'date', 'greet {0}', 'random' and 'clear')"
@@ -61,7 +73,7 @@
           :visible.sync="displayFinder"
           header="Finder"
           :breakpoints="{ '960px': '50vw' }"
-          :style="{ width: '40vw' }"
+          :styleName="{ width: '40vw' }"
           :maximizable="true">
           <Tree :value="nodes" />
         </Dialog>
@@ -154,19 +166,19 @@ export default {
       dockBasicItems: [
         {
           label: 'Finder',
-          icon: () => <img alt="Finder" src={getPublicUrl('demo/images/dock/finder.svg')} style="width: 100%" />
+          icon: getPublicUrl('demo/images/dock/finder.svg')
         },
         {
           label: 'App Store',
-          icon: () => <img alt="App Store" src={getPublicUrl('demo/images/dock/appstore.svg')} style="width: 100%" />
+          icon: getPublicUrl('demo/images/dock/appstore.svg')
         },
         {
           label: 'Photos',
-          icon: () => <img alt="Photos" src={getPublicUrl('demo/images/dock/photos.svg')} style="width: 100%" />
+          icon: getPublicUrl('demo/images/dock/photos.svg')
         },
         {
           label: 'Trash',
-          icon: () => <img alt="trash" src={getPublicUrl('demo/images/dock/trash.png')} style="width: 100%" />
+          icon: getPublicUrl('demo/images/dock/trash.png')
         }
       ],
       menubarItems: [
@@ -373,10 +385,6 @@ export default {
     background-image: url("../../assets/images/dock/window.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-  }
-
-  .p-dock {
-    z-index: 1000;
   }
 
   .p-menubar {

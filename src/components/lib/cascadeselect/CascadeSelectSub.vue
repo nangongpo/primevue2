@@ -18,10 +18,10 @@
                 :data-p-focus="isOptionFocused(processedOption)"
                 :data-p-disabled="isOptionDisabled(processedOption)">
                 <div v-ripple :class="cx('content')" @click="onOptionClick($event, processedOption)" @mousemove="onOptionMouseMove($event, processedOption)" v-bind="getPTOptions(processedOption, index, 'content')">
-                    <component v-if="templates['option']" :is="templates['option']" :option="processedOption.option" />
+                    <DynamicComponent v-if="templates['option']" :template="templates['option']" :option="processedOption.option" />
                     <span v-else :class="cx('text')" v-bind="getPTOptions(processedOption, index, 'text')">{{ getOptionLabelToRender(processedOption) }}</span>
                     <template v-if="isOptionGroup(processedOption)">
-                        <component v-if="templates['optiongroupicon']" :is="templates['optiongroupicon']" aria-hidden="true" />
+                        <DynamicComponent v-if="templates['optiongroupicon']" :template="templates['optiongroupicon']" aria-hidden="true" />
                         <span v-else-if="optionGroupIcon" :class="[cx('groupIcon'), optionGroupIcon]" aria-hidden="true" v-bind="getPTOptions(processedOption, index, 'groupIcon')" />
                         <AngleRightIcon v-else :class="cx('groupIcon')" aria-hidden="true" v-bind="getPTOptions(processedOption, index, 'groupIcon')" />
                     </template>

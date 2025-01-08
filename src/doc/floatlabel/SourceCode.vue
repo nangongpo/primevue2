@@ -21,98 +21,91 @@ export default {
       sourceCode1: {
         basic: `
 <div class="p-fluid grid">
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <InputText id="inputtext" type="text" v-model="value1" />
-            <label for="inputtext">InputText</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label p-input-icon-left">
-            <i class="pi pi-search" />
-            <InputText id="inputtext-left" type="text" v-model="valueIconLeft" />
-            <label for="inputtext-left">Left Icon</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label p-input-icon-right">
-            <i class="pi pi-search" />
-            <InputText id="inputtext-right" type="text" v-model="valueIconRight" />
-            <label for="inputtext-right">Right Icon</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <AutoComplete v-model="value2" :suggestions="filteredCountries" @complete="searchCountry($event)" field="name" />
-            <label for="autocomplete">AutoComplete</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <Calendar id="calendar" v-model="value3" />
-            <label for="calendar">Calendar</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <chips id="chips" v-model="value4" />
-            <label for="chips">Chips</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <InputMask id="inputmask" v-model="value5" mask="99/99/9999" slotChar="mm/dd/yyyy" />
-            <label for="inputmask">InputMask</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <InputNumber id="inputnumber" v-model="value6" />
-            <label for="inputnumber">InputNumber</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">
-                <i class="pi pi-user"></i>
-            </span>
-            <span class="p-float-label">
-                <InputText id="inputgroup" type="text" v-model="value7" />
-                <label for="inputgroup">InputGroup</label>
-            </span>
-        </div>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <CascadeSelect id="cascadeSelect" v-model="selectedCity" :options="cascadeCountries" optionLabel="cname" optionGroupLabel="name"
-                :optionGroupChildren="['states', 'cities']" />
-            <label for="multiselect">CascadeSelect</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <Dropdown id="dropdown" v-model="value8" :options="cities" optionLabel="name" />
-            <label for="dropdown">Dropdown</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <MultiSelect id="multiselect" v-model="value9" :options="cities" optionLabel="name" />
-            <label for="multiselect">MultiSelect</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <Textarea id="textarea" v-model="value10" rows="3" />
-            <label for="textarea">Textarea</label>
-        </span>
-    </div>
-    <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-            <Password id="password" v-model="value11" />
-            <label for="password">Password</label>
-        </span>
-    </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <InputText id="inputtext" type="text" v-model="value1" />
+      <label for="inputtext">InputText</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <AutoComplete
+        v-model="value2"
+        :suggestions="filteredCountries"
+        @complete="searchCountry($event)"
+        field="name" />
+      <label for="autocomplete">AutoComplete</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <Calendar id="calendar" v-model="value3" />
+      <label for="calendar">Calendar</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <chips id="chips" v-model="value4" />
+      <label for="chips">Chips</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+      <FloatLabel>
+        <InputMask id="inputmask" v-model="value5" mask="99/99/9999" slotChar="mm/dd/yyyy" />
+        <label for="inputmask">InputMask</label>
+      </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <span class="p-float-label">
+      <InputNumber id="inputnumber" v-model="value6" />
+      <label for="inputnumber">InputNumber</label>
+    </span>
+  </div>
+  <div class="field col-12 md:col-4">
+    <InputGroup>
+      <InputGroupAddon><i class="pi pi-user"></i></InputGroupAddon>
+      <FloatLabel>
+        <InputText id="inputgroup" type="text" v-model="value7" />
+        <label for="inputgroup">InputGroup</label>
+      </FloatLabel>
+    </InputGroup>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <CascadeSelect
+        id="cascadeSelect"
+        v-model="selectedCity"
+        :options="cascadeCountries"
+        optionLabel="cname"
+        optionGroupLabel="name"
+        :optionGroupChildren="['states', 'cities']" />
+      <label for="multiselect">CascadeSelect</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <Dropdown id="dropdown" v-model="value8" :options="cities" optionLabel="name" />
+      <label for="dropdown">Dropdown</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <MultiSelect id="multiselect" v-model="value9" :options="cities" optionLabel="name" />
+      <label for="multiselect">MultiSelect</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <Textarea id="textarea" v-model="value10" rows="3" />
+      <label for="textarea">Textarea</label>
+    </FloatLabel>
+  </div>
+  <div class="field col-12 md:col-4">
+    <FloatLabel>
+      <Password id="password" v-model="value11" />
+      <label for="password">Password</label>
+    </FloatLabel>
+  </div>
 </div>
         `
       },
@@ -143,8 +136,6 @@ export default {
             value9: null,
             value10: null,
             value11: null,
-            valueIconLeft: null,
-            valueIconRight: null,
             selectedCity: null,
             cascadeCountries: [
                 {

@@ -1,18 +1,22 @@
+<template>
+  <div>
+    <slot></slot>
+  </div>
+</template>
+
 <script>
 import BaseComponent from 'primevue2/basecomponent';
 
 export default {
     name: 'Row',
     extends: BaseComponent,
-    inject: ['$rows'],
+    data() {
+      return {
+        columns: null
+      }
+    },
     mounted() {
-        this.$rows?.add(this.$);
-    },
-    unmounted() {
-        this.$rows?.delete(this.$);
-    },
-    render() {
-        return null;
+      this.columns = this.$children;
     }
 };
 </script>

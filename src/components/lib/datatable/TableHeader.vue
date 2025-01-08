@@ -5,7 +5,7 @@
                 <template v-for="(col, i) of columns">
                     <DTHeaderCell
                         v-if="!columnProp(col, 'hidden') && (rowGroupMode !== 'subheader' || groupRowsBy !== columnProp(col, 'field'))"
-                        :key="columnProp(col, 'columnKey') || columnProp(col, 'field') || i"
+                        :key="columnProp(col, 'columnKey') + i || columnProp(col, 'field') + i || i"
                         :column="col"
                         :index="i"
                         @column-click="$emit('column-click', $event)"
@@ -53,20 +53,20 @@
                         v-bind="{ ...getColumnPT(col, 'root', i), ...getColumnPT(col, 'headerCell', i) }">
                         <DTHeaderCheckbox v-if="columnProp(col, 'selectionMode') === 'multiple'" :checked="allRowsSelected" :disabled="empty" @change="$emit('checkbox-change', $event)" :column="col" :unstyled="unstyled" :pt="pt" />
                         <DTColumnFilter
-                            v-if="col.children && col.children.filter"
+                            v-if="col.$scopedSlots && col.$scopedSlots.filter"
                             :field="columnProp(col, 'filterField') || columnProp(col, 'field')"
                             :type="columnProp(col, 'dataType')"
                             display="row"
                             :showMenu="columnProp(col, 'showFilterMenu')"
-                            :filterElement="col.children && col.children.filter"
-                            :filterHeaderTemplate="col.children && col.children.filterheader"
-                            :filterFooterTemplate="col.children && col.children.filterfooter"
-                            :filterClearTemplate="col.children && col.children.filterclear"
-                            :filterApplyTemplate="col.children && col.children.filterapply"
-                            :filterIconTemplate="col.children && col.children.filtericon"
-                            :filterAddIconTemplate="col.children && col.children.filteraddicon"
-                            :filterRemoveIconTemplate="col.children && col.children.filterremoveicon"
-                            :filterClearIconTemplate="col.children && col.children.filterclearicon"
+                            :filterElement="col.$scopedSlots && col.$scopedSlots.filter"
+                            :filterHeaderTemplate="col.$scopedSlots && col.$scopedSlots.filterheader"
+                            :filterFooterTemplate="col.$scopedSlots && col.$scopedSlots.filterfooter"
+                            :filterClearTemplate="col.$scopedSlots && col.$scopedSlots.filterclear"
+                            :filterApplyTemplate="col.$scopedSlots && col.$scopedSlots.filterapply"
+                            :filterIconTemplate="col.$scopedSlots && col.$scopedSlots.filtericon"
+                            :filterAddIconTemplate="col.$scopedSlots && col.$scopedSlots.filteraddicon"
+                            :filterRemoveIconTemplate="col.$scopedSlots && col.$scopedSlots.filterremoveicon"
+                            :filterClearIconTemplate="col.$scopedSlots && col.$scopedSlots.filterclearicon"
                             :filters="filters"
                             :filtersStore="filtersStore"
                             :filterInputProps="filterInputProps"
@@ -95,11 +95,11 @@
             </tr>
         </template>
         <template v-else>
-            <tr v-for="(row, i) of getHeaderRows()" :key="i" role="row" v-bind="{ ...ptm('headerRow'), ...getRowPT(row, 'root', i) }">
+            <tr v-for="(row, i) of columnGroup.$scopedSlots.default()" role="row" v-bind="{ ...ptm('headerRow'), ...getRowPT(row, 'root', i) }">
                 <template v-for="(col, j) of getHeaderColumns(row)">
                     <DTHeaderCell
-                        v-if="!columnProp(col, 'hidden') && (rowGroupMode !== 'subheader' || groupRowsBy !== columnProp(col, 'field')) && typeof col.children !== 'string'"
-                        :key="columnProp(col, 'columnKey') || columnProp(col, 'field') || j"
+                        v-if="(!columnProp(col, 'hidden') && (rowGroupMode !== 'subheader' || groupRowsBy !== columnProp(col, 'field')) && typeof col.$scopedSlots !== 'string')"
+                        :key="i + '_' + j + (columnProp(col, 'columnKey') ||columnProp(col, 'field') || '')"
                         :column="col"
                         @column-click="$emit('column-click', $event)"
                         @column-mousedown="$emit('column-mousedown', $event)"
@@ -133,7 +133,7 @@
 
 <script>
 import BaseComponent from 'primevue2/basecomponent';
-import { HelperSet, ObjectUtils, VueUtils } from 'primevue2/utils';
+import { ObjectUtils, VueUtils } from 'primevue2/utils';
 import ColumnFilter from './ColumnFilter.vue';
 import HeaderCell from './HeaderCell.vue';
 import HeaderCheckbox from './HeaderCheckbox.vue';
@@ -235,22 +235,6 @@ export default {
             default: null
         }
     },
-    provide() {
-        return {
-            $rows: this.d_headerRows,
-            $columns: this.d_headerColumns
-        };
-    },
-    data() {
-        return {
-            d_headerRows: new HelperSet({ type: 'Row' }),
-            d_headerColumns: new HelperSet({ type: 'Column' })
-        };
-    },
-    beforeUnmount() {
-        this.d_headerRows.clear();
-        this.d_headerColumns.clear();
-    },
     methods: {
         columnProp(col, prop) {
             return ObjectUtils.getVNodeProp(col, prop);
@@ -272,11 +256,11 @@ export default {
             return mergeProps(this.ptm(`columnGroup.${key}`, { columnGroup: columnGroupMetaData }), this.ptm(`columnGroup.${key}`, columnGroupMetaData), this.ptmo(this.getColumnGroupProps(), key, columnGroupMetaData));
         },
         getColumnGroupProps() {
-            return this.columnGroup && this.columnGroup.props && this.columnGroup.props.pt ? this.columnGroup.props.pt : undefined; //@todo
+            return this.columnGroup?.pt //@todo
         },
         getRowPT(row, key, index) {
             const rowMetaData = {
-                props: row.props,
+                props: row.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -290,11 +274,11 @@ export default {
             return mergeProps(this.ptm(`row.${key}`, { row: rowMetaData }), this.ptm(`row.${key}`, rowMetaData), this.ptmo(this.getRowProp(row), key, rowMetaData));
         },
         getRowProp(row) {
-            return row.props && row.props.pt ? row.props.pt : undefined; //@todo
+          return row?.pt //@todo
         },
         getColumnPT(column, key, index) {
             const columnMetaData = {
-                props: column.props,
+                props: column.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -308,19 +292,34 @@ export default {
             return mergeProps(this.ptm(`column.${key}`, { column: columnMetaData }), this.ptm(`column.${key}`, columnMetaData), this.ptmo(this.getColumnProp(column), key, columnMetaData));
         },
         getColumnProp(column) {
-            return column.props && column.props.pt ? column.props.pt : undefined; //@todo
+          return column?.pt //@todo
         },
         getFilterColumnHeaderClass(column) {
-            return [this.cx('headerCell', { column }), this.columnProp(column, 'filterHeaderClass'), this.columnProp(column, 'class')];
+            return ObjectUtils.toFlattenArray(
+              this.cx('headerCell', { column }), 
+              this.columnProp(column, 'filterHeaderClass'), 
+              this.columnProp(column, 'className')
+            )
         },
         getFilterColumnHeaderStyle(column) {
-            return [this.columnProp(column, 'filterHeaderStyle'), this.columnProp(column, 'style')];
+            return ObjectUtils.toFlattenArray(
+              this.columnProp(column, 'filterHeaderStyle'), 
+              this.columnProp(column, 'styleName')
+            )
         },
-        getHeaderRows() {
-            return this.d_headerRows?.get(this.columnGroup, this.columnGroup.children);
-        },
-        getHeaderColumns(row) {
-            return this.d_headerColumns?.get(row, row.children);
+        getHeaderColumns(row){
+            let cols = [];
+
+            if (row.child && row.child.$scopedSlots.default) {
+                row.child.$scopedSlots.default().forEach(child => {
+                    if (child.child && child.child.children && child.child.children instanceof Array)
+                        cols = [...cols, ...child.child.children];
+                    else if (child.componentOptions && child.componentOptions.tag === 'Column')
+                        cols.push(child);
+                });
+
+                return cols;
+            }
         }
     },
     computed: {

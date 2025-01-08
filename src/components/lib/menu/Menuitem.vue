@@ -9,17 +9,16 @@
         :aria-disabled="disabled()"
         v-bind="getPTOptions('menuitem')"
         :data-p-focused="isItemFocused()"
-        :data-p-disabled="disabled() || false"
-    >
+        :data-p-disabled="disabled() || false">
         <div :class="cx('content')" @click="onItemClick($event)" @mousemove="onItemMouseMove($event)" v-bind="getPTOptions('content')">
             <template v-if="!templates.item">
                 <a v-ripple :href="item.url" :class="cx('action')" :target="item.target" tabindex="-1" aria-hidden="true" v-bind="getPTOptions('action')">
-                    <component v-if="templates.itemicon" :is="templates.itemicon" :item="item" :class="cx('icon')" />
+                    <DynamicComponent v-if="templates.itemicon" :template="templates.itemicon" :item="item" :className="cx('icon')" />
                     <span v-else-if="item.icon" :class="[cx('icon'), item.icon]" v-bind="getPTOptions('icon')" />
                     <span :class="cx('label')" v-bind="getPTOptions('label')">{{ label() }}</span>
                 </a>
             </template>
-            <component v-else-if="templates.item" :is="templates.item" :item="item" :label="label()" :props="getMenuItemProps(item)"></component>
+            <DynamicComponent v-else-if="templates.item" :template="templates.item" :item="item" :label="label()" :props="getMenuItemProps(item)"></DynamicComponent>
         </div>
     </li>
 </template>

@@ -17,7 +17,7 @@
           aria:haspopup="true"
           aria-controls="overlay_panel" />
 
-        <OverlayPanel ref="op" appendTo="body" :showCloseIcon="true" id="overlay_panel" style="width: 450px">
+        <OverlayPanel ref="op" appendTo="body" :showCloseIcon="true" id="overlay_panel" :styleName="{width: '450px'}">
           <DataTable
             :value="products"
             :selection.sync="selectedProduct"

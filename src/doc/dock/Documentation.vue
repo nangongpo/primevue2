@@ -147,26 +147,27 @@ import Dock from 'primevue2/dock';
       },
       baseCode2: {
         basic: `
+import { getPublicUrl } from '@/utils'
 export default {
     data() {
         return {
             items: [
-                {
-                    label: 'Finder',
-                    icon: () => <img alt="Finder" src="demo/images/dock/finder.svg" style="width: 100%" />
-                },
-                {
-                    label: 'App Store',
-                    icon: () => <img alt="App Store" src="demo/images/dock/appstore.svg" style="width: 100%" />
-                },
-                {
-                    label: 'Photos',
-                    icon: () => <img alt="Photos" src="demo/images/dock/photos.svg" style="width: 100%" />
-                },
-                {
-                    label: 'Trash',
-                    icon: () => <img alt="trash" src="demo/images/dock/trash.png" style="width: 100%" />
-                }
+              {
+                label: 'Finder',
+                icon: getPublicUrl('demo/images/dock/finder.svg')
+              },
+              {
+                label: 'App Store',
+                icon: getPublicUrl('demo/images/dock/appstore.svg')
+              },
+              {
+                label: 'Photos',
+                icon: getPublicUrl('demo/images/dock/photos.svg')
+              },
+              {
+                label: 'Trash',
+                icon: getPublicUrl('demo/images/dock/trash.png')
+              }
             ]
         }
     }

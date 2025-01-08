@@ -7,19 +7,18 @@
         :style="$attrs.containerStyle"
         :aria-label="$attrs.ariaLabel"
         :aria-roledescription="$attrs.ariaRoledescription"
-        v-bind="{ ...$attrs.containerProps, ...getPTOptions('root') }"
-    >
+        v-bind="{ ...$attrs.containerProps, ...getPTOptions('root') }">
         <button v-if="$attrs.fullScreen" v-ripple autofocus type="button" :class="cx('closeButton')" :aria-label="closeAriaLabel" @click="$emit('mask-hide')" v-bind="getPTOptions('closeButton')">
-            <component :is="$attrs.templates['closeicon'] || 'TimesIcon'" :class="cx('closeIcon')" v-bind="getPTOptions('closeIcon')" />
+            <DynamicComponent :template="$attrs.templates['closeicon'] || 'TimesIcon'" :className="cx('closeIcon')" v-bind="getPTOptions('closeIcon')" />
         </button>
         <div v-if="$attrs.templates && $attrs.templates['header']" :class="cx('header')" v-bind="getPTOptions('header')">
-            <component :is="$attrs.templates['header']" />
+            <DynamicComponent :template="$attrs.templates['header']" />
         </div>
         <div :class="cx('content')" :aria-live="$attrs.autoPlay ? 'polite' : 'off'" v-bind="getPTOptions('content')">
             <GalleriaItem
                 :id="id"
-                v-model:activeIndex="activeIndex"
-                v-model:slideShowActive="slideShowActive"
+                :activeIndex="activeIndex"
+                :slideShowActive="slideShowActive"
                 :value="$attrs.value"
                 :circular="$attrs.circular"
                 :templates="$attrs.templates"
@@ -29,14 +28,15 @@
                 :autoPlay="$attrs.autoPlay"
                 @start-slideshow="startSlideShow"
                 @stop-slideshow="stopSlideShow"
+                @update:activeIndex="(val) => activeIndex = val"
                 :pt="pt"
                 :unstyled="unstyled"
             />
 
             <GalleriaThumbnails
                 v-if="$attrs.showThumbnails"
-                v-model:activeIndex="activeIndex"
-                v-model:slideShowActive="slideShowActive"
+                :activeIndex="activeIndex"
+                :slideShowActive="slideShowActive"
                 :containerId="id"
                 :value="$attrs.value"
                 :templates="$attrs.templates"
@@ -49,12 +49,13 @@
                 :prevButtonProps="$attrs.prevButtonProps"
                 :nextButtonProps="$attrs.nextButtonProps"
                 @stop-slideshow="stopSlideShow"
+                @update:activeIndex="(val) => activeIndex = val"
                 :pt="pt"
                 :unstyled="unstyled"
             />
         </div>
         <div v-if="$attrs.templates && $attrs.templates['footer']" :class="cx('footer')" v-bind="getPTOptions('footer')">
-            <component :is="$attrs.templates['footer']" />
+            <DynamicComponent :template="$attrs.templates['footer']" />
         </div>
     </div>
 </template>
@@ -107,7 +108,7 @@ export default {
     updated() {
         this.$emit('activeitem-change', this.activeIndex);
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (this.slideShowActive) {
             this.stopSlideShow();
         }

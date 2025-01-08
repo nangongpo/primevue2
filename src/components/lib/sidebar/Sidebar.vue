@@ -3,7 +3,7 @@
         <div v-if="containerVisible" :ref="maskRef" @mousedown="onMaskClick" :class="cx('mask')" :style="sx('mask', true, { position })" v-bind="ptm('mask')">
             <transition name="p-sidebar" @enter="onEnter" @after-enter="onAfterEnter" @before-leave="onBeforeLeave" @leave="onLeave" @after-leave="onAfterLeave" appear v-bind="ptm('transition')">
                 <div v-if="visible" :ref="containerRef" v-focustrap :class="cx('root')" role="complementary" :aria-modal="modal" v-bind="ptmi('root')">
-                    <slot v-if="$slots.container" name="container" :onClose="hide" :closeCallback="hide"></slot>
+                    <slot v-if="$scopedSlots.container" name="container" :onClose="hide" :closeCallback="hide"></slot>
                     <template v-else>
                         <div :ref="headerContainerRef" :class="cx('header')" v-bind="ptm('header')">
                             <slot name="header" :className="cx('title')">
@@ -11,7 +11,7 @@
                             </slot>
                             <button v-if="showCloseIcon" :ref="closeButtonRef" v-ripple type="button" :class="cx('closeButton')" :aria-label="closeAriaLabel" @click="hide" v-bind="ptm('closeButton')" data-pc-group-section="iconcontainer">
                                 <slot name="closeicon" :className="cx('closeIcon')">
-                                    <component :is="closeIcon ? 'span' : 'TimesIcon'" :class="[cx('closeIcon'), closeIcon]" v-bind="ptm('closeIcon')"></component>
+                                    <DynamicComponent :template="closeIcon ? 'span' : 'TimesIcon'" :className="[cx('closeIcon'), closeIcon]" v-bind="ptm('closeIcon')"></DynamicComponent>
                                 </slot>
                             </button>
                         </div>
@@ -55,7 +55,7 @@ export default {
             this.containerVisible = this.visible;
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.disableDocumentSettings();
 
         if (this.mask && this.autoZIndex) {

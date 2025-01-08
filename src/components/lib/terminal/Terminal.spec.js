@@ -12,7 +12,7 @@ describe('Terminal.vue', () => {
             mounted() {
                 TerminalService.on('command', this.commandHandler);
             },
-            beforeUnmount() {
+            beforeDestroy() {
                 TerminalService.off('command', this.commandHandler);
             },
             methods: {
@@ -48,7 +48,7 @@ describe('Terminal.vue', () => {
             mounted() {
                 TerminalService.on('command', this.commandHandler);
             },
-            beforeUnmount() {
+            beforeDestroy() {
                 TerminalService.off('command', this.commandHandler);
             },
             methods: {

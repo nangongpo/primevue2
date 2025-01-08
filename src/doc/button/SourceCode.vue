@@ -121,12 +121,12 @@ export default {
 <h5>Loading State</h5>
 <Button label="Save" icon="pi pi-check" :loading="isLoading" />
 
-<h5>Button Set</h5>
-<span class="p-buttonset">
+<h5>Button Group</h5>
+<ButtonGroup>
     <Button label="Save" icon="pi pi-check" />
     <Button label="Delete" icon="pi pi-trash" />
     <Button label="Cancel" icon="pi pi-times" />
-</span>
+</ButtonGroup>
 
 <h5>Sizes</h5>
 <div class="sizes">

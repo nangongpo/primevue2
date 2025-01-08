@@ -11,7 +11,7 @@
       <div class="card">
         <h5>Basic</h5>
         <Button label="Show" icon="pi pi-external-link" @click="openBasic" />
-        <Dialog header="Header" :visible.sync="displayBasic" :containerStyle="{ width: '50vw' }">
+        <Dialog header="Header" :visible.sync="displayBasic" :styleName="{ width: '350px' }">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -26,7 +26,7 @@
         </Dialog>
 
         <Button label="Long Content" icon="pi pi-external-link" @click="openBasic2" />
-        <Dialog header="Header" :visible.sync="displayBasic2" :containerStyle="{ width: '50vw' }">
+        <Dialog header="Header" :visible.sync="displayBasic2" :styleName="{ width: '350px' }">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -65,7 +65,7 @@
 
         <h5>Modal</h5>
         <Button label="Show" icon="pi pi-external-link" @click="openModal" />
-        <Dialog header="Header" :visible.sync="displayModal" :containerStyle="{ width: '50vw' }" :modal="true">
+        <Dialog header="Header" :visible.sync="displayModal" :modal="true" :styleName="{ width: '350px' }">
           <p class="m-0">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -84,7 +84,7 @@
         <Dialog
           header="Confirmation"
           :visible.sync="displayConfirmation"
-          :containerStyle="{ width: '350px' }"
+          :styleName="{ width: '350px' }"
           :modal="true">
           <div class="confirmation-content">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -101,7 +101,7 @@
         <Dialog
           header="Header"
           :visible.sync="displayMaximizable"
-          :containerStyle="{ width: '50vw' }"
+          :styleName="{ width: '350px' }"
           :maximizable="true"
           :modal="true">
           <p class="m-0">
@@ -154,9 +154,10 @@
         <Dialog
           header="Header"
           :visible.sync="displayPosition"
-          :style="{ width: '50vw' }"
           :position="position"
-          :modal="true">
+          :modal="true"
+          :draggable="false"
+          :styleName="{ width: '25rem' }">
           <p class="m-0">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -173,7 +174,7 @@
         <h5>DataView</h5>
         <Button label="DataView" icon="pi pi-external-link" @click="openDataView" />
 
-        <Dialog header="DataView" :visible.sync="displayDataView" class="p-dialog-maximized" :modal="true">
+        <Dialog header="DataView" :visible.sync="displayDataView" className="p-dialog-maximized" :modal="true">
           <DataView
             :value="products"
             :layout="layout"
@@ -198,57 +199,79 @@
             </template>
 
             <template #list="slotProps">
-              <div class="col-12">
-                <div class="product-list-item">
-                  <img :src="$publicUrl('demo/images/product/' + slotProps.data.image)" :alt="slotProps.data.name" />
-                  <div class="product-list-detail">
-                    <div class="product-name">{{ slotProps.data.name }}</div>
-                    <div class="product-description">{{ slotProps.data.description }}</div>
-                    <Rating :value="slotProps.data.rating" :readonly="true" :cancel="false"></Rating>
-                    <i class="pi pi-tag product-category-icon"></i
-                    ><span class="product-category">{{ slotProps.data.category }}</span>
+            <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
+              <div class="product-list-item">
+                <img :src="$publicUrl('demo/images/product/' + item.image)" :alt="item.name" />
+                <div class="product-list-detail">
+                  <div class="product-name">{{ item.name }}</div>
+                  <div class="product-description">
+                    {{ item.description }}
                   </div>
-                  <div class="product-list-action">
-                    <span class="product-price">${{ slotProps.data.price }}</span>
-                    <Button
-                      icon="pi pi-shopping-cart"
-                      label="Add to Cart"
-                      :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
-                    <span :class="'product-badge status-' + slotProps.data.inventoryStatus.toLowerCase()">{{
-                      slotProps.data.inventoryStatus
-                    }}</span>
-                  </div>
+                  <Rating
+                    :value="item.rating"
+                    :readonly="true"
+                    :cancel="false"></Rating>
+                  <i class="pi pi-tag product-category-icon"></i>
+                  <span class="product-category">
+                    {{ item.category }}
+                  </span>
+                </div>
+                <div class="product-list-action">
+                  <span class="product-price">${{ item.price }}</span>
+                  <Button
+                    icon="pi pi-shopping-cart"
+                    label="Add to Cart"
+                    :disabled="item.inventoryStatus === 'OUTOFSTOCK'">
+                  </Button>
+                  <span
+                    :class="'product-badge status-' + item.inventoryStatus.toLowerCase()">
+                    {{ item.inventoryStatus }}
+                  </span>
                 </div>
               </div>
-            </template>
+            </div>
+          </template>
 
-            <template #grid="slotProps">
-              <div class="col-12 md:col-4">
-                <div class="product-grid-item card">
+          <template #grid="slotProps">
+            <div class="grid">
+              <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 md:col-4">
+                <div class="product-grid-item p-4 border-round-lg">
                   <div class="product-grid-item-top">
                     <div>
                       <i class="pi pi-tag product-category-icon"></i>
-                      <span class="product-category">{{ slotProps.data.category }}</span>
+                      <span class="product-category">
+                        {{ item.category }}
+                      </span>
                     </div>
-                    <span :class="'product-badge status-' + slotProps.data.inventoryStatus.toLowerCase()">{{
-                      slotProps.data.inventoryStatus
-                    }}</span>
+                    <span :class="'product-badge status-' + item.inventoryStatus.toLowerCase()">
+                      {{ item.inventoryStatus }}
+                    </span>
                   </div>
                   <div class="product-grid-item-content">
-                    <img :src="$publicUrl('demo/images/product/' + slotProps.data.image)" :alt="slotProps.data.name" />
-                    <div class="product-name">{{ slotProps.data.name }}</div>
-                    <div class="product-description">{{ slotProps.data.description }}</div>
-                    <Rating :value="slotProps.data.rating" :readonly="true" :cancel="false"></Rating>
+                    <img 
+                      :src="$publicUrl('demo/images/product/' + item.image)"
+                      :alt="item.name" />
+                    <div class="product-name">{{ item.name }}</div>
+                    <div class="product-description">
+                      {{ item.description }}
+                    </div>
+                    <Rating
+                      :value="item.rating"
+                      :readonly="true"
+                      :cancel="false">
+                    </Rating>
                   </div>
                   <div class="product-grid-item-bottom">
-                    <span class="product-price">${{ slotProps.data.price }}</span>
+                    <span class="product-price">${{ item.price }}</span>
                     <Button
                       icon="pi pi-shopping-cart"
-                      :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
+                      :disabled="item.inventoryStatus === 'OUTOFSTOCK'">
+                    </Button>
                   </div>
                 </div>
               </div>
-            </template>
+            </div>
+          </template>
           </DataView>
         </Dialog>
       </div>
@@ -368,5 +391,125 @@ p {
 
 .p-dialog .p-button {
   min-width: 6rem;
+}
+
+.p-dropdown {
+  width: 14rem;
+  font-weight: normal;
+}
+
+.product-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.product-description {
+  margin: 0 0 1rem 0;
+}
+
+.product-category-icon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.product-category {
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+:deep(.product-list-item) {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+
+  img {
+    width: 150px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin-right: 2rem;
+  }
+
+  .product-list-detail {
+    flex: 1 1 0;
+  }
+
+  .p-rating {
+    margin: 0 0 0.5rem 0;
+  }
+
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    align-self: flex-end;
+  }
+
+  .product-list-action {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-button {
+    margin-bottom: 0.5rem;
+  }
+}
+
+:deep(.product-grid-item) {
+  border: 1px solid #dee2e6;
+
+  .product-grid-item-top,
+  .product-grid-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  img {
+    width: 75%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin: 2rem 0;
+  }
+
+  .product-grid-item-content {
+    text-align: center;
+  }
+
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .product-list-item {
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 75%;
+      margin: 2rem 0;
+    }
+
+    .product-list-detail {
+      text-align: center;
+    }
+
+    .product-price {
+      align-self: center;
+    }
+
+    .product-list-action {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-list-action {
+      margin-top: 2rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
 }
 </style>

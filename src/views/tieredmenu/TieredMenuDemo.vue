@@ -10,7 +10,10 @@
     <div class="content-section implementation">
       <div class="card">
         <h5>Inline</h5>
-        <TieredMenu :model="items" />
+        <div class="flex justify-center">
+          <TieredMenu :model="items" />
+        </div>
+
 
         <h5>Overlay</h5>
         <Button type="button" label="Toggle" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />

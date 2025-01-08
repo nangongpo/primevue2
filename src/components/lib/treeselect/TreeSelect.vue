@@ -39,7 +39,7 @@
         </div>
         <div :class="cx('trigger')" role="button" aria-haspopup="tree" :aria-expanded="overlayVisible" v-bind="ptm('trigger')">
             <slot name="triggericon" :className="cx('triggerIcon')">
-                <component :is="'ChevronDownIcon'" :class="cx('triggerIcon')" v-bind="ptm('triggerIcon')" />
+                <DynamicComponent :template="'ChevronDownIcon'" :className="cx('triggerIcon')" v-bind="ptm('triggerIcon')" />
             </slot>
         </div>
         <Portal :appendTo="appendTo">
@@ -76,10 +76,10 @@
                             :unstyled="unstyled"
                             :pt="ptm('tree')"
                         >
-                            <template v-if="$slots.itemtogglericon" #togglericon="iconProps">
+                            <template v-if="$scopedSlots.itemtogglericon" #togglericon="iconProps">
                                 <slot name="itemtogglericon" :node="iconProps.node" :expanded="iconProps.expanded" :className="iconProps.class" />
                             </template>
-                            <template v-if="$slots.itemcheckboxicon" #checkboxicon="iconProps">
+                            <template v-if="$scopedSlots.itemcheckboxicon" #checkboxicon="iconProps">
                                 <slot name="itemcheckboxicon" :checked="iconProps.checked" :partialChecked="iconProps.partialChecked" :className="iconProps.class" />
                             </template>
                         </TSTree>
@@ -151,7 +151,7 @@ export default {
     overlay: null,
     selfChange: false,
     selfClick: false,
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindOutsideClickListener();
         this.unbindResizeListener();
 

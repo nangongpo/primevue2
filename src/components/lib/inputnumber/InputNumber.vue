@@ -32,14 +32,14 @@
             <INButton :class="[cx('incrementButton'), incrementButtonClass]" v-on="upButtonListeners" :disabled="disabled" :tabindex="-1" aria-hidden="true" v-bind="incrementButtonProps" :pt="ptm('incrementButton')" :unstyled="unstyled">
                 <template #icon>
                     <slot name="incrementbuttonicon">
-                        <component :is="incrementButtonIcon ? 'span' : 'AngleUpIcon'" :class="incrementButtonIcon" v-bind="ptm('incrementButton')['icon']" data-pc-section="incrementbuttonicon" />
+                        <DynamicComponent :template="incrementButtonIcon ? 'span' : 'AngleUpIcon'" :className="incrementButtonIcon" v-bind="ptm('incrementButton')['icon']" data-pc-section="incrementbuttonicon" />
                     </slot>
                 </template>
             </INButton>
             <INButton :class="[cx('decrementButton'), decrementButtonClass]" v-on="downButtonListeners" :disabled="disabled" :tabindex="-1" aria-hidden="true" v-bind="decrementButtonProps" :pt="ptm('decrementButton')" :unstyled="unstyled">
                 <template #icon>
                     <slot name="decrementbuttonicon">
-                        <component :is="decrementButtonIcon ? 'span' : 'AngleDownIcon'" :class="decrementButtonIcon" v-bind="ptm('decrementButton')['icon']" data-pc-section="decrementbuttonicon" />
+                        <DynamicComponent :template="decrementButtonIcon ? 'span' : 'AngleDownIcon'" :className="decrementButtonIcon" v-bind="ptm('decrementButton')['icon']" data-pc-section="decrementbuttonicon" />
                     </slot>
                 </template>
             </INButton>
@@ -53,11 +53,10 @@
             aria-hidden="true"
             v-bind="incrementButtonProps"
             :pt="ptm('incrementButton')"
-            :unstyled="unstyled"
-        >
+            :unstyled="unstyled">
             <template #icon>
                 <slot name="incrementbuttonicon">
-                    <component :is="incrementButtonIcon ? 'span' : 'AngleUpIcon'" :class="incrementButtonIcon" v-bind="ptm('incrementButton')['icon']" data-pc-section="incrementbuttonicon" />
+                    <DynamicComponent :template="incrementButtonIcon ? 'span' : 'AngleUpIcon'" :className="incrementButtonIcon" v-bind="ptm('incrementButton')['icon']" data-pc-section="incrementbuttonicon" />
                 </slot>
             </template>
         </INButton>
@@ -70,11 +69,10 @@
             aria-hidden="true"
             v-bind="decrementButtonProps"
             :pt="ptm('decrementButton')"
-            :unstyled="unstyled"
-        >
+            :unstyled="unstyled">
             <template #icon>
                 <slot name="decrementbuttonicon">
-                    <component :is="decrementButtonIcon ? 'span' : 'AngleDownIcon'" :class="decrementButtonIcon" v-bind="ptm('decrementButton')['icon']" data-pc-section="decrementbuttonicon" />
+                    <DynamicComponent :template="decrementButtonIcon ? 'span' : 'AngleDownIcon'" :className="decrementButtonIcon" v-bind="ptm('decrementButton')['icon']" data-pc-section="decrementbuttonicon" />
                 </slot>
             </template>
         </INButton>
@@ -93,7 +91,7 @@ export default {
     name: 'InputNumber',
     extends: BaseInputNumber,
     inheritAttrs: false,
-    emits: ['input', 'input', 'focus', 'blur'],
+    emits: ['input', 'change', 'focus', 'blur'],
     numberFormat: null,
     _numeral: null,
     _decimal: null,
@@ -789,7 +787,7 @@ export default {
         },
         handleOnInput(event, currentValue, newValue) {
             if (this.isValueChanged(currentValue, newValue)) {
-                this.$emit('input', { originalEvent: event, value: newValue, formattedValue: currentValue });
+                this.$emit('change', { originalEvent: event, value: newValue, formattedValue: currentValue });
             }
         },
         isValueChanged(currentValue, newValue) {

@@ -33,7 +33,7 @@
             <slot name="controlsend"></slot>
         </div>
         <div :class="cx('container')" v-bind="ptm('container')">
-            <div v-if="$slots.header" :class="cx('header')" v-bind="ptm('header')">
+            <div v-if="$scopedSlots.header" :class="cx('header')" v-bind="ptm('header')">
                 <slot name="header"></slot>
             </div>
             <transition-group
@@ -109,7 +109,7 @@ export default {
             this.id = newValue || UniqueComponentId();
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.destroyStyle();
     },
     updated() {

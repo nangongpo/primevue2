@@ -170,7 +170,9 @@ import Menu from 'primevue2/menu';
       },
       baseCode: {
         basic: `
-<Menu :model="items" />
+<div class="flex">
+    <Menu :model="items" />
+</div>
         `
       },
       baseCode2: {
@@ -196,7 +198,7 @@ export default {
 				{
 					label: 'Vue Website',
 					icon: 'pi pi-external-link',
-					url: 'https://vuejs.org/'
+					url: 'https://v2.vuejs.org/'
 				},
 				{
                     label: 'Router',

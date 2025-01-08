@@ -1,6 +1,6 @@
 <template>
     <div :class="cx('root')" v-bind="ptmi('root')">
-        <div v-if="$slots.header" :class="cx('header')" v-bind="ptm('header')">
+        <div v-if="$scopedSlots.header" :class="cx('header')" v-bind="ptm('header')">
             <slot name="header"></slot>
         </div>
         <DVPaginator
@@ -16,19 +16,18 @@
             :alwaysShow="alwaysShowPaginator"
             @page="onPage($event)"
             :unstyled="unstyled"
-            :pt="ptm('paginator')"
-        >
-            <template v-if="$slots.paginatorstart" #start>
+            :pt="ptm('paginator')">
+            <template v-if="$scopedSlots.paginatorstart" #start>
                 <slot name="paginatorstart"></slot>
             </template>
-            <template v-if="$slots.paginatorend" #end>
+            <template v-if="$scopedSlots.paginatorend" #end>
                 <slot name="paginatorend"></slot>
             </template>
         </DVPaginator>
         <div :class="cx('content')" v-bind="ptm('content')">
             <template v-if="!empty">
-                <slot v-if="$slots.list && layout === 'list'" name="list" :items="items"></slot>
-                <slot v-if="$slots.grid && layout === 'grid'" name="grid" :items="items"></slot>
+                <slot v-if="$scopedSlots.list && layout === 'list'" name="list" :items="items"></slot>
+                <slot v-if="$scopedSlots.grid && layout === 'grid'" name="grid" :items="items"></slot>
             </template>
             <div v-else :class="cx('emptyMessage')" v-bind="ptm('emptyMessage')">
                 <slot name="empty" :layout="layout">
@@ -49,16 +48,15 @@
             :alwaysShow="alwaysShowPaginator"
             @page="onPage($event)"
             :unstyled="unstyled"
-            :pt="ptm('paginator')"
-        >
-            <template v-if="$slots.paginatorstart" #start>
+            :pt="ptm('paginator')">
+            <template v-if="$scopedSlots.paginatorstart" #start>
                 <slot name="paginatorstart"></slot>
             </template>
-            <template v-if="$slots.paginatorend" #end>
+            <template v-if="$scopedSlots.paginatorend" #end>
                 <slot name="paginatorend"></slot>
             </template>
         </DVPaginator>
-        <div v-if="$slots.footer" :class="cx('footer')" v-bind="ptm('footer')">
+        <div v-if="$scopedSlots.footer" :class="cx('footer')" v-bind="ptm('footer')">
             <slot name="footer"></slot>
         </div>
     </div>

@@ -2,7 +2,7 @@
     <Portal :appendTo="appendTo" :disabled="!popup">
         <transition name="p-connected-overlay" @enter="onEnter" @leave="onLeave" @after-leave="onAfterLeave" v-bind="ptm('transition')">
             <div v-if="popup ? overlayVisible : true" :ref="containerRef" :id="id" :class="cx('root')" @click="onOverlayClick" v-bind="ptmi('root')">
-                <div v-if="$slots.start" :class="cx('start')" v-bind="ptm('start')">
+                <div v-if="$scopedSlots.start" :class="cx('start')" v-bind="ptm('start')">
                     <slot name="start"></slot>
                 </div>
                 <ul
@@ -17,8 +17,7 @@
                     @focus="onListFocus"
                     @blur="onListBlur"
                     @keydown="onListKeyDown"
-                    v-bind="ptm('menu')"
-                >
+                    v-bind="ptm('menu')">
                     <template v-for="(item, i) of model">
                         <template v-if="item.items && visible(item) && !item.separator">
                             <li v-if="item.items" :key="label(item) + i.toString()" :id="id + '_' + i" :class="[cx('submenuHeader'), item.class]" :style="item.style" role="none" v-bind="ptm('submenuHeader')">
@@ -30,14 +29,14 @@
                                     :key="child.label + i + '_' + j"
                                     :id="id + '_' + i + '_' + j"
                                     :item="child"
-                                    :templates="$slots"
+                                    :templates="$scopedSlots"
                                     :focusedOptionId="focusedOptionId"
                                     :unstyled="unstyled"
                                     @item-click="itemClick"
                                     @item-mousemove="itemMouseMove"
                                     :pt="pt"
                                 />
-                                <li v-else-if="visible(child) && child.separator" :key="'separator' + i + j" :class="[cx('separator'), item.class]" :style="child.style" role="separator" v-bind="ptm('separator')"></li>
+                                <li v-else-if="visible(child) && child.separator" :key="'separator_' + i + '_' + j" :class="[cx('separator'), item.class]" :style="child.style" role="separator" v-bind="ptm('separator')"></li>
                             </template>
                         </template>
                         <li v-else-if="visible(item) && item.separator" :key="'separator' + i.toString()" :class="[cx('separator'), item.class]" :style="item.style" role="separator" v-bind="ptm('separator')"></li>
@@ -47,7 +46,7 @@
                             :id="id + '_' + i"
                             :item="item"
                             :index="i"
-                            :templates="$slots"
+                            :templates="$scopedslots"
                             :focusedOptionId="focusedOptionId"
                             :unstyled="unstyled"
                             @item-click="itemClick"
@@ -56,7 +55,7 @@
                         />
                     </template>
                 </ul>
-                <div v-if="$slots.end" :class="cx('end')" v-bind="ptm('end')">
+                <div v-if="$scopedSlots.end" :class="cx('end')" v-bind="ptm('end')">
                     <slot name="end"></slot>
                 </div>
             </div>
@@ -104,7 +103,7 @@ export default {
             this.bindOutsideClickListener();
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindResizeListener();
         this.unbindOutsideClickListener();
 

@@ -1,5 +1,6 @@
 import { FilterMatchMode } from 'primevue2/api'
 import { inject } from 'vue'
+// import PortalVue from 'portal-vue'
 
 export const defaultOptions = {
   ripple: false,
@@ -262,5 +263,12 @@ export default {
     app.prototype.$primevue = PrimeVue
 
     app.provide(PrimeVueSymbol, PrimeVue)
+
+    // 全局添加Teleport、TeleportTarget、MountingTeleport组件
+    // app.use(PortalVue, {
+    //   portalName: 'Teleport',
+    //   portalTargetName: 'TeleportTarget',
+    //   MountingPortalName: 'MountingTeleport'
+    // })
   }
 }

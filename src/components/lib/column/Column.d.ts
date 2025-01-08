@@ -342,7 +342,7 @@ export interface ColumnState {
     /**
      * Current style of the body cell.
      */
-    styleObject: object;
+    styleName: object;
     /**
      * Current filter overlay visible as a boolean.
      */

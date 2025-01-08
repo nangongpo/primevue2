@@ -18,7 +18,7 @@
                     :menuId="id"
                     :focusedItemId="focused ? focusedItemId : undefined"
                     :items="processedItems"
-                    :templates="$slots"
+                    :templates="$scopedSlots"
                     :activeItemPath="activeItemPath"
                     :level="0"
                     :visible="submenuVisible"
@@ -89,7 +89,7 @@ export default {
     mounted() {
         this.id = this.id || UniqueComponentId();
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindOutsideClickListener();
         this.unbindResizeListener();
 

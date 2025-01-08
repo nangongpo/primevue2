@@ -111,7 +111,7 @@ const classes = {
     rowgroupHeader: 'p-rowgroup-header',
     rowGroupToggler: 'p-row-toggler p-link',
     rowGroupTogglerIcon: 'p-row-toggler-icon',
-    row: ({ instance, props, index, columnSelectionMode }) => {
+    row: ({ instance, props, rowData, index, columnSelectionMode }) => {
         let rowStyleClass = [];
 
         if (props.selectionMode) {
@@ -120,13 +120,13 @@ const classes = {
 
         if (props.selection) {
             rowStyleClass.push({
-                'p-highlight': columnSelectionMode ? instance.isSelected && instance.$parentInstance.$parentInstance.highlightOnSelect : instance.isSelected
+                'p-highlight': columnSelectionMode ? instance.isSelected(rowData) && instance.$parentInstance.$parentInstance.highlightOnSelect : instance.isSelected(rowData)
             });
         }
 
         if (props.contextMenuSelection) {
             rowStyleClass.push({
-                'p-highlight-contextmenu': instance.isSelectedWithContextMenu
+                'p-highlight-contextmenu': instance.isSelectedWithContextMenu(rowData)
             });
         }
 

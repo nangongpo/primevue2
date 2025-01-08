@@ -1,7 +1,7 @@
 <template>
     <div :class="cx('columnFilter')" v-bind="getColumnPT('columnFilter')">
         <div v-if="display === 'row'" :class="cx('filterInput')" v-bind="{ ...filterInputProps, ...getColumnPT('filterInput') }">
-            <component :is="filterElement" :field="field" :filterModel="filters[field]" :filterCallback="filterCallback" />
+            <DynamicComponent :template="filterElement" :field="field" :filterModel="filters[field]" :filterCallback="filterCallback" />
         </div>
         <button
             v-if="showMenuButton"
@@ -14,12 +14,11 @@
             :class="cx('filterMenuButton')"
             @click="toggleMenu($event)"
             @keydown="onToggleButtonKeyDown($event)"
-            v-bind="getColumnPT('filterMenuButton', ptmFilterMenuParams)"
-        >
-            <component :is="filterIconTemplate || 'FilterIcon'" v-bind="getColumnPT('filterMenuIcon')" />
+            v-bind="getColumnPT('filterMenuButton', ptmFilterMenuParams)">
+            <DynamicComponent :template="filterIconTemplate || 'FilterIcon'" v-bind="getColumnPT('filterMenuIcon')" />
         </button>
         <button v-if="showClearButton && display === 'row'" :class="cx('headerFilterClearButton')" type="button" @click="clearFilter()" v-bind="getColumnPT('headerFilterClearButton', ptmHeaderFilterClearParams)">
-            <component :is="filterClearIconTemplate || 'FilterSlashIcon'" v-bind="getColumnPT('filterClearIcon')" />
+            <DynamicComponent :template="filterClearIconTemplate || 'FilterSlashIcon'" v-bind="getColumnPT('filterClearIcon')" />
         </button>
         <Portal>
             <transition name="p-connected-overlay" @enter="onOverlayEnter" @after-enter="onOverlayAfterEnter" @leave="onOverlayLeave" @after-leave="onOverlayAfterLeave" v-bind="getColumnPT('transition')">
@@ -34,9 +33,8 @@
                     @keydown.escape="hide"
                     @click="onContentClick"
                     @mousedown="onContentMouseDown"
-                    v-bind="getColumnPT('filterOverlay')"
-                >
-                    <component :is="filterHeaderTemplate" :field="field" :filterModel="filters[field]" :filterCallback="filterCallback" />
+                    v-bind="getColumnPT('filterOverlay')">
+                    <DynamicComponent :template="filterHeaderTemplate" :field="field" :filterModel="filters[field]" :filterCallback="filterCallback" />
                     <template v-if="display === 'row'">
                         <ul :class="cx('filterRowItems')" v-bind="getColumnPT('filterRowItems')">
                             <li
@@ -47,8 +45,7 @@
                                 @keydown="onRowMatchModeKeyDown($event)"
                                 @keydown.enter.prevent="onRowMatchModeChange(matchMode.value)"
                                 :tabindex="i === 0 ? '0' : null"
-                                v-bind="getColumnPT('filterRowItem', ptmFilterRowItemOptions(matchMode))"
-                            >
+                                v-bind="getColumnPT('filterRowItem', ptmFilterRowItemOptions(matchMode))">
                                 {{ matchMode.label }}
                             </li>
                             <li :class="cx('filterSeparator')" v-bind="getColumnPT('filterSeparator')"></li>
@@ -85,7 +82,7 @@
                                     :unstyled="unstyled"
                                     :pt="getColumnPT('filterMatchModeDropdown')"
                                 ></CFDropdown>
-                                <component v-if="display === 'menu'" :is="filterElement" :field="field" :filterModel="fieldConstraint" :filterCallback="filterCallback" :applyFilter="applyFilter" />
+                                <DynamicComponent v-if="display === 'menu'" :template="filterElement" :field="field" :filterModel="fieldConstraint" :filterCallback="filterCallback" :applyFilter="applyFilter" />
                                 <div v-bind="getColumnPT('filterRemove')">
                                     <CFButton
                                         v-if="showRemoveIcon"
@@ -97,10 +94,9 @@
                                         text
                                         severity="danger"
                                         size="small"
-                                        :pt="getColumnPT('filterRemoveButton')"
-                                    >
+                                        :pt="getColumnPT('filterRemoveButton')">
                                         <template #icon="iconProps">
-                                            <component :is="filterRemoveIconTemplate || 'TrashIcon'" :class="iconProps.class" v-bind="getColumnPT('filterRemoveButton')['icon']" />
+                                            <DynamicComponent :template="filterRemoveIconTemplate || 'TrashIcon'" :className="iconProps.class" v-bind="getColumnPT('filterRemoveButton')['icon']" />
                                         </template>
                                     </CFButton>
                                 </div>
@@ -117,10 +113,9 @@
                                 text
                                 severity="info"
                                 size="small"
-                                :pt="getColumnPT('filterAddRuleButton')"
-                            >
+                                :pt="getColumnPT('filterAddRuleButton')">
                                 <template #icon="iconProps">
-                                    <component :is="filterAddIconTemplate || 'PlusIcon'" :class="iconProps.class" v-bind="getColumnPT('filterAddRuleButton')['icon']" />
+                                    <DynamicComponent :template="filterAddIconTemplate || 'PlusIcon'" :className="iconProps.class" v-bind="getColumnPT('filterAddRuleButton')['icon']" />
                                 </template>
                             </CFButton>
                         </div>
@@ -136,14 +131,14 @@
                                 outlined
                                 :pt="getColumnPT('filterClearButton')"
                             ></CFButton>
-                            <component v-else :is="filterClearTemplate" :field="field" :filterModel="filters[field]" :filterCallback="clearFilter" />
+                            <DynamicComponent v-else :template="filterClearTemplate" :field="field" :filterModel="filters[field]" :filterCallback="clearFilter" />
                             <template v-if="showApplyButton">
                                 <CFButton v-if="!filterApplyTemplate" type="button" :class="cx('filterApplyButton')" :label="applyButtonLabel" @click="applyFilter()" :unstyled="unstyled" size="small" :pt="getColumnPT('filterApplyButton')"></CFButton>
-                                <component v-else :is="filterApplyTemplate" :field="field" :filterModel="filters[field]" :filterCallback="applyFilter" />
+                                <DynamicComponent v-else :template="filterApplyTemplate" :field="field" :filterModel="filters[field]" :filterCallback="applyFilter" />
                             </template>
                         </div>
                     </template>
-                    <component :is="filterFooterTemplate" :field="field" :filterModel="filters[field]" :filterCallback="filterCallback" />
+                    <DynamicComponent :template="filterFooterTemplate" :field="field" :filterModel="filters[field]" :filterCallback="filterCallback" />
                 </div>
             </transition>
         </Portal>
@@ -293,7 +288,7 @@ export default {
     overlay: null,
     selfClick: false,
     overlayEventListener: null,
-    beforeUnmount() {
+    beforeDestroy() {
         if (this.overlayEventListener) {
             OverlayEventBus.off('overlay-click', this.overlayEventListener);
             this.overlayEventListener = null;
@@ -321,7 +316,7 @@ export default {
     methods: {
         getColumnPT(key, params) {
             const columnMetaData = {
-                props: this.column.props,
+                props: this.column.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -333,7 +328,7 @@ export default {
             return mergeProps(this.ptm(`column.${key}`, { column: columnMetaData }), this.ptm(`column.${key}`, columnMetaData), this.ptmo(this.getColumnProp(), key, columnMetaData));
         },
         getColumnProp() {
-            return this.column.props && this.column.props.pt ? this.column.props.pt : undefined;
+          return this.column?.pt //@todo:
         },
         ptmFilterRowItemOptions(matchMode) {
             return {

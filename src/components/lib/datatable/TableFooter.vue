@@ -6,9 +6,9 @@
             </template>
         </tr>
         <template v-else>
-            <tr v-for="(row, i) of getFooterRows()" :key="i" role="row" v-bind="{ ...ptm('footerRow'), ...getRowPT(row, 'root', i) }">
+            <tr v-for="(row, i) of columnGroup.$scopedSlots.default()" :key="i" role="row" v-bind="{ ...ptm('footerRow'), ...getRowPT(row, 'root', i) }">
                 <template v-for="(col, j) of getFooterColumns(row)">
-                    <DTFooterCell v-if="!columnProp(col, 'hidden')" :key="columnProp(col, 'columnKey') || columnProp(col, 'field') || j" :column="col" :index="i" :pt="pt" />
+                    <DTFooterCell v-if="!columnProp(col, 'hidden')" :key="i + '_' + j + '_' + (columnProp(col, 'columnKey') || columnProp(col, 'field') || '')" :column="col" :index="i" :pt="pt" />
                 </template>
             </tr>
         </template>
@@ -17,8 +17,9 @@
 
 <script>
 import BaseComponent from 'primevue2/basecomponent';
-import { HelperSet, ObjectUtils, VueUtils } from 'primevue2/utils';
+import { ObjectUtils, VueUtils } from 'primevue2/utils';
 import FooterCell from './FooterCell.vue';
+
 const { mergeProps } = VueUtils
 
 export default {
@@ -31,25 +32,9 @@ export default {
             default: null
         },
         columns: {
-            type: Object,
+            type: [Object, Array],
             default: null
         }
-    },
-    provide() {
-        return {
-            $rows: this.d_footerRows,
-            $columns: this.d_footerColumns
-        };
-    },
-    data() {
-        return {
-            d_footerRows: new HelperSet({ type: 'Row' }),
-            d_footerColumns: new HelperSet({ type: 'Column' })
-        };
-    },
-    beforeUnmount() {
-        this.d_footerRows.clear();
-        this.d_footerColumns.clear();
     },
     methods: {
         columnProp(col, prop) {
@@ -72,11 +57,11 @@ export default {
             return mergeProps(this.ptm(`columnGroup.${key}`, { columnGroup: columnGroupMetaData }), this.ptm(`columnGroup.${key}`, columnGroupMetaData), this.ptmo(this.getColumnGroupProps(), key, columnGroupMetaData));
         },
         getColumnGroupProps() {
-            return this.columnGroup && this.columnGroup.props && this.columnGroup.props.pt ? this.columnGroup.props.pt : undefined; //@todo
+          return this.columnGroup?.pt //@todo
         },
         getRowPT(row, key, index) {
             const rowMetaData = {
-                props: row.props,
+                props: row.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -90,13 +75,21 @@ export default {
             return mergeProps(this.ptm(`row.${key}`, { row: rowMetaData }), this.ptm(`row.${key}`, rowMetaData), this.ptmo(this.getRowProp(row), key, rowMetaData));
         },
         getRowProp(row) {
-            return row.props && row.props.pt ? row.props.pt : undefined; //@todo
+          return row?.pt //@todo
         },
-        getFooterRows() {
-            return this.d_footerRows?.get(this.columnGroup, this.columnGroup.children);
-        },
-        getFooterColumns(row) {
-            return this.d_footerColumns?.get(row, row.children);
+        getFooterColumns(row){
+            let cols = [];
+
+            if (row.child && row.child.$scopedSlots.default) {
+                row.child.$scopedSlots.default().forEach(child => {
+                    if (child.child && child.child.children && child.child.children instanceof Array)
+                        cols = [...cols, ...child.child.children];
+                    else if (child.componentOptions && child.componentOptions.tag === 'Column')
+                        cols.push(child);
+                });
+
+                return cols;
+            }
         }
     },
     computed: {
@@ -107,7 +100,7 @@ export default {
                 hasFooter = true;
             } else if (this.columns) {
                 for (let col of this.columns) {
-                    if (this.columnProp(col, 'footer') || (col.children && col.children.footer)) {
+                    if (this.columnProp(col, 'footer') || (col.$scopedSlots && col.$scopedSlots.footer)) {
                         hasFooter = true;
                         break;
                     }

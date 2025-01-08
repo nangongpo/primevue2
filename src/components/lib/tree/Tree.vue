@@ -20,7 +20,7 @@
                     v-for="(node, index) of valueToRender"
                     :key="node.key"
                     :node="node"
-                    :templates="$slots"
+                    :templates="$scopedSlots"
                     :level="level + 1"
                     :index="index"
                     :expandedKeys="d_expandedKeys"

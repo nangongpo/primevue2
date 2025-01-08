@@ -1,6 +1,6 @@
 <template>
     <span :class="cx('root')" v-bind="ptmi('root')">
-        <component v-if="$slots.icon" :is="$slots.icon" :class="cx('icon')" v-bind="ptm('icon')" />
+        <DynamicComponent v-if="$scopedSlots.icon" :template="$slots.icon" :className="cx('icon')" v-bind="ptm('icon')" />
         <span v-else-if="icon" :class="[cx('icon'), icon]" v-bind="ptm('icon')"></span>
         <slot v-if="value || $slots.default">
             <span :class="cx('value')" v-bind="ptm('value')">{{ value }}</span>

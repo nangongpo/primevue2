@@ -2,7 +2,7 @@ import { DomHandler } from 'primevue2/utils';
 import BaseRipple from './BaseRipple';
 
 const Ripple = BaseRipple.extend('ripple', {
-    mounted(el) {
+    inserted(el) {
         const config = el?.$instance?.$primevueConfig;
 
         if (config && config.ripple) {
@@ -12,7 +12,7 @@ const Ripple = BaseRipple.extend('ripple', {
             el.setAttribute('data-pd-ripple', true);
         }
     },
-    unmounted(el) {
+    unbind(el) {
         this.remove(el);
     },
     timeout: undefined,

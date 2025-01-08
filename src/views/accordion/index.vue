@@ -112,8 +112,10 @@
         <h5>Custom Headers</h5>
         <Accordion class="accordion-custom" :activeIndex="0">
           <AccordionTab>
-            <template #header>
+            <template #headericon>
               <i class="pi pi-calendar"></i>
+            </template>
+            <template #header>
               <span>Header I</span>
             </template>
             <p>

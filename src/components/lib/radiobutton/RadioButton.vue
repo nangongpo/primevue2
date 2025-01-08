@@ -1,5 +1,5 @@
 <template>
-    <div :class="cx('root')" v-bind="getPTOptions('root')" :data-p-highlight="checked" :data-p-disabled="disabled"  v-on="$listeners">
+    <div :class="cx('root')" v-bind="getPTOptions('root')" :data-p-highlight="checked" :data-p-disabled="disabled">
         <input
             :id="inputId"
             type="radio"

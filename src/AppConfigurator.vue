@@ -48,6 +48,30 @@
                           </button>
                           <span>Aura Light Teal</span>
                       </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-teal')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-teal.png')" alt="Aura Light Teal" />
+                          </button>
+                          <span></span>
+                      </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-teal')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-teal.png')" alt="Aura Light Teal" />
+                          </button>
+                          <span>Aura Light Teal</span>
+                      </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-teal')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-teal.png')" alt="Aura Light Teal" />
+                          </button>
+                          <span>Aura Light Teal</span>
+                      </div>
+                      <div class="col-3">
+                          <button class="p-link" type="button" @click="changeTheme($event, 'aura-light-teal')">
+                            <img :src="$publicUrl('demo/images/themes/aura-light-teal.png')" alt="Aura Light Teal" />
+                          </button>
+                          <span>Aura Light Teal</span>
+                      </div>
                     </div>
 
                     <h5>Bootstrap</h5>

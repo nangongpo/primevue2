@@ -20,24 +20,24 @@
                     <template v-if="!templates.item">
                         <a v-ripple :href="getItemProp(processedItem, 'url')" :class="cx('action')" :target="getItemProp(processedItem, 'target')" tabindex="-1" aria-hidden="true" v-bind="getPTOptions('action', processedItem, index)">
                             <template v-if="isItemGroup(processedItem)">
-                                <component v-if="templates.submenuicon" :is="templates.submenuicon" :class="cx('submenuIcon')" :active="isItemActive(processedItem)" v-bind="getPTOptions('submenuIcon', processedItem, index)" />
-                                <component v-else :is="isItemActive(processedItem) ? 'ChevronDownIcon' : 'ChevronRightIcon'" :class="cx('submenuIcon')" v-bind="getPTOptions('submenuIcon', processedItem, index)" />
+                                <DynamicComponent v-if="templates.submenuicon" :template="templates.submenuicon" :className="cx('submenuIcon')" :active="isItemActive(processedItem)" v-bind="getPTOptions('submenuIcon', processedItem, index)" />
+                                <DynamicComponent v-else :template="isItemActive(processedItem) ? 'ChevronDownIcon' : 'ChevronRightIcon'" :className="cx('submenuIcon')" v-bind="getPTOptions('submenuIcon', processedItem, index)" />
                             </template>
-                            <component v-if="templates.itemicon" :is="templates.itemicon" :item="processedItem.item" :class="cx('icon')" />
+                            <DynamicComponent v-if="templates.itemicon" :template="templates.itemicon" :item="processedItem.item" :className="cx('icon')" />
                             <span v-else-if="getItemProp(processedItem, 'icon')" :class="[cx('icon'), getItemProp(processedItem, 'icon')]" v-bind="getPTOptions('icon', processedItem, index)" />
                             <span :class="cx('label')" v-bind="getPTOptions('label', processedItem, index)">{{ getItemLabel(processedItem) }}</span>
                         </a>
                     </template>
-                    <component
+                    <DynamicComponent
                         v-else
-                        :is="templates.item"
+                        :template="templates.item"
                         :item="processedItem.item"
                         :root="false"
                         :active="isItemActive(processedItem)"
                         :hasSubmenu="isItemGroup(processedItem)"
                         :label="getItemLabel(processedItem)"
-                        :props="getMenuItemProps(processedItem, index)"
-                    ></component>
+                        :props="getMenuItemProps(processedItem, index)">
+                    </DynamicComponent>
                 </div>
                 <transition name="p-toggleable-content" v-bind="ptm('transition')">
                     <div v-show="isItemActive(processedItem)" :class="cx('toggleableContent')" v-bind="ptm('toggleableContent')">
@@ -66,8 +66,8 @@
                 :style="getItemProp(processedItem, 'style')"
                 :class="[cx('separator'), getItemProp(processedItem, 'class')]"
                 role="separator"
-                v-bind="ptm('separator')"
-            ></li>
+                v-bind="ptm('separator')">
+            </li>
         </template>
     </ul>
 </template>
@@ -107,7 +107,7 @@ export default {
             default: null
         },
         activeItemPath: {
-            type: Object,
+            type: Array,
             default: null
         },
         tabindex: {

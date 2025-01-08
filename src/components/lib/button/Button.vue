@@ -43,7 +43,7 @@ export default {
             return this.label ? this.label + (this.badge ? ' ' + this.badge : '') : this.$attrs.ariaLabel;
         },
         hasIcon() {
-            return this.icon || this.$slots.icon;
+            return this.icon || this.$scopedSlots.icon;
         }
     },
     components: {

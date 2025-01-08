@@ -7,7 +7,7 @@ export default {
     extends: BaseComponent,
     style: InputIconStyle,
     props: {
-        class: null
+        className: null
     },
     provide() {
         return {

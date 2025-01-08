@@ -18,8 +18,8 @@ export default {
     },
     computed: {
         isNested() {
-            return this.$slots.default().some((child) => {
-                this.nestedState = child.type.name === 'Splitter' ? true : null;
+            return (this.$slots.default || []).some((child) => {
+                this.nestedState = child.componentOptions && child.componentOptions.Ctor.extendOptions.name === 'Splitter' ? true : null;
 
                 return this.nestedState;
             });

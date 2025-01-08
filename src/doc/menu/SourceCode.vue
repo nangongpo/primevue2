@@ -21,7 +21,9 @@ export default {
       sourceCode1: {
         basic: `
 <h3>Inline</h3>
-<Menu :model="items" />
+<div class="flex">
+    <Menu :model="items" />
+</div>
 
 <h3>Overlay</h3>
 <Button type="button" label="Toggle" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
@@ -57,7 +59,7 @@ export default {
                     items: [{
                         label: 'Vue Website',
                         icon: 'pi pi-external-link',
-                        url: 'https://vuejs.org/'
+                        url: 'https://v2.vuejs.org/'
                     },
                     {
                         label: 'Router',

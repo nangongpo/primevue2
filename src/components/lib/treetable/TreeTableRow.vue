@@ -1,5 +1,4 @@
 <template>
-  <div>
     <tr
         ref="node"
         :class="containerClass"
@@ -36,34 +35,10 @@
                 :index="i"
                 :loadingMode="loadingMode"
                 :unstyled="unstyled"
-                :pt="pt"
-            ></TTBodyCell>
+                :pt="pt">
+            </TTBodyCell>
         </template>
     </tr>
-    <template v-if="expanded && node.children && node.children.length">
-        <TreeTableRow
-            v-for="childNode of node.children"
-            :key="nodeKey(childNode)"
-            :dataKey="dataKey"
-            :columns="columns"
-            :node="childNode"
-            :parentNode="node"
-            :level="level + 1"
-            :expandedKeys="expandedKeys"
-            :selectionMode="selectionMode"
-            :selectionKeys="selectionKeys"
-            :indentation="indentation"
-            :ariaPosInset="node.children.indexOf(childNode) + 1"
-            :ariaSetSize="node.children.length"
-            :templates="templates"
-            @node-toggle="$emit('node-toggle', $event)"
-            @node-click="$emit('node-click', $event)"
-            @checkbox-change="onCheckboxChange"
-            :unstyled="unstyled"
-            :pt="pt"
-        />
-    </template>
-  </div>
 </template>
 
 <script>

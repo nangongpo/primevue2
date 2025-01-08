@@ -106,7 +106,20 @@ import TabMenu from 'primevue2/tabmenu';
       },
       baseCode: {
         basic: `
-<TabMenu :model="items" />
+<TabMenu :model="items">
+  <template #item="{ item, props }">
+    <router-link v-if="item.to" v-slot="{ href, navigate }" :to="item.to" custom>
+      <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+        <span v-bind="props.icon" />
+        <span v-bind="props.label">{{ item.label }}</span>
+      </a>
+    </router-link>
+    <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+      <span v-bind="props.icon" />
+      <span v-bind="props.label">{{ item.label }}</span>
+    </a>
+  </template>
+</TabMenu>
 <router-view />
         `
       },

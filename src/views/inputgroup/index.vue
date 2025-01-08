@@ -13,89 +13,83 @@
         <h5>Addons</h5>
         <div class="grid p-fluid">
           <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class="pi pi-user"></i>
-              </span>
+            <InputGroup>
+              <InputGroupAddon><i class="pi pi-user"></i></InputGroupAddon>
               <InputText placeholder="Username" />
-            </div>
+            </InputGroup>
           </div>
 
           <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">$</span>
+            <InputGroup>
+              <InputGroupAddon>$</InputGroupAddon>
               <InputText placeholder="Price" />
-              <span class="p-inputgroup-addon">.00</span>
-            </div>
+              <InputGroupAddon>.00</InputGroupAddon>
+            </InputGroup>
           </div>
 
           <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">W</span>
+            <InputGroup>
+              <InputGroupAddon>W</InputGroupAddon>
               <InputText placeholder="Website" />
-            </div>
+            </InputGroup>
           </div>
         </div>
 
         <h5>Multiple Addons</h5>
         <div class="grid">
           <div class="col-12">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class="pi pi-clock"></i>
-              </span>
-              <span class="p-inputgroup-addon">
-                <i class="pi pi-star-fill"></i>
-              </span>
+            <InputGroup>
+              <InputGroupAddon><i class="pi pi-clock"></i></InputGroupAddon>
+              <InputGroupAddon><i class="pi pi-star-fill"></i></InputGroupAddon>
               <InputText placeholder="Price" />
-              <span class="p-inputgroup-addon">$</span>
-              <span class="p-inputgroup-addon">.00</span>
-            </div>
+              <InputGroupAddon>$</InputGroupAddon>
+              <InputGroupAddon>.00</InputGroupAddon>
+            </InputGroup>
           </div>
         </div>
 
         <h5>Button Addons</h5>
         <div class="grid p-fluid">
           <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
+            <InputGroup>
               <Button label="Search" />
               <InputText placeholder="Keyword" />
-            </div>
+            </InputGroup>
           </div>
 
           <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
+            <InputGroup>
               <InputText placeholder="Keyword" />
               <Button icon="pi pi-search" class="p-button-warning" />
-            </div>
+            </InputGroup>
           </div>
 
           <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
+            <InputGroup>
               <Button icon="pi pi-check" class="p-button-success" />
               <InputText placeholder="Vote" />
               <Button icon="pi pi-times" class="p-button-danger" />
-            </div>
+            </InputGroup>
           </div>
         </div>
 
         <h5>Checkbox and RadioButton</h5>
         <div class="grid p-fluid">
           <div class="col-12 md:col-12">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
+            <InputGroup>
+              <InputGroupAddon>
                 <Checkbox v-model="checked1" :binary="true" />
-              </span>
+              </InputGroupAddon>
               <InputText placeholder="Username" />
-            </div>
+            </InputGroup>
           </div>
 
           <div class="col-12 md:col-12">
             <div class="p-inputgroup">
               <InputText placeholder="Price" />
-              <span class="p-inputgroup-addon">
+              <InputGroupAddon>
                 <RadioButton name="rb1" value="rb1" v-model="radioValue1" />
-              </span>
+              </InputGroupAddon>
             </div>
           </div>
 

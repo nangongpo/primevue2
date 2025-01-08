@@ -22,6 +22,8 @@ export default {
             type: Boolean,
             default: null
         },
+        className: null,
+        styleName: null,
         contentStyle: {
             type: null,
             default: null

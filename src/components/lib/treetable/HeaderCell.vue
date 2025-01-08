@@ -11,13 +11,12 @@
         :data-p-sortable-column="columnProp('sortable')"
         :data-p-resizable-column="resizableColumns"
         :data-p-highlight="isColumnSorted()"
-        :data-p-frozen-column="columnProp('frozen')"
-    >
+        :data-p-frozen-column="columnProp('frozen')">
         <span v-if="resizableColumns && !columnProp('frozen')" :class="cx('columnResizer')" @mousedown="onResizeStart" v-bind="getColumnPT('columnResizer')"></span>
-        <component v-if="column.children && column.children.header" :is="column.children.header" :column="column" />
+        <DynamicComponent v-if="column.children && column.children.header" :template="column.children.header" :column="column" />
         <span v-if="columnProp('header')" :class="cx('headerTitle')" v-bind="getColumnPT('headerTitle')">{{ columnProp('header') }}</span>
         <span v-if="columnProp('sortable')" v-bind="getColumnPT('sort')">
-            <component :is="(column.children && column.children.sorticon) || sortableColumnIcon" :sorted="sortState.sorted" :sortOrder="sortState.sortOrder" :class="cx('sortIcon')" v-bind="getColumnPT('sortIcon')" />
+            <DynamicComponent :template="(column.children && column.children.sorticon) || sortableColumnIcon" :sorted="sortState.sorted" :sortOrder="sortState.sortOrder" :className="cx('sortIcon')" v-bind="getColumnPT('sortIcon')" />
         </span>
         <span v-if="isMultiSorted()" :class="cx('sortBadge')" v-bind="getColumnPT('sortBadge')">{{ getMultiSortMetaIndex() + 1 }}</span>
     </th>
@@ -68,7 +67,7 @@ export default {
     },
     data() {
         return {
-            styleObject: {}
+            styleName: {}
         };
     },
     mounted() {
@@ -122,7 +121,7 @@ export default {
                         right = DomHandler.getOuterWidth(next) + parseFloat(next.style.right || 0);
                     }
 
-                    this.styleObject.right = right + 'px';
+                    this.styleName.right = right + 'px';
                 } else {
                     let left = 0;
                     let prev = DomHandler.getPreviousElementSibling(this.$el, '[data-p-frozen-column="true"]');
@@ -131,7 +130,7 @@ export default {
                         left = DomHandler.getOuterWidth(prev) + parseFloat(prev.style.left || 0);
                     }
 
-                    this.styleObject.left = left + 'px';
+                    this.styleName.left = left + 'px';
                 }
 
                 let filterRow = this.$el.parentElement.nextElementSibling;
@@ -139,8 +138,8 @@ export default {
                 if (filterRow) {
                     let index = DomHandler.index(this.$el);
 
-                    filterRow.children[index].style.left = this.styleObject.left;
-                    filterRow.children[index].style.right = this.styleObject.right;
+                    filterRow.children[index].style.left = this.styleName.left;
+                    filterRow.children[index].style.right = this.styleName.right;
                 }
             }
         },
@@ -186,7 +185,7 @@ export default {
             let headerStyle = this.columnProp('headerStyle');
             let columnStyle = this.columnProp('style');
 
-            return this.columnProp('frozen') ? [columnStyle, headerStyle, this.styleObject] : [columnStyle, headerStyle];
+            return this.columnProp('frozen') ? [columnStyle, headerStyle, this.styleName] : [columnStyle, headerStyle];
         },
         sortState() {
             let sorted = false;

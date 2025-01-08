@@ -7,6 +7,10 @@
     <p>An array as the value can be bound using the standard v-model directive.</p>
     <DocSectionCode :code="baseCode" />
 
+    <h5>Comma Separator</h5>
+    <p>A new chip is added when enter key is pressed, separator property allows definining an additional key. Currently only valid value is , to create a new item when comma key is pressed.</p>
+    <DocSectionCode :code="commaSeparatorCode" />
+
     <h5>Custom Content</h5>
     <p>
       A chip is customized using the <i>chip</i> template where the chip value is passed to the slotProps with the value
@@ -202,6 +206,11 @@ import Chips from 'primevue2/chips';
       baseCode: {
         basic: `
 <Chips v-model="value" />
+        `
+      },
+      commaSeparatorCode: {
+        basic:  `
+<Chips v-model="value2" separator="," />
         `
       },
       customContentCode: {

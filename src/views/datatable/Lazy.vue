@@ -27,6 +27,7 @@
           :filters.sync="filters"
           ref="dt"
           dataKey="id"
+          selectionMode="multiple"
           :totalRecords="totalRecords"
           :loading="loading"
           @page="onPage($event)"
@@ -40,7 +41,6 @@
           @select-all-change="onSelectAllChange"
           @row-select="onRowSelect"
           @row-unselect="onRowUnselect">
-          <Column selectionMode="multiple" headerStyle="width: 3em"></Column>
           <Column field="name" header="Name" filterMatchMode="startsWith" ref="name" :sortable="true">
             <template #filter="{ filterModel, filterCallback }">
               <InputText

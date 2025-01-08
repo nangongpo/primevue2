@@ -98,8 +98,8 @@ export default {
             type: String,
             default: undefined
         },
-        style: null,
-        class: null
+        styleName: null,
+        className: null
     },
     style: FileUploadStyle,
     provide() {

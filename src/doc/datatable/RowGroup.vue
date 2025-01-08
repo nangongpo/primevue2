@@ -21,20 +21,20 @@ export default {
     <DataTable :value="customers" rowGroupMode="subheader" groupRowsBy="representative.name" responsiveLayout="scroll"
         sortMode="single" sortField="representative.name" :sortOrder="1" scrollable scrollHeight="400px">
         <Column field="representative.name" header="Representative"></Column>
-        <Column field="name" header="Name" :styles="{'min-width':'200px'}"></Column>
-        <Column field="country" header="Country" :styles="{'min-width':'200px'}">
+        <Column field="name" header="Name" :styleName="{'min-width':'200px'}"></Column>
+        <Column field="country" header="Country" :styleName="{'min-width':'200px'}">
             <template #body="slotProps">
                 <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + slotProps.data.country.code" width="30" />
                 <span class="image-text">{{slotProps.data.country.name}}</span>
             </template>
         </Column>
-        <Column field="company" header="Company" :styles="{'min-width':'200px'}"></Column>
-        <Column field="status" header="Status" :styles="{'min-width':'200px'}">
+        <Column field="company" header="Company" :styleName="{'min-width':'200px'}"></Column>
+        <Column field="status" header="Status" :styleName="{'min-width':'200px'}">
             <template #body="slotProps">
                 <span :class="'customer-badge status-' + slotProps.data.status">{{slotProps.data.status}}</span>
             </template>
         </Column>
-        <Column field="date" header="Date" :styles="{'min-width':'200px'}"></Column>
+        <Column field="date" header="Date" :styleName="{'min-width':'200px'}"></Column>
         <template #groupheader="slotProps">
             <img :alt="slotProps.data.representative.name" :src="'demo/images/avatar/' + slotProps.data.representative.image" width="32" style="vertical-align: middle" />
             <span class="image-text">{{slotProps.data.representative.name}}</span>

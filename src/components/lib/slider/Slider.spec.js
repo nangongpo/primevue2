@@ -7,7 +7,7 @@ describe('Slider.vue', () => {
     beforeEach(() => {
         wrapper = mount(Slider, {
             props: {
-                value: null
+                modelValue: null
             }
         });
     });
@@ -34,16 +34,16 @@ describe('Slider.vue', () => {
 
         await wrapper.vm.setValue({ pageX: 60 }); // TODO:
 
-        expect(wrapper.emitted()['input'][0][0]).toBeGreaterThan(0);
+        expect(wrapper.emitted()['update:modelValue'][0][0]).toBeGreaterThan(0);
     });
 
     it('should set value on vertical mode', async () => {
-        await wrapper.setProps({ orientation: 'vertical', value: 0 });
+        await wrapper.setProps({ orientation: 'vertical', modelValue: 0 });
 
         await wrapper.vm.updateDomData();
 
         await wrapper.vm.setValue({ pageY: 111 }); // TODO:
 
-        expect(wrapper.emitted()['input'][0][0]).toBe(0);
+        expect(wrapper.emitted()['update:modelValue'][0][0]).toBe(0);
     });
 });

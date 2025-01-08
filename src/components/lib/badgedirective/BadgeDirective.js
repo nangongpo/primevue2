@@ -2,7 +2,7 @@ import { DomHandler, UniqueComponentId } from 'primevue2/utils';
 import BaseBadgeDirective from './BaseBadgeDirective';
 
 const BadgeDirective = BaseBadgeDirective.extend('badge', {
-    mounted(el, binding) {
+    inserted(el, binding) {
         const id = UniqueComponentId() + '_badge';
 
         const badge = DomHandler.createElement('span', {
@@ -42,7 +42,7 @@ const BadgeDirective = BaseBadgeDirective.extend('badge', {
 
         this.$el = badge;
     },
-    updated(el, binding) {
+    componentUpdated(el, binding) {
         !this.isUnstyled() && DomHandler.addClass(el, 'p-overlay-badge');
         el.setAttribute('data-p-overlay-badge', 'true');
 

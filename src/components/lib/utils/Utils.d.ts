@@ -107,7 +107,8 @@ export declare class ObjectUtils {
   static nestedKeys(obj: object, parentKey?: string): string[];
   static stringify(value: any, indent?: number, currentIndent?: number): string;
   static deepMerge<T extends PlainObject, S extends PlainObject[]>(target: T,
-    ...sources: S): T & S[number]
+    ...sources: S): T & S[number];
+  static toFlattenArray(...args: any[]): any[]
 }
 
 export declare class HelperSet {

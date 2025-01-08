@@ -1,6 +1,6 @@
 <template>
-    <div :class="containerClass" :style="style" v-bind="ptmi('root')">
-        <DockSub :model="model" :templates="$slots" :tooltipOptions="tooltipOptions" :position="position" :menuId="menuId" :aria-label="ariaLabel" :aria-labelledby="ariaLabelledby" :tabindex="tabindex" :pt="pt" :unstyled="unstyled"></DockSub>
+    <div :class="containerClass" :style="styleName" v-bind="ptmi('root')">
+        <DockSub :model="model" :templates="$scopedSlots" :tooltipOptions="tooltipOptions" :position="position" :menuId="menuId" :aria-label="ariaLabel" :aria-labelledby="ariaLabelledby" :tabindex="tabindex" :pt="pt" :unstyled="unstyled"></DockSub>
     </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
     mounted() {
         this.bindMatchMediaListener();
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindMatchMediaListener();
     },
     methods: {
@@ -50,7 +50,7 @@ export default {
     },
     computed: {
         containerClass() {
-            return [this.class, this.cx('root')];
+            return [this.className, this.cx('root')];
         }
     },
     components: {

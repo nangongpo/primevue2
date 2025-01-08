@@ -33,7 +33,7 @@
             <slot name="sourcecontrolsend"></slot>
         </div>
         <div :class="cx('sourceWrapper')" v-bind="ptm('sourceWrapper')" data-pc-group-section="listwrapper">
-            <div v-if="$slots.sourceheader" :class="cx('sourceHeader')" v-bind="ptm('sourceHeader')" data-pc-group-section="header">
+            <div v-if="$scopedSlots.sourceheader" :class="cx('sourceHeader')" v-bind="ptm('sourceHeader')" data-pc-group-section="header">
                 <slot name="sourceheader"></slot>
             </div>
             <transition-group
@@ -78,35 +78,35 @@
             <PLButton :aria-label="moveToTargetAriaLabel" type="button" @click="moveToTarget" :disabled="moveDisabled(0)" v-bind="moveToTargetProps" :pt="ptm('moveToTargetButton')" :unstyled="unstyled">
                 <template #icon>
                     <slot name="movetotargeticon" :viewChanged="viewChanged">
-                        <component :is="viewChanged ? 'AngleDownIcon' : 'AngleRightIcon'" v-bind="ptm('moveToTargetButton')['icon']" data-pc-section="movetotargeticon" />
+                        <DynamicComponent :template="viewChanged ? 'AngleDownIcon' : 'AngleRightIcon'" v-bind="ptm('moveToTargetButton')['icon']" data-pc-section="movetotargeticon" />
                     </slot>
                 </template>
             </PLButton>
             <PLButton :aria-label="moveAllToTargetAriaLabel" type="button" @click="moveAllToTarget" :disabled="moveAllDisabled('sourceList')" v-bind="moveAllToTargetProps" :pt="ptm('moveAllToTargetButton')" :unstyled="unstyled">
                 <template #icon>
                     <slot name="movealltotargeticon" :viewChanged="viewChanged">
-                        <component :is="viewChanged ? 'AngleDoubleDownIcon' : 'AngleDoubleRightIcon'" v-bind="ptm('moveAllToTargetButton')['icon']" data-pc-section="movealltotargeticon" />
+                        <DynamicComponent :template="viewChanged ? 'AngleDoubleDownIcon' : 'AngleDoubleRightIcon'" v-bind="ptm('moveAllToTargetButton')['icon']" data-pc-section="movealltotargeticon" />
                     </slot>
                 </template>
             </PLButton>
             <PLButton :aria-label="moveToSourceAriaLabel" type="button" @click="moveToSource" :disabled="moveDisabled(1)" v-bind="moveToSourceProps" :pt="ptm('moveToSourceButton')" :unstyled="unstyled">
                 <template #icon>
                     <slot name="movetosourceicon" :viewChanged="viewChanged">
-                        <component :is="viewChanged ? 'AngleUpIcon' : 'AngleLeftIcon'" v-bind="ptm('moveToSourceButton')['icon']" data-pc-section="movetosourceicon" />
+                        <DynamicComponent :template="viewChanged ? 'AngleUpIcon' : 'AngleLeftIcon'" v-bind="ptm('moveToSourceButton')['icon']" data-pc-section="movetosourceicon" />
                     </slot>
                 </template>
             </PLButton>
             <PLButton :aria-label="moveAllToSourceAriaLabel" type="button" @click="moveAllToSource" :disabled="moveAllDisabled('targetList')" v-bind="moveAllToSourceProps" :pt="ptm('moveAllToSourceButton')" :unstyled="unstyled">
                 <template #icon>
                     <slot name="movealltosourceicon" :viewChanged="viewChanged">
-                        <component :is="viewChanged ? 'AngleDoubleUpIcon' : 'AngleDoubleLeftIcon'" v-bind="ptm('moveAllToSourceButton')['icon']" data-pc-section="movealltosourceicon" />
+                        <DynamicComponent :template="viewChanged ? 'AngleDoubleUpIcon' : 'AngleDoubleLeftIcon'" v-bind="ptm('moveAllToSourceButton')['icon']" data-pc-section="movealltosourceicon" />
                     </slot>
                 </template>
             </PLButton>
             <slot name="movecontrolsend"></slot>
         </div>
         <div :class="cx('targetWrapper')" v-bind="ptm('targetWrapper')" data-pc-group-section="listwrapper">
-            <div v-if="$slots.targetheader" :class="cx('targetHeader')" v-bind="ptm('targetHeader')" data-pc-group-section="header">
+            <div v-if="$scopedSlots.targetheader" :class="cx('targetHeader')" v-bind="ptm('targetHeader')" data-pc-group-section="header">
                 <slot name="targetheader"></slot>
             </div>
             <transition-group
@@ -237,7 +237,7 @@ export default {
             this.reorderDirection = null;
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.destroyStyle();
         this.destroyMedia();
     },

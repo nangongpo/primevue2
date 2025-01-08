@@ -1,6 +1,6 @@
 <template>
     <div :class="cx('root')" role="region" v-bind="ptmi('root')">
-        <div v-if="$slots.header" :class="cx('header')" v-bind="ptm('header')">
+        <div v-if="$scopedSlots.header" :class="cx('header')" v-bind="ptm('header')">
             <slot name="header"></slot>
         </div>
         <div v-if="!empty" :class="[cx('content'), contentClass]" v-bind="ptm('content')">
@@ -14,10 +14,9 @@
                     :aria-label="ariaPrevButtonLabel"
                     @click="navBackward"
                     v-bind="{ ...prevButtonProps, ...ptm('previousButton') }"
-                    data-pc-group-section="navigator"
-                >
+                    data-pc-group-section="navigator">
                     <slot name="previousicon">
-                        <component :is="isVertical() ? 'ChevronUpIcon' : 'ChevronLeftIcon'" :class="cx('previousButtonIcon')" v-bind="ptm('previousButtonIcon')" />
+                        <DynamicComponent :template="isVertical() ? 'ChevronUpIcon' : 'ChevronLeftIcon'" :className="cx('previousButtonIcon')" v-bind="ptm('previousButtonIcon')" />
                     </slot>
                 </button>
 
@@ -31,8 +30,7 @@
                                 v-bind="ptm('itemCloned')"
                                 :data-p-carousel-item-active="totalShiftedItems * -1 === value.length + d_numVisible"
                                 :data-p-carousel-item-start="index === 0"
-                                :data-p-carousel-item-end="value.slice(-1 * d_numVisible).length - 1 === index"
-                            >
+                                :data-p-carousel-item-end="value.slice(-1 * d_numVisible).length - 1 === index">
                                 <slot name="item" :data="item" :index="index"></slot>
                             </div>
                         </template>
@@ -47,8 +45,7 @@
                             v-bind="ptm('item')"
                             :data-p-carousel-item-active="firstIndex() <= index && lastIndex() >= index"
                             :data-p-carousel-item-start="firstIndex() === index"
-                            :data-p-carousel-item-end="lastIndex() === index"
-                        >
+                            :data-p-carousel-item-end="lastIndex() === index">
                             <slot name="item" :data="item" :index="index"></slot>
                         </div>
                         <template v-if="isCircular()">
@@ -68,10 +65,9 @@
                     :aria-label="ariaNextButtonLabel"
                     @click="navForward"
                     v-bind="{ ...nextButtonProps, ...ptm('nextButton') }"
-                    data-pc-group-section="navigator"
-                >
+                    data-pc-group-section="navigator">
                     <slot name="nexticon">
-                        <component :is="isVertical() ? 'ChevronDownIcon' : 'ChevronRightIcon'" :class="cx('nextButtonIcon')" v-bind="ptm('nextButtonIcon')" />
+                        <DynamicComponent :template="isVertical() ? 'ChevronDownIcon' : 'ChevronRightIcon'" :className="cx('nextButtonIcon')" v-bind="ptm('nextButtonIcon')" />
                     </slot>
                 </button>
             </div>
@@ -92,7 +88,7 @@
         <slot v-else name="empty">
             {{ emptyMessageText }}
         </slot>
-        <div v-if="$slots.footer" :class="cx('footer')" v-bind="ptm('footer')">
+        <div v-if="$scopedSlots.footer" :class="cx('footer')" v-bind="ptm('footer')">
             <slot name="footer"></slot>
         </div>
     </div>
@@ -257,7 +253,7 @@ export default {
             }
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (this.responsiveOptions) {
             this.unbindDocumentListeners();
         }

@@ -1,11 +1,11 @@
 <template>
-    <component
+    <DynamicComponent
         v-if="template"
-        :is="template"
+        :template="template"
         :index="index"
         :active="active"
         :highlighted="highlighted"
-        :class="cx('stepper.action')"
+        :className="cx('stepper.action')"
         :headerClass="cx('stepper.action')"
         :numberClass="cx('stepper.number')"
         :titleClass="cx('stepper.title')"

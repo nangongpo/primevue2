@@ -6,7 +6,6 @@
     <h5>Getting Started</h5>
     <p><i>rows</i> and <i>totalRecords</i> are the required properties of the Paginator.</p>
     <DocSectionCode :code="baseCode" />
-    <DocSectionCode :code="baseCode2" importCode />
 
     <h5>Start Index</h5>
     <p><i>first</i> property defines the index of the first item displayed by the paginator.</p>

@@ -1,14 +1,14 @@
 <template>
     <nav v-if="alwaysShow ? true : pageLinks && pageLinks.length > 1" v-bind="ptmi('paginatorWrapper')">
         <div v-for="(value, key) in templateItems" :key="key" ref="paginator" :class="cx('paginator', { key })" v-bind="ptm('root')">
-            <div v-if="$slots.start" :class="cx('start')" v-bind="ptm('start')">
+            <div v-if="$scopedSlots.start" :class="cx('start')" v-bind="ptm('start')">
                 <slot name="start" :state="currentState"></slot>
             </div>
             <template v-for="item in value">
-                <FirstPageLink v-if="item === 'FirstPageLink'" :key="item" :aria-label="getAriaLabel('firstPageLabel')" :template="$slots.firstpagelinkicon" @click="changePageToFirst($event)" :disabled="isFirstPage || empty" :unstyled="unstyled" :pt="pt" />
-                <PrevPageLink v-else-if="item === 'PrevPageLink'" :key="item" :aria-label="getAriaLabel('prevPageLabel')" :template="$slots.prevpagelinkicon" @click="changePageToPrev($event)" :disabled="isFirstPage || empty" :unstyled="unstyled" :pt="pt" />
-                <NextPageLink v-else-if="item === 'NextPageLink'" :key="item" :aria-label="getAriaLabel('nextPageLabel')" :template="$slots.nextpagelinkicon" @click="changePageToNext($event)" :disabled="isLastPage || empty" :unstyled="unstyled" :pt="pt" />
-                <LastPageLink v-else-if="item === 'LastPageLink'" :key="item" :aria-label="getAriaLabel('lastPageLabel')" :template="$slots.lastpagelinkicon" @click="changePageToLast($event)" :disabled="isLastPage || empty" :unstyled="unstyled" :pt="pt" />
+                <FirstPageLink v-if="item === 'FirstPageLink'" :key="item" :aria-label="getAriaLabel('firstPageLabel')" :template="$scopedSlots.firstpagelinkicon" @click="changePageToFirst($event)" :disabled="isFirstPage || empty" :unstyled="unstyled" :pt="pt" />
+                <PrevPageLink v-else-if="item === 'PrevPageLink'" :key="item" :aria-label="getAriaLabel('prevPageLabel')" :template="$scopedSlots.prevpagelinkicon" @click="changePageToPrev($event)" :disabled="isFirstPage || empty" :unstyled="unstyled" :pt="pt" />
+                <NextPageLink v-else-if="item === 'NextPageLink'" :key="item" :aria-label="getAriaLabel('nextPageLabel')" :template="$scopedSlots.nextpagelinkicon" @click="changePageToNext($event)" :disabled="isLastPage || empty" :unstyled="unstyled" :pt="pt" />
+                <LastPageLink v-else-if="item === 'LastPageLink'" :key="item" :aria-label="getAriaLabel('lastPageLabel')" :template="$scopedSlots.lastpagelinkicon" @click="changePageToLast($event)" :disabled="isLastPage || empty" :unstyled="unstyled" :pt="pt" />
                 <PageLinks v-else-if="item === 'PageLinks'" :key="item" :aria-label="getAriaLabel('pageLabel')" :value="pageLinks" :page="page" @click="changePageLink($event)" :pt="pt" />
                 <CurrentPageReport
                     v-else-if="item === 'CurrentPageReport'"
@@ -32,7 +32,7 @@
                     :options="rowsPerPageOptions"
                     @rows-change="onRowChange($event)"
                     :disabled="empty"
-                    :templates="$slots"
+                    :templates="$scopedSlots"
                     :unstyled="unstyled"
                     :pt="pt"
                 />
@@ -44,13 +44,13 @@
                     :pageCount="pageCount"
                     @page-change="changePage($event)"
                     :disabled="empty"
-                    :templates="$slots"
+                    :templates="$scopedSlots"
                     :unstyled="unstyled"
                     :pt="pt"
                 />
                 <JumpToPageInput v-else-if="item === 'JumpToPageInput'" :key="item" :page="currentPage" @page-change="changePage($event)" :disabled="empty" :unstyled="unstyled" :pt="pt" />
             </template>
-            <div v-if="$slots.end" :class="cx('end')" v-bind="ptm('end')">
+            <div v-if="$scopedSlots.end" :class="cx('end')" v-bind="ptm('end')">
                 <slot name="end" :state="currentState"></slot>
             </div>
         </div>

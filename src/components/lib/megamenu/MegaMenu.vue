@@ -1,6 +1,6 @@
 <template>
     <div :ref="containerRef" :id="id" :class="cx('root')" v-bind="ptmi('root')">
-        <div v-if="$slots.start" :class="cx('start')" v-bind="ptm('start')">
+        <div v-if="$scopedSlots.start" :class="cx('start')" v-bind="ptm('start')">
             <slot name="start"></slot>
         </div>
         <slot :id="id" name="menubutton" :className="cx('menubutton')" :toggleCallback="(event) => menuButtonClick(event)">
@@ -16,8 +16,7 @@
                 :aria-label="$primevue.config.locale.aria?.navigation"
                 @click="menuButtonClick($event)"
                 @keydown="menuButtonKeydown($event)"
-                v-bind="ptm('menubutton')"
-            >
+                v-bind="ptm('menubutton')">
                 <slot name="menubuttonicon">
                     <BarsIcon v-bind="ptm('menubuttonicon')" />
                 </slot>
@@ -37,7 +36,7 @@
             :focusedItemId="focused ? focusedItemId : undefined"
             :items="processedItems"
             :horizontal="horizontal"
-            :templates="$slots"
+            :templates="$scopedSlots"
             :activeItem="activeItem"
             :mobileActive="mobileActive"
             :level="0"
@@ -49,7 +48,7 @@
             @item-click="onItemClick"
             @item-mouseenter="onItemMouseEnter"
         />
-        <div v-if="$slots.end" :class="cx('end')" v-bind="ptm('end')">
+        <div v-if="$scopedSlots.end" :class="cx('end')" v-bind="ptm('end')">
             <slot name="end"></slot>
         </div>
     </div>
@@ -103,7 +102,7 @@ export default {
         this.id = this.id || UniqueComponentId();
         this.bindMatchMediaListener();
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.mobileActive = false;
         this.unbindOutsideClickListener();
         this.unbindResizeListener();

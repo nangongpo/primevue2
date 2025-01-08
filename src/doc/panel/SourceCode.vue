@@ -71,7 +71,7 @@ export default {
                     items: [{
                         label: 'Vue Website',
                         icon: 'pi pi-external-link',
-                        url: 'https://vuejs.org/'
+                        url: 'https://v2.vuejs.org/'
                     },
                     {
                         label: 'Router',

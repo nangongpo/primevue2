@@ -125,12 +125,12 @@
         <Button type="button" icon="pi pi-search" :loading="loading[2]" @click="load(2)" />
         <Button type="button" label="Search" :loading="loading[3]" @click="load(3)" />
 
-        <h5>Button Set</h5>
-        <span class="p-buttonset">
+        <h5>Button Group</h5>
+        <ButtonGroup>
           <Button label="Save" icon="pi pi-check" />
           <Button label="Delete" icon="pi pi-trash" />
           <Button label="Cancel" icon="pi pi-times" />
-        </span>
+        </ButtonGroup>
 
         <h5>Sizes</h5>
         <div class="sizes">
@@ -171,7 +171,7 @@ export default {
   margin-right: 0.5rem;
 }
 
-.p-buttonset {
+.p-button-group {
   .p-button {
     margin-right: 0;
   }

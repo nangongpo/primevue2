@@ -72,9 +72,9 @@
     <p>Button displays a <i>loadingIcon</i> when <i>loading</i> property is enabled.</p>
     <DocSectionCode :code="loadingStateCode" />
 
-    <h5>ButtonSet</h5>
-    <p>Wrapping the buttons in a container having a <i>.p-buttonset</i> class, groups the buttons side to side.</p>
-    <DocSectionCode :code="buttonSetCode" />
+    <h5>ButtonGroup</h5>
+    <p>Wrapping the buttons in a container having a <i>.p-button-group</i> class, groups the buttons side to side.</p>
+    <DocSectionCode :code="buttonGroupCode" />
 
     <h5>Sizes</h5>
     <p>
@@ -204,6 +204,7 @@ export default {
       importCode: {
         basic: `
 import Button from 'primevue2/button';
+import ButtonGroup from 'primevue2/buttongroup';
         `
       },
       buttonCode: {
@@ -271,13 +272,13 @@ import Button from 'primevue2/button';
 <Button label="Save" icon="pi pi-check" :loading="isLoading" />
         `      
       },
-      buttonSetCode: {
+      buttonGroupCode: {
         basic: `
-<span class="p-buttonset">
+<ButtonGroup>
     <Button label="Save" icon="pi pi-check" />
     <Button label="Delete" icon="pi pi-trash" />
     <Button label="Cancel" icon="pi pi-times" />
-</span>
+</ButtonGroup>
         `      
       },
       sizesCode: {

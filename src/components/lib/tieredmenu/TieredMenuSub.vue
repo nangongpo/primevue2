@@ -25,10 +25,9 @@
                         @click="onItemClick($event, processedItem)"
                         @mouseenter="onItemMouseEnter($event, processedItem)"
                         @mousemove="onItemMouseMove($event, processedItem)"
-                        v-bind="getPTOptions(processedItem, index, 'content')"
-                    >
+                        v-bind="getPTOptions(processedItem, index, 'content')">
                         <template v-if="!templates.item">
-                            <a v-ripple :href="getItemProp(processedItem, 'url')" :class="cx('action')" :target="getItemProp(processedItem, 'target')" tabindex="-1" aria-hidden="true" v-bind="getPTOptions(processedItem, index, 'action')">
+                            <a v-ripple :href="getItemProp(processedItem, 'url')" :class="cx('action')" :target="getItemProp(processedItem, 'target')" tabindex="-1" v-bind="getPTOptions(processedItem, index, 'action')">
                                 <component v-if="templates.itemicon" :is="templates.itemicon" :item="processedItem.item" :class="cx('icon')" />
                                 <span v-else-if="getItemProp(processedItem, 'icon')" :class="[cx('icon'), getItemProp(processedItem, 'icon')]" v-bind="getPTOptions(processedItem, index, 'icon')" />
                                 <span :id="getItemLabelId(processedItem)" :class="cx('label')" v-bind="getPTOptions(processedItem, index, 'label')">{{ getItemLabel(processedItem) }}</span>
@@ -62,7 +61,6 @@
                 </li>
                 <li
                     v-if="isItemVisible(processedItem) && getItemProp(processedItem, 'separator')"
-                    :key="'separator_' + getItemKey(processedItem)"
                     :id="getItemId(processedItem)"
                     :style="getItemProp(processedItem, 'style')"
                     :class="[cx('separator'), getItemProp(processedItem, 'class')]"
@@ -113,7 +111,7 @@ export default {
             default: null
         },
         activeItemPath: {
-            type: Object,
+            type: Array,
             default: null
         },
         tabindex: {

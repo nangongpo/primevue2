@@ -248,10 +248,10 @@ import OrganizationChart from 'primevue2/organizationchart';
       },
       baseCode: {
         basic: `
- <OrganizationChart :value="data">
-    <template #default="slotProps">
-        <span>{{slotProps.node.data.label}}</span>
-    </template>
+<OrganizationChart :value="data">
+  <template #default="slotProps">
+    <span>{{ slotProps.node.label }}</span>
+  </template>
 </OrganizationChart>
         `
       },
@@ -261,38 +261,31 @@ export default {
     data() {
         return {
             data: {
-                key: '0',
-                data: {label: 'F.C. Barcelona'},
-                children: [
+              label: 'Argentina',
+              children: [
+                {
+                  label: 'Argentina',
+                  children: [
                     {
-                        key: '0_0',
-                        data: {label: 'F.C. Barcelona'},
-                        children: [
-                            {
-                                key: '0_0_0',
-                                data: {label: 'Chelsea F.C.'}
-                            },
-                            {
-                                key: '0_0_1',
-                                data: {label: 'F.C. Barcelona'}
-                            }
-                        ]
+                      label: 'Argentina'
                     },
                     {
-                        key: '0_1',
-                        data: {label: 'Real Madrid'},
-                        children: [
-                            {
-                                key: '0_1_0',
-                                data: {label: 'Bayern Munich'}
-                            },
-                            {
-                                key: '0_1_1',
-                                data: {label: 'Real Madrid'}
-                            }
-                        ]
+                      label: 'Croatia'
                     }
-                ]
+                  ]
+                },
+                {
+                  label: 'France',
+                  children: [
+                    {
+                      label: 'France'
+                    },
+                    {
+                      label: 'Morocco'
+                    }
+                  ]
+                }
+              ]
             }
         }
     }

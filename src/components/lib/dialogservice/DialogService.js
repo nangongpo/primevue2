@@ -21,7 +21,7 @@ export default {
             }
         };
 
-        // app.config.unwrapInjectedRef = true; // Remove it after Vue 3.3. Details: https://vuejs.org/guide/components/provide-inject.html#working-with-reactivity
+        // app.config.unwrapInjectedRef = true; // Remove it after Vue 3.3. Details: https://v2.vuejs.org/guide/components/provide-inject.html#working-with-reactivity
         app.prototype.$dialog = DialogService;
         app.provide(PrimeVueDialogSymbol, DialogService);
     }

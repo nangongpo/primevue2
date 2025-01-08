@@ -32,7 +32,7 @@
                     <span :class="cx('label')" v-bind="ptm('label')">{{ val }}</span>
                 </slot>
                 <slot name="removetokenicon" :className="cx('removeTokenIcon')" :index="i" :onClick="(event) => removeItem(event, i)" :removeCallback="(event) => removeItem(event, i)">
-                    <component :is="removeTokenIcon ? 'span' : 'TimesCircleIcon'" :class="[cx('removeTokenIcon'), removeTokenIcon]" @click="removeItem($event, i)" aria-hidden="true" v-bind="ptm('removeTokenIcon')" />
+                    <DynamicComponent :template="removeTokenIcon ? 'span' : 'TimesCircleIcon'" :className="[cx('removeTokenIcon'), removeTokenIcon]" @click="removeItem($event, i)" aria-hidden="true" v-bind="ptm('removeTokenIcon')" />
                 </slot>
             </li>
             <li :class="cx('inputToken')" role="option" v-bind="ptm('inputToken')">

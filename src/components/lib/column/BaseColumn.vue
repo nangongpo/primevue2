@@ -38,11 +38,11 @@ export default {
             type: null,
             default: null
         },
-        style: {
-            type: null,
+        styleName: {
+            type: Object,
             default: null
         },
-        class: {
+        className: {
             type: String,
             default: null
         },

@@ -20,14 +20,13 @@
         :data-p-highlight="isColumnSorted()"
         :data-p-filter-column="filterColumn"
         :data-p-frozen-column="columnProp('frozen')"
-        :data-p-reorderable-column="reorderableColumns"
-    >
+        :data-p-reorderable-column="reorderableColumns">
         <span v-if="resizableColumns && !columnProp('frozen')" :class="cx('columnResizer')" @mousedown="onResizeStart" v-bind="getColumnPT('columnResizer')"></span>
         <div :class="cx('headerContent')" v-bind="getColumnPT('headerContent')">
-            <component v-if="column.children && column.children.header" :is="column.children.header" :column="column" />
+            <DynamicComponent v-if="column.$scopedSlots && column.$scopedSlots.header" :template="column.$scopedSlots.header" :column="column" />
             <span v-if="columnProp('header')" :class="cx('headerTitle')" v-bind="getColumnPT('headerTitle')">{{ columnProp('header') }}</span>
             <span v-if="columnProp('sortable')" v-bind="getColumnPT('sort')">
-                <component :is="(column.children && column.children.sorticon) || sortableColumnIcon" :sorted="sortState.sorted" :sortOrder="sortState.sortOrder" :class="cx('sortIcon')" v-bind="getColumnPT('sorticon')" />
+                <DynamicComponent :template="(column.$scopedSlots && column.$scopedSlots.sorticon) || sortableColumnIcon" :sorted="sortState.sorted" :sortOrder="sortState.sortOrder" :className="cx('sortIcon')" v-bind="getColumnPT('sorticon')" />
             </span>
             <span v-if="isMultiSorted()" :class="cx('sortBadge')" v-bind="getColumnPT('sortBadge')">{{ getBadgeValue() }}</span>
             <DTHeaderCheckbox
@@ -35,26 +34,26 @@
                 :checked="allRowsSelected"
                 @change="onHeaderCheckboxChange"
                 :disabled="empty"
-                :headerCheckboxIconTemplate="column.children && column.children.headercheckboxicon"
+                :headerCheckboxIconTemplate="column.$scopedSlots && column.$scopedSlots.headercheckboxicon"
                 :column="column"
                 :unstyled="unstyled"
                 :pt="pt"
             />
             <DTColumnFilter
-                v-if="filterDisplay === 'menu' && column.children && column.children.filter"
+                v-if="filterDisplay === 'menu' && column.$scopedSlots && column.$scopedSlots.filter"
                 :field="columnProp('filterField') || columnProp('field')"
                 :type="columnProp('dataType')"
                 display="menu"
                 :showMenu="columnProp('showFilterMenu')"
-                :filterElement="column.children && column.children.filter"
-                :filterHeaderTemplate="column.children && column.children.filterheader"
-                :filterFooterTemplate="column.children && column.children.filterfooter"
-                :filterClearTemplate="column.children && column.children.filterclear"
-                :filterApplyTemplate="column.children && column.children.filterapply"
-                :filterIconTemplate="column.children && column.children.filtericon"
-                :filterAddIconTemplate="column.children && column.children.filteraddicon"
-                :filterRemoveIconTemplate="column.children && column.children.filterremoveicon"
-                :filterClearIconTemplate="column.children && column.children.filterclearicon"
+                :filterElement="column.$scopedSlots && column.$scopedSlots.filter"
+                :filterHeaderTemplate="column.$scopedSlots && column.$scopedSlots.filterheader"
+                :filterFooterTemplate="column.$scopedSlots && column.$scopedSlots.filterfooter"
+                :filterClearTemplate="column.$scopedSlots && column.$scopedSlots.filterclear"
+                :filterApplyTemplate="column.$scopedSlots && column.$scopedSlots.filterapply"
+                :filterIconTemplate="column.$scopedSlots && column.$scopedSlots.filtericon"
+                :filterAddIconTemplate="column.$scopedSlots && column.$scopedSlots.filteraddicon"
+                :filterRemoveIconTemplate="column.$scopedSlots && column.$scopedSlots.filterremoveicon"
+                :filterClearIconTemplate="column.$scopedSlots && column.$scopedSlots.filterclearicon"
                 :filters="filters"
                 :filtersStore="filtersStore"
                 :filterInputProps="filterInputProps"
@@ -205,7 +204,7 @@ export default {
         },
         getColumnPT(key) {
             const columnMetaData = {
-                props: this.column.props,
+                props: this.column.$props,
                 parent: {
                     instance: this,
                     props: this.$props,
@@ -224,7 +223,7 @@ export default {
             return mergeProps(this.ptm(`column.${key}`, { column: columnMetaData }), this.ptm(`column.${key}`, columnMetaData), this.ptmo(this.getColumnProp(), key, columnMetaData));
         },
         getColumnProp() {
-            return this.column.props && this.column.props.pt ? this.column.props.pt : undefined; //@todo:
+          return this.column?.pt //@todo:
         },
         onClick(event) {
             this.$emit('column-click', { originalEvent: event, column: this.column });
@@ -309,13 +308,19 @@ export default {
     },
     computed: {
         containerClass() {
-            return [this.cx('headerCell'), this.filterColumn ? this.columnProp('filterHeaderClass') : this.columnProp('headerClass'), this.columnProp('class')];
+            return ObjectUtils.toFlattenArray(
+              this.cx('headerCell'),
+              this.filterColumn ? this.columnProp('filterHeaderClass') : this.columnProp('headerClass'), 
+              this.columnProp('className')
+            )
         },
         containerStyle() {
             let headerStyle = this.filterColumn ? this.columnProp('filterHeaderStyle') : this.columnProp('headerStyle');
-            let columnStyle = this.columnProp('style');
+            let columnStyle = this.columnProp('styleName');
 
-            return this.columnProp('frozen') ? [columnStyle, headerStyle, this.styleObject] : [columnStyle, headerStyle];
+            return this.columnProp('frozen') 
+              ? ObjectUtils.toFlattenArray(columnStyle, headerStyle, this.styleObject) 
+              : ObjectUtils.toFlattenArray(columnStyle, headerStyle)
         },
         sortState() {
             let sorted = false;

@@ -230,7 +230,7 @@ export interface VirtualScrollerProps {
     /**
      * Inline style of the component.
      */
-    styleObject?: any;
+    styleName?: any;
     /**
      * Style class of the component.
      */

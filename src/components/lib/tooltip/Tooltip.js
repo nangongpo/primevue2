@@ -2,7 +2,7 @@ import { ConnectedOverlayScrollHandler, DomHandler, ObjectUtils, UniqueComponent
 import BaseTooltip from './BaseTooltip';
 
 const Tooltip = BaseTooltip.extend('tooltip', {
-    beforeMount(el, options) {
+    bind(el, options) {
         let target = this.getTarget(el);
 
         target.$_ptooltipModifiers = this.getModifiers(options);
@@ -33,13 +33,14 @@ const Tooltip = BaseTooltip.extend('tooltip', {
             }
         }
 
-        target.$_ptooltipZIndex = options.instance.$primevue?.config?.zIndex?.tooltip;
+        target.$_ptooltipZIndex = el.$instance?.$primevueConfig
+        ?.zIndex?.tooltip;
 
         this.bindEvents(target, options);
 
         el.setAttribute('data-pd-tooltip', true);
     },
-    updated(el, options) {
+    componentUpdated(el, options) {
         let target = this.getTarget(el);
 
         target.$_ptooltipModifiers = this.getModifiers(options);
@@ -80,7 +81,7 @@ const Tooltip = BaseTooltip.extend('tooltip', {
             }
         }
     },
-    unmounted(el, options) {
+    unbind(el, options) {
         let target = this.getTarget(el);
 
         this.remove(target);

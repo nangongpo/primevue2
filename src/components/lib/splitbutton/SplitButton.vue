@@ -1,5 +1,5 @@
 <template>
-    <div :class="containerClass" :style="style" v-bind="ptmi('root')" :data-p-severity="severity">
+    <div :class="containerClass" :style="styleName" v-bind="ptmi('root')" :data-p-severity="severity">
         <PVSButton
             type="button"
             :class="cx('button')"
@@ -14,11 +14,10 @@
             @click="onDefaultButtonClick"
             v-bind="buttonProps"
             :pt="ptm('button')"
-            :unstyled="unstyled"
-        >
-            <template v-if="$slots.icon" #icon="slotProps">
-                <slot name="icon" :className="slotProps.class">
-                    <span :class="[icon, slotProps.class]" v-bind="ptm('button')['icon']" data-pc-section="buttonicon" />
+            :unstyled="unstyled">
+            <template v-if="$scopedSlots.icon" #icon="slotProps">
+                <slot name="icon" :className="slotProps.className">
+                    <span :class="[icon, slotProps.className]" v-bind="ptm('button')['icon']" data-pc-section="buttonicon" />
                 </slot>
             </template>
             <template #default>
@@ -41,19 +40,18 @@
             :size="size"
             v-bind="menuButtonProps"
             :pt="ptm('menuButton')"
-            :unstyled="unstyled"
-        >
+            :unstyled="unstyled">
             <template #icon="slotProps">
-                <slot name="menubuttonicon" :className="slotProps.class">
-                    <component :is="menuButtonIcon ? 'span' : 'ChevronDownIcon'" :class="[menuButtonIcon, slotProps.class]" v-bind="ptm('menuButton')['icon']" data-pc-section="menubuttonicon" />
+                <slot name="menubuttonicon" :className="slotProps.className">
+                    <DynamicComponent :template="menuButtonIcon ? 'span' : 'ChevronDownIcon'" :className="[menuButtonIcon, slotProps.className]" v-bind="ptm('menuButton')['icon']" data-pc-section="menubuttonicon" />
                 </slot>
             </template>
         </PVSButton>
         <PVSMenu ref="menu" :id="id + '_overlay'" :model="model" :popup="true" :autoZIndex="autoZIndex" :baseZIndex="baseZIndex" :appendTo="appendTo" :unstyled="unstyled" :pt="ptm('menu')">
-            <template v-if="$slots.menuitemicon" #itemicon="slotProps">
-                <slot name="menuitemicon" :item="slotProps.item" :className="slotProps.class" />
+            <template v-if="$scopedSlots.menuitemicon" #itemicon="slotProps">
+                <slot name="menuitemicon" :item="slotProps.item" :className="slotProps.className" />
             </template>
-            <template v-if="$slots.item" #item="slotProps">
+            <template v-if="$scopedSlots.item" #item="slotProps">
                 <slot name="item" :item="slotProps.item" :hasSubmenu="slotProps.hasSubmenu" :label="slotProps.label" :props="slotProps.props"></slot>
             </template>
         </PVSMenu>
@@ -115,7 +113,7 @@ export default {
     },
     computed: {
         containerClass() {
-            return [this.cx('root'), this.class];
+            return [this.cx('root'), this.className];
         }
     },
     components: {

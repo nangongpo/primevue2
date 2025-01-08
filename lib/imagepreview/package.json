@@ -1,9 +1,0 @@
-{
-    "main": "./imagepreview.cjs.js",
-    "module": "./imagepreview.esm.js",
-    "unpkg": "./imagepreview.min.js",
-    "types": "./ImagePreview.d.ts",
-    "browser": {
-        "./sfc": "./ImagePreview.vue"
-    }
-}

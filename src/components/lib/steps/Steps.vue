@@ -12,15 +12,14 @@
                     @keydown="onItemKeydown($event, item, index)"
                     v-bind="getPTOptions('menuitem', item, index)"
                     :data-p-highlight="isActive(index)"
-                    :data-p-disabled="isItemDisabled(item, index)"
-                >
-                    <template v-if="!$slots.item">
+                    :data-p-disabled="isItemDisabled(item, index)">
+                    <template v-if="!$scopedSlots.item">
                         <span :class="cx('action')" v-bind="getPTOptions('action', item, index)">
                             <span :class="cx('step')" v-bind="getPTOptions('step', item, index)">{{ index + 1 }}</span>
                             <span :class="cx('label')" v-bind="getPTOptions('label', item, index)">{{ label(item) }}</span>
                         </span>
                     </template>
-                    <component v-else :is="$slots.item" :item="item" :index="index" :active="index === d_activeStep" :label="label(item)" :props="getMenuItemProps(item, index)"></component>
+                    <DynamicComponent v-else :template="$scopedSlots.item" :item="item" :index="index" :active="index === d_activeStep" :label="label(item)" :props="getMenuItemProps(item, index)"></DynamicComponent>
                 </li>
             </template>
         </ol>

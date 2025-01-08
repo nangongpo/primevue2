@@ -1,10 +1,10 @@
 <template>
     <div :class="cx('root')" @click="onBarClick" v-bind="ptmi('root')" :data-p-sliding="false">
-        <span :class="cx('range')" :style="[sx('range'), rangeStyle]" v-bind="ptm('range')"></span>
+        <span :class="cx('range')" :style="[...sx('range'), rangeStyle]" v-bind="ptm('range')"></span>
         <span
             v-if="!range"
             :class="cx('handle')"
-            :style="[sx('handle'), handleStyle]"
+            :style="[...sx('handle'), handleStyle]"
             @touchstart.passive="onDragStart($event)"
             @touchmove.passive="onDrag($event)"
             @touchend="onDragEnd($event)"
@@ -18,12 +18,12 @@
             :aria-labelledby="ariaLabelledby"
             :aria-label="ariaLabel"
             :aria-orientation="orientation"
-            v-bind="ptm('handle')"
-        ></span>
+            v-bind="ptm('handle')">
+        </span>
         <span
             v-if="range"
             :class="cx('handle')"
-            :style="[sx('handle'), rangeStartHandleStyle]"
+            :style="[...sx('handle'), rangeStartHandleStyle]"
             @touchstart.passive="onDragStart($event, 0)"
             @touchmove.passive="onDrag($event)"
             @touchend="onDragEnd($event)"
@@ -37,12 +37,12 @@
             :aria-labelledby="ariaLabelledby"
             :aria-label="ariaLabel"
             :aria-orientation="orientation"
-            v-bind="ptm('startHandler')"
-        ></span>
+            v-bind="ptm('startHandler')">
+        </span>
         <span
             v-if="range"
             :class="cx('handle')"
-            :style="[sx('handle'), rangeEndHandleStyle]"
+            :style="[...sx('handle'), rangeEndHandleStyle]"
             @touchstart.passive="onDragStart($event, 1)"
             @touchmove.passive="onDrag($event)"
             @touchend="onDragEnd($event)"
@@ -56,12 +56,13 @@
             :aria-labelledby="ariaLabelledby"
             :aria-label="ariaLabel"
             :aria-orientation="orientation"
-            v-bind="ptm('endHandler')"
-        ></span>
+            v-bind="ptm('endHandler')">
+        </span>
     </div>
 </template>
 
 <script>
+// 已更新
 import { DomHandler } from 'primevue2/utils';
 import BaseSlider from './BaseSlider.vue';
 
@@ -78,7 +79,7 @@ export default {
     barHeight: null,
     dragListener: null,
     dragEndListener: null,
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindDragListeners();
     },
     methods: {
@@ -100,7 +101,7 @@ export default {
             let newValue = (this.max - this.min) * (handleValue / 100) + this.min;
 
             if (this.step) {
-                const oldValue = this.range ? this.value[this.handleIndex] : this.value;
+                const oldValue = this.range ? this.currentValue[this.handleIndex] : this.currentValue;
                 const diff = newValue - oldValue;
 
                 if (diff < 0) newValue = oldValue + Math.ceil(newValue / this.step - oldValue / this.step) * this.step;
@@ -113,31 +114,31 @@ export default {
         },
         updateModel(event, value) {
             let newValue = parseFloat(value.toFixed(10));
-            let modelValue;
+            let _value;
 
             if (this.range) {
-              modelValue = this.value ? [...this.value] : [];
+              _value = this.currentValue ? [...this.currentValue] : [];
 
                 if (this.handleIndex == 0) {
                     if (newValue < this.min) newValue = this.min;
                     else if (newValue >= this.max) newValue = this.max;
 
-                    modelValue[0] = newValue;
+                    _value[0] = newValue;
                 } else {
                     if (newValue > this.max) newValue = this.max;
                     else if (newValue <= this.min) newValue = this.min;
 
-                    modelValue[1] = newValue;
+                    _value[1] = newValue;
                 }
             } else {
                 if (newValue < this.min) newValue = this.min;
                 else if (newValue > this.max) newValue = this.max;
 
-                modelValue = newValue;
+                _value = newValue;
             }
 
-            this.$emit('input', modelValue);
-            this.$emit('change', modelValue);
+            this.$emit('input', _value);
+            this.$emit('change', _value);
         },
         onDragStart(event, index) {
             if (this.disabled) {
@@ -148,7 +149,7 @@ export default {
             this.dragging = true;
             this.updateDomData();
 
-            if (this.range && this.value[0] === this.max) {
+            if (this.range && this.currentValue[0] === this.max) {
                 this.handleIndex = 0;
             } else {
                 this.handleIndex = index;
@@ -167,7 +168,7 @@ export default {
             if (this.dragging) {
                 this.dragging = false;
                 this.$el.setAttribute('data-p-sliding', false);
-                this.$emit('slideend', { originalEvent: event, value: this.value });
+                this.$emit('slideend', { originalEvent: event, currentValue: this.currentValue });
             }
         },
         onBarClick(event) {
@@ -228,12 +229,12 @@ export default {
             let newValue;
 
             if (this.range) {
-                if (this.step) newValue = this.value[index] - this.step;
-                else newValue = this.value[index] - 1;
+                if (this.step) newValue = this.currentValue[index] - this.step;
+                else newValue = this.currentValue[index] - 1;
             } else {
-                if (this.step) newValue = this.value - this.step;
-                else if (!this.step && pageKey) newValue = this.value - 10;
-                else newValue = this.value - 1;
+                if (this.step) newValue = this.currentValue - this.step;
+                else if (!this.step && pageKey) newValue = this.currentValue - 10;
+                else newValue = this.currentValue - 1;
             }
 
             this.updateModel(event, newValue);
@@ -243,12 +244,12 @@ export default {
             let newValue;
 
             if (this.range) {
-                if (this.step) newValue = this.value[index] + this.step;
-                else newValue = this.value[index] + 1;
+                if (this.step) newValue = this.currentValue[index] + this.step;
+                else newValue = this.currentValue[index] + 1;
             } else {
-                if (this.step) newValue = this.value + this.step;
-                else if (!this.step && pageKey) newValue = this.value + 10;
-                else newValue = this.value + 1;
+                if (this.step) newValue = this.currentValue + this.step;
+                else if (!this.step && pageKey) newValue = this.currentValue + 10;
+                else newValue = this.currentValue + 1;
             }
 
             this.updateModel(event, newValue);
@@ -278,7 +279,7 @@ export default {
         }
     },
     computed: {
-        value() {
+        currentValue() {
             if (this.range) {
                 return [this.value?.[0] ?? this.min, this.value?.[1] ?? this.max];
             }
@@ -308,16 +309,16 @@ export default {
             else return { bottom: this.handlePosition + '%' };
         },
         handlePosition() {
-            if (this.value < this.min) return 0;
-            else if (this.value > this.max) return 100;
-            else return ((this.value - this.min) * 100) / (this.max - this.min);
+            if (this.currentValue < this.min) return 0;
+            else if (this.currentValue > this.max) return 100;
+            else return ((this.currentValue - this.min) * 100) / (this.max - this.min);
         },
         rangeStartPosition() {
-            if (this.value && this.value[0]) return ((this.value[0] < this.min ? 0 : this.value[0] - this.min) * 100) / (this.max - this.min);
+            if (this.currentValue && this.currentValue[0]) return ((this.currentValue[0] < this.min ? 0 : this.currentValue[0] - this.min) * 100) / (this.max - this.min);
             else return 0;
         },
         rangeEndPosition() {
-            if (this.value && this.value.length === 2) return ((this.value[1] > this.max ? 100 : this.value[1] - this.min) * 100) / (this.max - this.min);
+            if (this.currentValue && this.currentValue.length === 2) return ((this.currentValue[1] > this.max ? 100 : this.currentValue[1] - this.min) * 100) / (this.max - this.min);
             else return 100;
         },
         rangeStartHandleStyle() {

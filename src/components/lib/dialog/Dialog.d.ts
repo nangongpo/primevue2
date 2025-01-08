@@ -409,7 +409,7 @@ export interface DialogEmits {
  *
  * [Live Demo](https://www.primevue.org/dialog/)
  * --- ---
- * ![PrimeVue](https://primefaces.org/cdn/primevue2/images/logo-100.png)
+ * ![PrimeVue](https://primefaces.org/cdn/primevue/images/logo-100.png)
  *
  * @group Component
  */

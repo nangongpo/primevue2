@@ -2,12 +2,12 @@ import { DomHandler, ObjectUtils } from 'primevue2/utils';
 import BaseFocusTrap from './BaseFocusTrap';
 
 const FocusTrap = BaseFocusTrap.extend('focustrap', {
-    mounted(el, binding) {
+    inserted(el, binding) {
         const { disabled } = binding.value || {};
 
         if (!disabled) {
             this.createHiddenFocusableElements(el, binding);
-            this.bind(el, binding);
+            this._bind(el, binding);
             this.autoElementFocus(el, binding);
         }
 
@@ -15,19 +15,19 @@ const FocusTrap = BaseFocusTrap.extend('focustrap', {
 
         this.$el = el;
     },
-    updated(el, binding) {
+    componentUpdated(el, binding) {
         const { disabled } = binding.value || {};
 
-        disabled && this.unbind(el);
+        disabled && this._unbind(el);
     },
-    unmounted(el) {
-        this.unbind(el);
+    unbind(el) {
+        this._unbind(el);
     },
     methods: {
         getComputedSelector(selector) {
             return `:not(.p-hidden-focusable):not([data-p-hidden-focusable="true"])${selector ?? ''}`;
         },
-        bind(el, binding) {
+        _bind(el, binding) {
             const { onFocusIn, onFocusOut } = binding.value || {};
 
             el.$_pfocustrap_mutationobserver = new MutationObserver((mutationList) => {
@@ -59,7 +59,7 @@ const FocusTrap = BaseFocusTrap.extend('focustrap', {
             el.addEventListener('focusin', el.$_pfocustrap_focusinlistener);
             el.addEventListener('focusout', el.$_pfocustrap_focusoutlistener);
         },
-        unbind(el) {
+        _unbind(el) {
             el.$_pfocustrap_mutationobserver && el.$_pfocustrap_mutationobserver.disconnect();
             el.$_pfocustrap_focusinlistener && el.removeEventListener('focusin', el.$_pfocustrap_focusinlistener) && (el.$_pfocustrap_focusinlistener = null);
             el.$_pfocustrap_focusoutlistener && el.removeEventListener('focusout', el.$_pfocustrap_focusoutlistener) && (el.$_pfocustrap_focusoutlistener = null);

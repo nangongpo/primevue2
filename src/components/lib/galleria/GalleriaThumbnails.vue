@@ -10,9 +10,8 @@
                 :aria-label="ariaPrevButtonLabel"
                 @click="navBackward($event)"
                 v-bind="{ ...prevButtonProps, ...ptm('previousThumbnailButton') }"
-                data-pc-group-section="thumbnailnavigator"
-            >
-                <component :is="templates.previousthumbnailicon || (isVertical ? 'ChevronUpIcon' : 'ChevronLeftIcon')" :class="cx('previousThumbnailIcon')" v-bind="ptm('previousThumbnailIcon')" />
+                data-pc-group-section="thumbnailnavigator">
+                <DynamicComponent :template="templates.previousthumbnailicon || (isVertical ? 'ChevronUpIcon' : 'ChevronLeftIcon')" :className="cx('previousThumbnailIcon')" v-bind="ptm('previousThumbnailIcon')" />
             </button>
             <div :class="cx('thumbnailItemsContainer')" :style="{ height: isVertical ? contentHeight : '' }" v-bind="ptm('thumbnailItemsContainer')">
                 <div
@@ -23,8 +22,7 @@
                     @touchstart="onTouchStart($event)"
                     @touchmove="onTouchMove($event)"
                     @touchend="onTouchEnd($event)"
-                    v-bind="ptm('thumbnailItems')"
-                >
+                    v-bind="ptm('thumbnailItems')">
                     <div
                         v-for="(item, index) of value"
                         :key="`p-galleria-thumbnail-item-${index}`"
@@ -38,17 +36,15 @@
                         :data-p-galleria-thumbnail-item-current="activeIndex === index"
                         :data-p-galleria-thumbnail-item-active="isItemActive(index)"
                         :data-p-galleria-thumbnail-item-start="firstItemAciveIndex() === index"
-                        :data-p-galleria-thumbnail-item-end="lastItemActiveIndex() === index"
-                    >
+                        :data-p-galleria-thumbnail-item-end="lastItemActiveIndex() === index">
                         <div
                             :class="cx('thumbnailItemContent')"
                             :tabindex="activeIndex === index ? '0' : '-1'"
                             :aria-label="ariaPageLabel(index + 1)"
                             :aria-current="activeIndex === index ? 'page' : undefined"
                             @click="onItemClick(index)"
-                            v-bind="ptm('thumbnailItemContent')"
-                        >
-                            <component v-if="templates.thumbnail" :is="templates.thumbnail" :item="item" />
+                            v-bind="ptm('thumbnailItemContent')">
+                            <DynamicComponent v-if="templates.thumbnail" :template="templates.thumbnail" :item="item" />
                         </div>
                     </div>
                 </div>
@@ -62,9 +58,8 @@
                 :aria-label="ariaNextButtonLabel"
                 @click="navForward($event)"
                 v-bind="{ ...nextButtonProps, ...ptm('nextThumbnailButton') }"
-                data-pc-group-section="thumbnailnavigator"
-            >
-                <component :is="templates.nextthumbnailicon || (isVertical ? 'ChevronDownIcon' : 'ChevronRightIcon')" :class="cx('nextThumbnailIcon')" v-bind="ptm('nextThumbnailIcon')" />
+                data-pc-group-section="thumbnailnavigator">
+                <DynamicComponent :template="templates.nextthumbnailicon || (isVertical ? 'ChevronDownIcon' : 'ChevronRightIcon')" :className="cx('nextThumbnailIcon')" v-bind="ptm('nextThumbnailIcon')" />
             </button>
         </div>
     </div>
@@ -199,7 +194,7 @@ export default {
             this.d_oldNumVisible = this.d_numVisible;
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (this.responsiveOptions) {
             this.unbindDocumentListeners();
         }

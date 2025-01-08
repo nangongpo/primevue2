@@ -796,6 +796,11 @@ export default new Router({
       path: '/virtualscroller',
       name: 'virtualscroller',
       component: () => import('./views/virtualscroller/VirtualScroller.vue')
+    },
+    {
+      path: '/teleport',
+      name: 'teleport',
+      component: () => import('./views/teleport/TeleportDemo.vue')
     }
   ]
 })

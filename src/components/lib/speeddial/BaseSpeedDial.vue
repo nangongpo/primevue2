@@ -55,8 +55,8 @@ export default {
             default: true
         },
         tooltipOptions: null,
-        style: null,
-        class: null,
+        styleName: null,
+        className: null,
         ariaLabelledby: {
             type: String,
             default: null

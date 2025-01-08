@@ -10,7 +10,7 @@ export default {
             type: String,
             default: null
         },
-        styleObject: null,
+        styleName: null,
         className: null,
         items: {
             type: Array,

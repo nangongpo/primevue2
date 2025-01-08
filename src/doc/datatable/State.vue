@@ -26,12 +26,12 @@ export default {
                 <InputText v-model="filters1['global'].value" placeholder="Global Search" />
             </span>
         </template>
-        <Column field="name" header="Name" :sortable="true" :styles="{width:'25%'}">
+        <Column field="name" header="Name" :sortable="true" :styleName="{width:'25%'}">
             <template #filter>
                 <InputText type="text" v-model="filters1['name']" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
-        <Column header="Country" :sortable="true" sortField="country.name" filterField="country.name" filterMatchMode="contains" :styles="{width:'25%'}">
+        <Column header="Country" :sortable="true" sortField="country.name" filterField="country.name" filterMatchMode="contains" :styleName="{width:'25%'}">
             <template #body="slotProps">
                 <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + slotProps.data.country.code" width="30" />
                 <span class="image-text">{{slotProps.data.country.name}}</span>
@@ -40,7 +40,7 @@ export default {
                 <InputText type="text" v-model="filters1['country.name']" class="p-column-filter" placeholder="Search by country"/>
             </template>
         </Column>
-        <Column header="Representative" :sortable="true" sortField="representative.name" filterField="representative.name" filterMatchMode="in" :styles="{width:'25%'}">
+        <Column header="Representative" :sortable="true" sortField="representative.name" filterField="representative.name" filterMatchMode="in" :styleName="{width:'25%'}">
             <template #body="slotProps">
                 <img :alt="slotProps.data.representative.name" :src="'demo/images/avatar/' + slotProps.data.representative.image" width="32" style="vertical-align: middle" />
                 <span class="image-text">{{slotProps.data.representative.name}}</span>
@@ -56,7 +56,7 @@ export default {
                 </MultiSelect>
             </template>
         </Column>
-        <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styles="{width:'25%'}">
+        <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styleName="{width:'25%'}">
             <template #body="slotProps">
                 <span :class="'customer-badge status-' + slotProps.data.status">{{slotProps.data.status}}</span>
             </template>
@@ -85,12 +85,12 @@ export default {
                 <InputText v-model="filters2['global'].value" placeholder="Global Search" />
             </span>
         </template>
-        <Column field="name" header="Name" :sortable="true" :styles="{width:'25%'}">
+        <Column field="name" header="Name" :sortable="true" :styleName="{width:'25%'}">
             <template #filter>
                 <InputText type="text" v-model="filters2['name']" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
-        <Column header="Country" :sortable="true" sortField="country.name" filterField="country.name" filterMatchMode="contains" :styles="{width:'25%'}">
+        <Column header="Country" :sortable="true" sortField="country.name" filterField="country.name" filterMatchMode="contains" :styleName="{width:'25%'}">
             <template #body="slotProps">
                 <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + slotProps.data.country.code" width="30" />
                 <span class="image-text">{{slotProps.data.country.name}}</span>
@@ -99,7 +99,7 @@ export default {
                 <InputText type="text" v-model="filters2['country.name']" class="p-column-filter" placeholder="Search by country"/>
             </template>
         </Column>
-        <Column header="Representative" :sortable="true" sortField="representative.name" filterField="representative.name" filterMatchMode="in" :styles="{width:'25%'}">
+        <Column header="Representative" :sortable="true" sortField="representative.name" filterField="representative.name" filterMatchMode="in" :styleName="{width:'25%'}">
             <template #body="slotProps">
                 <img :alt="slotProps.data.representative.name" :src="'demo/images/avatar/' + slotProps.data.representative.image" width="32" style="vertical-align: middle" />
                 <span class="image-text">{{slotProps.data.representative.name}}</span>
@@ -115,7 +115,7 @@ export default {
                 </MultiSelect>
             </template>
         </Column>
-        <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styles="{width:'25%'}">
+        <Column field="status" header="Status" :sortable="true" filterMatchMode="equals" :styleName="{width:'25%'}">
             <template #body="slotProps">
                 <span :class="'customer-badge status-' + slotProps.data.status">{{slotProps.data.status}}</span>
             </template>

@@ -12,7 +12,7 @@
 
     <div class="content-section implementation">
       <div class="card">
-        <Steps :model="items" :readonly="true" />
+        <Steps :activeStep.sync="active" :model="items" :readonly="true" />
       </div>
 
       <keep-alive>
@@ -31,6 +31,7 @@ import StepsDoc from '@/doc/steps/index.vue'
 export default {
   data() {
     return {
+      active: 0,
       items: [
         {
           label: 'Personal',
@@ -58,11 +59,12 @@ export default {
   methods: {
     nextPage(event) {
       this.formObject = { ...this.formObject, ...event.formData }
-
-      this.$router.push(this.items[event.pageIndex + 1].to)
+      this.active = event.pageIndex + 1
+      this.$router.push(this.items[this.active].to)
     },
     prevPage(event) {
-      this.$router.push(this.items[event.pageIndex - 1].to)
+      this.active--
+      this.$router.push(this.items[this.active].to)
     },
     complete() {
       this.$toast.add({

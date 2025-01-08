@@ -27,15 +27,15 @@
             :unstyled="unstyled"
         />
         <slot v-if="toggleMask && unmasked" name="hideicon" :onClick="onMaskToggle" :toggleCallback="onMaskToggle">
-            <component :is="hideIcon ? 'i' : 'EyeSlashIcon'" :class="[cx('hideIcon'), hideIcon]" @click="onMaskToggle" v-bind="ptm('hideIcon')" />
+            <DynamicComponent :template="hideIcon ? 'i' : 'EyeSlashIcon'" :className="[cx('hideIcon'), hideIcon]" @click="onMaskToggle" v-bind="ptm('hideIcon')" />
         </slot>
         <slot v-if="toggleMask && !unmasked" name="showicon" :onClick="onMaskToggle" :toggleCallback="onMaskToggle">
-            <component :is="showIcon ? 'i' : 'EyeIcon'" :class="[cx('showIcon'), showIcon]" @click="onMaskToggle" v-bind="ptm('showIcon')" />
+            <DynamicComponent :template="showIcon ? 'i' : 'EyeIcon'" :className="[cx('showIcon'), showIcon]" @click="onMaskToggle" v-bind="ptm('showIcon')" />
         </slot>
         <span class="p-hidden-accessible" aria-live="polite" v-bind="ptm('hiddenAccesible')" :data-p-hidden-accessible="true">
             {{ infoText }}
         </span>
-        <Portal :appendTo="appendTo">
+        <Portal :appendTo="appendTo" key="password">
             <transition name="p-connected-overlay" @enter="onOverlayEnter" @leave="onOverlayLeave" @after-leave="onOverlayAfterLeave" v-bind="ptm('transition')">
                 <div v-if="overlayVisible" :ref="overlayRef" :id="panelId || panelUniqueId" :class="[cx('panel'), panelClass]" :style="panelStyle" @click="onOverlayClick" v-bind="{ ...panelProps, ...ptm('panel') }">
                     <slot name="header"></slot>
@@ -92,7 +92,7 @@ export default {
         this.mediumCheckRegExp = new RegExp(this.mediumRegex);
         this.strongCheckRegExp = new RegExp(this.strongRegex);
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindResizeListener();
 
         if (this.scrollHandler) {
@@ -140,7 +140,7 @@ export default {
             return level;
         },
         onInput(newVal) {
-            this.$emit('input', newVal);
+            this.$emit('input', event.target.value);
             this.$emit('change', newVal);
         },
         onFocus(event) {

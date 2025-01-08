@@ -37,7 +37,7 @@ import { FieldsetPassThroughOptions } from '../fieldset';
 import { FileUploadPassThroughOptions } from '../fileupload';
 import { FocusTrapDirectivePassThroughOptions } from '../focustrap';
 import { GalleriaPassThroughOptions } from '../galleria';
-import { ImagePassThroughOptions } from '../image';
+import { ImagePassThroughOptions } from '../imagepreview';
 import { InlineMessagePassThroughOptions } from '../inlinemessage';
 import { InplacePassThroughOptions } from '../inplace';
 import { InputMaskPassThroughOptions } from '../inputmask';

@@ -1,6 +1,6 @@
 <template>
     <div :ref="containerRef" :class="cx('root')" v-bind="ptmi('root')">
-        <div v-if="$slots.start" :class="cx('start')" v-bind="ptm('start')">
+        <div v-if="$scopedSlots.start" :class="cx('start')" v-bind="ptm('start')">
             <slot name="start"></slot>
         </div>
         <slot :id="id" name="menubutton" :className="cx('button')" :toggleCallback="(event) => menuButtonClick(event)">
@@ -28,7 +28,7 @@
             :id="id"
             role="menubar"
             :items="processedItems"
-            :templates="$slots"
+            :templates="$scopedSlots"
             :root="true"
             :mobileActive="mobileActive"
             tabindex="0"
@@ -48,7 +48,7 @@
             @item-mouseenter="onItemMouseEnter"
             @item-mousemove="onItemMouseMove"
         />
-        <div v-if="$slots.end" :class="cx('end')" v-bind="ptm('end')">
+        <div v-if="$scopedSlots.end" :class="cx('end')" v-bind="ptm('end')">
             <slot name="end"></slot>
         </div>
     </div>
@@ -99,7 +99,7 @@ export default {
         this.id = this.id || UniqueComponentId();
         this.bindMatchMediaListener();
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.mobileActive = false;
         this.unbindOutsideClickListener();
         this.unbindResizeListener();

@@ -2,12 +2,12 @@
     <li v-if="visible()" :class="[cx('menuitem'), item.class]" v-bind="ptm('menuitem', ptmOptions)">
         <template v-if="!templates.item">
             <a :href="item.url || '#'" :class="cx('action')" :target="item.target" :aria-current="isCurrentUrl()" @click="onClick" v-bind="ptm('action', ptmOptions)">
-                <component v-if="templates && templates.itemicon" :is="templates.itemicon" :item="item" :class="cx('icon', ptmOptions)" />
+                <DynamicComponent v-if="templates && templates.itemicon" :template="templates.itemicon" :item="item" :className="cx('icon', ptmOptions)" />
                 <span v-else-if="item.icon" :class="[cx('icon'), item.icon]" v-bind="ptm('icon', ptmOptions)" />
                 <span v-if="item.label" :class="cx('label')" v-bind="ptm('label', ptmOptions)">{{ label() }}</span>
             </a>
         </template>
-        <component v-else :is="templates.item" :item="item" :label="label()" :props="getMenuItemProps"></component>
+        <DynamicComponent v-else :template="templates.item" :item="item" :label="label()" :props="getMenuItemProps"></DynamicComponent>
     </li>
 </template>
 

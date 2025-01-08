@@ -64,8 +64,8 @@ export default {
     <template #loading>
         Loading customers data. Please wait.
     </template>
-    <Column selectionMode="multiple" :styles="{'min-width': '3rem'}"></Column>
-    <Column field="name" header="Name" sortable :styles="{'min-width': '14rem'}">
+    <Column selectionMode="multiple" :styleName="{'min-width': '3rem'}"></Column>
+    <Column field="name" header="Name" sortable :styleName="{'min-width': '14rem'}">
         <template #body="{data}">
             {{data.name}}
         </template>
@@ -73,7 +73,7 @@ export default {
             <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
         </template>
     </Column>
-    <Column field="country.name" header="Country" sortable filterMatchMode="contains" :styles="{'min-width': '14rem'}">
+    <Column field="country.name" header="Country" sortable filterMatchMode="contains" :styleName="{'min-width': '14rem'}">
         <template #body="{data}">
             <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + data.country.code" width="30" />
             <span class="image-text">{{data.country.name}}</span>
@@ -82,7 +82,7 @@ export default {
             <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by country"/>
         </template>
     </Column>
-    <Column header="Agent" sortable filterField="representative" sortField="representative.name" :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" :styles="{'min-width': '14rem'}">
+    <Column header="Agent" sortable filterField="representative" sortField="representative.name" :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" :styleName="{'min-width': '14rem'}">
         <template #body="{data}">
             <img :alt="data.representative.name" :src="'demo/images/avatar/' + data.representative.image" width="32" style="vertical-align: middle" />
             <span class="image-text">{{data.representative.name}}</span>
@@ -99,7 +99,7 @@ export default {
             </MultiSelect>
         </template>
     </Column>
-    <Column field="date" header="Date" sortable dataType="date" :styles="{'min-width': '8rem'}">
+    <Column field="date" header="Date" sortable dataType="date" :styleName="{'min-width': '8rem'}">
         <template #body="{data}">
             {{formatDate(data.date)}}
         </template>
@@ -107,7 +107,7 @@ export default {
             <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
         </template>
     </Column>
-    <Column field="balance" header="Balance" sortable dataType="numeric" :styles="{'min-width': '8rem'}">
+    <Column field="balance" header="Balance" sortable dataType="numeric" :styleName="{'min-width': '8rem'}">
         <template #body="{data}">
             {{formatCurrency(data.balance)}}
         </template>
@@ -115,7 +115,7 @@ export default {
             <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
         </template>
     </Column>
-    <Column field="status" header="Status" sortable :filterMenuStyle="{'width':'14rem'}" :styles="{'min-width': '10rem'}">
+    <Column field="status" header="Status" sortable :filterMenuStyle="{'width':'14rem'}" :styleName="{'min-width': '10rem'}">
         <template #body="{data}">
             <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
         </template>
@@ -130,7 +130,7 @@ export default {
             </Dropdown>
         </template>
     </Column>
-    <Column field="activity" header="Activity" sortable :showFilterMatchModes="false" :styles="{'min-width': '10rem'}">
+    <Column field="activity" header="Activity" sortable :showFilterMatchModes="false" :styleName="{'min-width': '10rem'}">
         <template #body="{data}">
             <ProgressBar :value="data.activity" :showValue="false" />
         </template>

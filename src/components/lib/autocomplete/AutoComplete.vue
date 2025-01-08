@@ -66,9 +66,9 @@
           :index="i"
           :onClick="(event) => removeOption(event, i)"
           :removeCallback="(event) => removeOption(event, i)">
-          <component
-            :is="removeTokenIcon ? 'span' : 'TimesCircleIcon'"
-            :class="[cx('removeTokenIcon'), removeTokenIcon]"
+          <DynamicComponent
+            :template="removeTokenIcon ? 'span' : 'TimesCircleIcon'"
+            :className="[cx('removeTokenIcon'), removeTokenIcon]"
             @click="removeOption($event, i)"
             aria-hidden="true"
             v-bind="ptm('removeTokenIcon')" />
@@ -131,9 +131,9 @@
       :pt="ptm('dropdownButton')">
       <template #icon>
         <slot name="dropdownicon" :className="dropdownIcon">
-          <component
-            :is="dropdownIcon ? 'span' : 'ChevronDownIcon'"
-            :class="dropdownIcon"
+          <DynamicComponent
+            :template="dropdownIcon ? 'span' : 'ChevronDownIcon'"
+            :className="dropdownIcon"
             v-bind="ptm('dropdownButton')['icon']"
             data-pc-section="dropdownicon" />
         </slot>
@@ -173,7 +173,7 @@
           <VirtualScroller
             :ref="virtualScrollerRef"
             v-bind="virtualScrollerOptions"
-            :styleObject="{ height: scrollHeight }"
+            :styleName="{ height: scrollHeight }"
             :items="visibleOptions"
             :tabindex="-1"
             :disabled="virtualScrollerDisabled"

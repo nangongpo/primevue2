@@ -9,10 +9,9 @@
         :disabled="disabled"
         :unstyled="unstyled"
         :pt="ptm('jumpToPageDropdown')"
-        data-pc-group-section="pagedropdown"
-    >
+        data-pc-group-section="pagedropdown">
         <template v-if="templates['jumptopagedropdownicon']" #dropdownicon="slotProps">
-            <component :is="templates['jumptopagedropdownicon']" :class="slotProps.className" />
+            <DynamicComponent :template="templates['jumptopagedropdownicon']" :className="slotProps.className" />
         </template>
     </JTPDropdown>
 </template>

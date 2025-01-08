@@ -1,9 +1,6 @@
 <template>
   <div>
-    <a
-      href="https://github.com/nangongpo/primevue2/tree/main/src/views/steps"
-      class="btn-viewsource"
-      target="_blank"
+    <a href="https://github.com/nangongpo/primevue2/tree/main/src/views/steps" class="btn-viewsource" target="_blank"
       rel="noopener noreferrer">
       <span>View on GitHub</span>
     </a>
@@ -20,9 +17,10 @@ export default {
     return {
       sourceCode1: {
         basic: `
-<Steps :model="items" :readonly="true"  style="margin-bottom: 1rem" />
+<Steps :activeStep.sync="active" :model="items" :readonly="true" />
 <keep-alive>
-    <router-view :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete" />
+    <router-view :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)"
+      @complete="complete" />
 </keep-alive>
         `
       },
@@ -31,6 +29,7 @@ export default {
 export default {
     data() {
         return {
+            active: 0,
             items: [{
                 label: 'Personal',
                 to: '/steps'
@@ -55,14 +54,13 @@ export default {
     },
     methods: {
         nextPage(event) {
-            for (let field in event.formData) {
-                this.formObject[field] = event.formData[field];
-            }
-
-            this.$router.push(this.items[event.pageIndex + 1].to);
+            this.formObject = { ...this.formObject, ...event.formData }
+            this.active = event.pageIndex + 1
+            this.$router.push(this.items[this.active].to)
         },
         prevPage(event) {
-            this.$router.push(this.items[event.pageIndex - 1].to);
+            this.active--
+            this.$router.push(this.items[this.active].to)
         },
         complete() {
             this.$toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + this.formObject.firstname + ' ' + this.formObject.lastname + ' your order completed.'});

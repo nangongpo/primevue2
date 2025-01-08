@@ -1,6 +1,6 @@
 <template>
-    <button v-ripple :class="cx('firstPageButton')" type="button" v-bind="getPTOptions('firstPageButton')" data-pc-group-section="pagebutton">
-        <component :is="template || 'AngleDoubleLeftIcon'" :class="cx('firstPageIcon')" v-bind="getPTOptions('firstPageIcon')" />
+    <button v-ripple :class="cx('firstPageButton')" type="button" v-bind="getPTOptions('firstPageButton')" v-on="$listeners" data-pc-group-section="pagebutton">
+        <DynamicComponent :template="template || 'AngleDoubleLeftIcon'" :className="cx('firstPageIcon')" v-bind="getPTOptions('firstPageIcon')" />
     </button>
 </template>
 
@@ -8,6 +8,7 @@
 import BaseComponent from 'primevue2/basecomponent';
 import AngleDoubleLeftIcon from 'primevue2/icons/angledoubleleft';
 import Ripple from 'primevue2/ripple';
+import { DynamicComponent } from 'primevue2/utils'
 
 export default {
     name: 'FirstPageLink',
@@ -29,6 +30,7 @@ export default {
         }
     },
     components: {
+        DynamicComponent: DynamicComponent,
         AngleDoubleLeftIcon: AngleDoubleLeftIcon
     },
     directives: {

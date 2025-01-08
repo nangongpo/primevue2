@@ -1,6 +1,6 @@
 <template>
     <td :style="containerStyle" :class="containerClass" role="cell" v-bind="{ ...getColumnPT('root'), ...getColumnPT('footerCell') }" :data-p-frozen-column="columnProp('frozen')">
-        <component v-if="column.children && column.children.footer" :is="column.children.footer" :column="column" />
+        <DynamicComponent v-if="column.children && column.children.footer" :template="column.children.footer" :column="column" />
         {{ columnProp('footer') }}
     </td>
 </template>
@@ -26,7 +26,7 @@ export default {
     },
     data() {
         return {
-            styleObject: {}
+            styleName: {}
         };
     },
     mounted() {
@@ -75,7 +75,7 @@ export default {
                         right = DomHandler.getOuterWidth(next) + parseFloat(next.style.right || 0);
                     }
 
-                    this.styleObject.right = right + 'px';
+                    this.styleName.right = right + 'px';
                 } else {
                     let left = 0;
                     let prev = DomHandler.getPreviousElementSibling(this.$el, '[data-p-frozen-column="true"]');
@@ -84,7 +84,7 @@ export default {
                         left = DomHandler.getOuterWidth(prev) + parseFloat(prev.style.left || 0);
                     }
 
-                    this.styleObject.left = left + 'px';
+                    this.styleName.left = left + 'px';
                 }
             }
         }
@@ -97,7 +97,7 @@ export default {
             let bodyStyle = this.columnProp('footerStyle');
             let columnStyle = this.columnProp('style');
 
-            return this.columnProp('frozen') ? [columnStyle, bodyStyle, this.styleObject] : [columnStyle, bodyStyle];
+            return this.columnProp('frozen') ? [columnStyle, bodyStyle, this.styleName] : [columnStyle, bodyStyle];
         }
     }
 };

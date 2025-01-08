@@ -1,5 +1,5 @@
 <template>
-    <div :class="cx('root')" :style="[sx('root'), containerStyle]" aria-hidden="true" v-bind="ptmi('root')"></div>
+    <div :class="cx('root')" :style="[...sx('root'), containerStyle]" aria-hidden="true" v-bind="ptmi('root')"></div>
 </template>
 
 <script>

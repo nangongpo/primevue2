@@ -8,6 +8,7 @@ import Badge from 'primevue2/badge'
 import BadgeDirective from 'primevue2/badgedirective'
 import BlockUI from 'primevue2/blockui'
 import Breadcrumb from 'primevue2/breadcrumb'
+import ButtonGroup from 'primevue2/buttongroup'
 import Button from 'primevue2/button'
 import Calendar from 'primevue2/calendar'
 import Card from 'primevue2/card'
@@ -34,12 +35,17 @@ import Divider from 'primevue2/divider'
 import Dock from 'primevue2/dock'
 import Dropdown from 'primevue2/dropdown'
 import Editor from 'primevue2/editor'
+import FloatLabel from 'primevue2/floatlabel'
+import IconField from 'primevue2/iconfield'
 import Fieldset from 'primevue2/fieldset'
 import FileUpload from 'primevue2/fileupload'
 import FullCalendar from 'primevue2/fullcalendar'
 import ImagePreview from 'primevue2/imagepreview'
 import InlineMessage from 'primevue2/inlinemessage'
 import Inplace from 'primevue2/inplace'
+import InputGroup from 'primevue2/inputgroup'
+import InputGroupAddon from 'primevue2/inputgroupaddon'
+import InputIcon from 'primevue2/inputicon'
 import InputMask from 'primevue2/inputmask'
 import InputNumber from 'primevue2/inputnumber'
 import InputSwitch from 'primevue2/inputswitch'
@@ -95,6 +101,7 @@ import Tooltip from 'primevue2/tooltip'
 import ToggleButton from 'primevue2/togglebutton'
 import TriStateCheckbox from 'primevue2/tristatecheckbox'
 import Galleria from 'primevue2/galleria'
+import Teleport from 'primevue2/teleport'
 
 // import './assets/styles/primevue.css'
 
@@ -111,6 +118,7 @@ export default {
     Vue.directive('ripple', Ripple)
     Vue.directive('styleclass', StyleClass)
 
+    Vue.component('Teleport', Teleport)
     Vue.component('Accordion', Accordion)
     Vue.component('AccordionTab', AccordionTab)
     Vue.component('Avatar', Avatar)
@@ -119,6 +127,7 @@ export default {
     Vue.component('Badge', Badge)
     Vue.component('BlockUI', BlockUI)
     Vue.component('Breadcrumb', Breadcrumb)
+    Vue.component('ButtonGroup', ButtonGroup)
     Vue.component('Button', Button)
     Vue.component('Calendar', Calendar)
     Vue.component('Card', Card)
@@ -143,12 +152,17 @@ export default {
     Vue.component('Dock', Dock)
     Vue.component('Dropdown', Dropdown)
     Vue.component('Editor', Editor)
+    Vue.component('FloatLabel', FloatLabel)
+    Vue.component('IconField', IconField)
     Vue.component('Fieldset', Fieldset)
     Vue.component('FileUpload', FileUpload)
     Vue.component('FullCalendar', FullCalendar)
     Vue.component('ImagePreview', ImagePreview)
     Vue.component('InlineMessage', InlineMessage)
     Vue.component('Inplace', Inplace)
+    Vue.component('InputGroup', InputGroup)
+    Vue.component('InputGroupAddon', InputGroupAddon)
+    Vue.component('InputIcon', InputIcon)
     Vue.component('InputMask', InputMask)
     Vue.component('InputNumber', InputNumber)
     Vue.component('InputSwitch', InputSwitch)

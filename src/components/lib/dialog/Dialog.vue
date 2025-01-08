@@ -2,8 +2,8 @@
     <Portal :appendTo="appendTo">
         <div v-if="containerVisible" :ref="maskRef" :class="cx('mask')" :style="sx('mask', true, { position, modal })" @click="onMaskClick" v-bind="ptm('mask')">
             <transition name="p-dialog" @before-enter="onBeforeEnter" @enter="onEnter" @before-leave="onBeforeLeave" @leave="onLeave" @after-leave="onAfterLeave" appear v-bind="ptm('transition')">
-                <div v-if="visible" :ref="containerRef" v-focustrap="{ disabled: !modal }" :class="cx('root')" :style="sx('root')" role="dialog" :aria-labelledby="ariaLabelledById" :aria-modal="modal" v-bind="ptmi('root')">
-                    <slot v-if="$slots.container" name="container" :onClose="close" :onMaximize="(event) => maximize(event)" :closeCallback="close" :maximizeCallback="(event) => maximize(event)"></slot>
+                <div v-if="visible" :ref="containerRef" v-focustrap="{ disabled: !modal }" :class="[...cx('root'), this.className]" :style="[...sx('root'), this.styleName]" role="dialog" :aria-labelledby="ariaLabelledById" :aria-modal="modal" v-bind="ptmi('root')">
+                    <slot v-if="$scopedSlots.container" name="container" :onClose="close" :onMaximize="(event) => maximize(event)" :closeCallback="close" :maximizeCallback="(event) => maximize(event)"></slot>
                     <template v-else>
                         <div v-if="showHeader" :ref="headerContainerRef" :class="cx('header')" @mousedown="initDrag" v-bind="ptm('header')">
                             <slot name="header" :className="cx('title')">
@@ -20,10 +20,9 @@
                                     type="button"
                                     :tabindex="maximizable ? '0' : '-1'"
                                     v-bind="ptm('maximizableButton')"
-                                    data-pc-group-section="headericon"
-                                >
+                                    data-pc-group-section="headericon">
                                     <slot name="maximizeicon" :maximized="maximized" :className="cx('maximizableIcon')">
-                                        <component :is="maximizeIconComponent" :class="[cx('maximizableIcon'), maximized ? minimizeIcon : maximizeIcon]" v-bind="ptm('maximizableIcon')" />
+                                        <DynamicComponent :template="maximizeIconComponent" :class="[cx('maximizableIcon'), maximized ? minimizeIcon : maximizeIcon]" v-bind="ptm('maximizableIcon')" />
                                     </slot>
                                 </button>
                                 <button
@@ -36,10 +35,9 @@
                                     :aria-label="closeAriaLabel"
                                     type="button"
                                     v-bind="{ ...closeButtonProps, ...ptm('closeButton') }"
-                                    data-pc-group-section="headericon"
-                                >
+                                    data-pc-group-section="headericon">
                                     <slot name="closeicon" :className="cx('closeButtonIcon')">
-                                        <component :is="closeIcon ? 'span' : 'TimesIcon'" :class="[cx('closeButtonIcon'), closeIcon]" v-bind="ptm('closeButtonIcon')"></component>
+                                        <DynamicComponent :template="closeIcon ? 'span' : 'TimesIcon'" :class="[cx('closeButtonIcon'), closeIcon]" v-bind="ptm('closeButtonIcon')"></DynamicComponent>
                                     </slot>
                                 </button>
                             </div>
@@ -47,7 +45,7 @@
                         <div :ref="contentRef" :class="[cx('content'), contentClass]" :style="contentStyle" v-bind="{ ...contentProps, ...ptm('content') }">
                             <slot></slot>
                         </div>
-                        <div v-if="footer || $slots.footer" :ref="footerContainerRef" :class="cx('footer')" v-bind="ptm('footer')">
+                        <div v-if="footer || $scopedSlots.footer" :ref="footerContainerRef" :class="cx('footer')" v-bind="ptm('footer')">
                             <slot name="footer">{{ footer }}</slot>
                         </div>
                     </template>
@@ -112,7 +110,7 @@ export default {
             this.containerVisible = this.visible;
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         this.unbindDocumentState();
         this.unbindGlobalListeners();
         this.destroyStyle();
@@ -148,6 +146,10 @@ export default {
             if (this.autoZIndex) {
                 ZIndexUtils.set('modal', this.mask, this.baseZIndex + this.$primevue.config.zIndex.modal);
             }
+
+        },
+        onAfterEnter() {
+            this.focus();
         },
         onBeforeLeave() {
             if (this.modal) {
@@ -181,13 +183,13 @@ export default {
                 return container && container.querySelector('[autofocus]');
             };
 
-            let focusTarget = this.$slots.footer && findFocusableElement(this.footerContainer);
+            let focusTarget = this.$scopedSlots.footer && findFocusableElement(this.footerContainer);
 
             if (!focusTarget) {
-                focusTarget = this.$slots.header && findFocusableElement(this.headerContainer);
+                focusTarget = this.$scopedSlots.header && findFocusableElement(this.headerContainer);
 
                 if (!focusTarget) {
-                    focusTarget = this.$slots.default && findFocusableElement(this.content);
+                    focusTarget = this.$scopedSlots.default && findFocusableElement(this.content);
 
                     if (!focusTarget) {
                         if (this.maximizable) {

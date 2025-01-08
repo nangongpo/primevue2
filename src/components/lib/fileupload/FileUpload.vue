@@ -3,23 +3,23 @@
         <input ref="fileInput" type="file" @change="onFileSelect" :multiple="multiple" :accept="accept" :disabled="chooseDisabled" v-bind="ptm('input')" />
         <div :class="cx('buttonbar')" v-bind="ptm('buttonbar')">
             <slot name="header" :files="files" :uploadedFiles="uploadedFiles" :chooseCallback="choose" :uploadCallback="upload" :clearCallback="clear">
-                <span v-ripple :class="chooseButtonClass" :style="style" @click="choose" @keydown.enter="choose" @focus="onFocus" @blur="onBlur" tabindex="0" v-bind="ptm('chooseButton')">
+                <span v-ripple :class="chooseButtonClass" :style="styleName" @click="choose" @keydown.enter="choose" @focus="onFocus" @blur="onBlur" tabindex="0" v-bind="ptm('chooseButton')">
                     <slot name="chooseicon" :className="cx('chooseIcon')">
-                        <component :is="chooseIcon ? 'span' : 'PlusIcon'" :class="[cx('chooseIcon'), chooseIcon]" aria-hidden="true" v-bind="ptm('chooseIcon')" />
+                        <DynamicComponent :template="chooseIcon ? 'span' : 'PlusIcon'" :className="[cx('chooseIcon'), chooseIcon]" aria-hidden="true" v-bind="ptm('chooseIcon')" />
                     </slot>
                     <span :class="cx('chooseButtonLabel')" v-bind="ptm('chooseButtonLabel')">{{ chooseButtonLabel }}</span>
                 </span>
                 <FileUploadButton v-if="showUploadButton" :label="uploadButtonLabel" @click="upload" :disabled="uploadDisabled" :unstyled="unstyled" :pt="ptm('uploadButton')">
                     <template #icon="iconProps">
                         <slot name="uploadicon">
-                            <component :is="uploadIcon ? 'span' : 'UploadIcon'" :class="[iconProps.class, uploadIcon]" aria-hidden="true" v-bind="ptm('uploadButton')['icon']" data-pc-section="uploadbuttonicon" />
+                            <DynamicComponent :template="uploadIcon ? 'span' : 'UploadIcon'" :className="[iconProps.class, uploadIcon]" aria-hidden="true" v-bind="ptm('uploadButton')['icon']" data-pc-section="uploadbuttonicon" />
                         </slot>
                     </template>
                 </FileUploadButton>
                 <FileUploadButton v-if="showCancelButton" :label="cancelButtonLabel" @click="clear" :disabled="cancelDisabled" :unstyled="unstyled" :pt="ptm('cancelButton')">
                     <template #icon="iconProps">
                         <slot name="cancelicon">
-                            <component :is="cancelIcon ? 'span' : 'TimesIcon'" :class="[iconProps.class, cancelIcon]" aria-hidden="true" v-bind="ptm('cancelButton')['icon']" data-pc-section="cancelbuttonicon" />
+                            <DynamicComponent :template="cancelIcon ? 'span' : 'TimesIcon'" :className="[iconProps.class, cancelIcon]" aria-hidden="true" v-bind="ptm('cancelButton')['icon']" data-pc-section="cancelbuttonicon" />
                         </slot>
                     </template>
                 </FileUploadButton>
@@ -29,24 +29,24 @@
             <slot name="content" :files="files" :uploadedFiles="uploadedFiles" :removeUploadedFileCallback="removeUploadedFile" :removeFileCallback="remove" :progress="progress" :messages="messages">
                 <template v-if="hasFiles">
                     <FileUploadProgressBar :value="progress" :showValue="false" :unstyled="unstyled" :pt="ptm('progressbar')" />
-                    <FileContent :files="files" @remove="remove" :badgeValue="pendingLabel" :previewWidth="previewWidth" :templates="$slots" :unstyled="unstyled" :pt="pt" />
+                    <FileContent :files="files" @remove="remove" :badgeValue="pendingLabel" :previewWidth="previewWidth" :templates="$scopedSlots" :unstyled="unstyled" :pt="pt" />
                 </template>
                 <FileUploadMessage v-for="msg of messages" :key="msg" severity="error" @close="onMessageClose" :unstyled="unstyled" :pt="ptm('message')">{{ msg }}</FileUploadMessage>
-                <FileContent :files="uploadedFiles" @remove="removeUploadedFile" :badgeValue="completedLabel" badgeSeverity="success" :previewWidth="previewWidth" :templates="$slots" :unstyled="unstyled" :pt="pt" />
+                <FileContent :files="uploadedFiles" @remove="removeUploadedFile" :badgeValue="completedLabel" badgeSeverity="success" :previewWidth="previewWidth" :templates="$scopedSlots" :unstyled="unstyled" :pt="pt" />
             </slot>
-            <div v-if="$slots.empty && !hasFiles && !hasUploadedFiles" :class="cx('empty')" v-bind="ptm('empty')">
+            <div v-if="$scopedSlots.empty && !hasFiles && !hasUploadedFiles" :class="cx('empty')" v-bind="ptm('empty')">
                 <slot name="empty"></slot>
             </div>
         </div>
     </div>
     <div v-else-if="isBasic" :class="cx('root')" v-bind="ptmi('root')">
         <FileUploadMessage v-for="msg of messages" :key="msg" severity="error" @close="onMessageClose" :unstyled="unstyled" :pt="ptm('messages')">{{ msg }}</FileUploadMessage>
-        <span v-ripple :class="chooseButtonClass" :style="style" @mouseup="onBasicUploaderClick" @keydown.enter="choose" @focus="onFocus" @blur="onBlur" tabindex="0" v-bind="ptm('chooseButton')">
+        <span v-ripple :class="chooseButtonClass" :style="styleName" @mouseup="onBasicUploaderClick" @keydown.enter="choose" @focus="onFocus" @blur="onBlur" tabindex="0" v-bind="ptm('chooseButton')">
             <slot v-if="!hasFiles || auto" name="uploadicon" :className="cx('uploadIcon')">
-                <component :is="uploadIcon ? 'span' : 'UploadIcon'" :class="[cx('uploadIcon'), uploadIcon]" aria-hidden="true" v-bind="ptm('uploadIcon')" />
+                <DynamicComponent :template="uploadIcon ? 'span' : 'UploadIcon'" :className="[cx('uploadIcon'), uploadIcon]" aria-hidden="true" v-bind="ptm('uploadIcon')" />
             </slot>
             <slot v-else name="chooseicon" :className="cx('chooseIcon')">
-                <component :is="chooseIcon ? 'span' : 'PlusIcon'" :class="[cx('chooseIcon'), chooseIcon]" aria-hidden="true" v-bind="ptm('chooseIcon')" />
+                <DynamicComponent :template="chooseIcon ? 'span' : 'PlusIcon'" :className="[cx('chooseIcon'), chooseIcon]" aria-hidden="true" v-bind="ptm('chooseIcon')" />
             </slot>
             <span :class="cx('label')" v-bind="ptm('label')">{{ basicChooseButtonLabel }}</span>
             <input v-if="!hasFiles" ref="fileInput" type="file" :accept="accept" :disabled="disabled" :multiple="multiple" @change="onFileSelect" @focus="onFocus" @blur="onBlur" v-bind="ptm('input')" />
@@ -366,7 +366,7 @@ export default {
             return this.mode === 'basic';
         },
         chooseButtonClass() {
-            return [this.cx('chooseButton'), this.class];
+            return [this.cx('chooseButton'), this.className];
         },
         basicChooseButtonLabel() {
             return this.auto ? this.chooseButtonLabel : this.hasFiles ? this.files.map((f) => f.name).join(', ') : this.chooseButtonLabel;

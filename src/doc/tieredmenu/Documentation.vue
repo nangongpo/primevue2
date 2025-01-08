@@ -160,7 +160,9 @@ import TieredMenu from 'primevue2/tieredmenu';
       },
       baseCode: {
         basic: `
-<TieredMenu :model="items" />
+<div class="flex justify-center">
+    <TieredMenu :model="items" />
+</div>
         `
       },
       baseCode2: {

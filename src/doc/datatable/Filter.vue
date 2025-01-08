@@ -34,7 +34,7 @@ export default {
         <template #loading>
             Loading customers data. Please wait.
         </template>
-        <Column field="name" header="Name" :styles="{'min-width':'12rem'}">
+        <Column field="name" header="Name" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 {{data.name}}
             </template>
@@ -42,7 +42,7 @@ export default {
                 <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
-        <Column header="Country" filterField="country.name" :styles="{'min-width':'12rem'}">
+        <Column header="Country" filterField="country.name" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + data.country.code" width="30" />
                 <span class="image-text">{{data.country.name}}</span>
@@ -60,7 +60,7 @@ export default {
                 <div class="px-3 pt-0 pb-3 text-center font-bold">Customized Buttons</div>
             </template>
         </Column>
-        <Column header="Agent" filterField="representative" :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" :styles="{'min-width':'14rem'}">
+        <Column header="Agent" filterField="representative" :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" :styleName="{'min-width':'14rem'}">
             <template #body="{data}">
                 <img :alt="data.representative.name" :src="'demo/images/avatar/' + data.representative.image" width="32" style="vertical-align: middle" />
                 <span class="image-text">{{data.representative.name}}</span>
@@ -77,7 +77,7 @@ export default {
                 </MultiSelect>
             </template>
         </Column>
-        <Column header="Date" filterField="date" dataType="date" :styles="{'min-width':'10rem'}">
+        <Column header="Date" filterField="date" dataType="date" :styleName="{'min-width':'10rem'}">
             <template #body="{data}">
                 {{formatDate(data.date)}}
             </template>
@@ -85,7 +85,7 @@ export default {
                 <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
             </template>
         </Column>
-        <Column header="Balance" filterField="balance" dataType="numeric" :styles="{'min-width':'10rem'}">
+        <Column header="Balance" filterField="balance" dataType="numeric" :styleName="{'min-width':'10rem'}">
             <template #body="{data}">
                 {{formatCurrency(data.balance)}}
             </template>
@@ -93,7 +93,7 @@ export default {
                 <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
             </template>
         </Column>
-        <Column field="status" header="Status" :filterMenuStyle="{'width':'14rem'}" :styles="{'min-width':'12rem'}">
+        <Column field="status" header="Status" :filterMenuStyle="{'width':'14rem'}" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
             </template>
@@ -109,7 +109,7 @@ export default {
                 </Dropdown>
             </template>
         </Column>
-        <Column field="activity" header="Activity" :showFilterMatchModes="false" :styles="{'min-width':'12rem'}">
+        <Column field="activity" header="Activity" :showFilterMatchModes="false" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 <ProgressBar :value="data.activity" :showValue="false"></ProgressBar>
             </template>
@@ -122,7 +122,7 @@ export default {
                 </div>
             </template>
         </Column>
-        <Column field="verified" header="Verified" dataType="boolean" bodyClass="text-center" :styles="{'min-width':'8rem'}">
+        <Column field="verified" header="Verified" dataType="boolean" bodyClass="text-center" :styleName="{'min-width':'8rem'}">
             <template #body="{data}">
                 <i class="pi" :class="{'true-icon pi-check-circle': data.verified, 'false-icon pi-times-circle': !data.verified}"></i>
             </template>
@@ -151,7 +151,7 @@ export default {
         <template #loading>
             Loading customers data. Please wait.
         </template>
-        <Column field="name" header="Name" :styles="{'min-width':'12rem'}">
+        <Column field="name" header="Name" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 {{data.name}}
             </template>
@@ -159,7 +159,7 @@ export default {
                 <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" :placeholder="\`Search by name - \${filterModel.matchMode}\`" v-tooltip.top.focus="'Hit enter key to filter'"/>
             </template>
         </Column>
-        <Column header="Country" filterField="country.name" :styles="{'min-width':'12rem'}">
+        <Column header="Country" filterField="country.name" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + data.country.code" width="30" />
                 <span class="image-text">{{data.country.name}}</span>
@@ -168,7 +168,7 @@ export default {
                 <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by country" v-tooltip.top.focus="'Filter as you type'"/>
             </template>
         </Column>
-        <Column header="Agent" filterField="representative" :showFilterMenu="false" :styles="{'min-width':'14rem'}">
+        <Column header="Agent" filterField="representative" :showFilterMenu="false" :styleName="{'min-width':'14rem'}">
             <template #body="{data}">
                 <img :alt="data.representative.name" :src="'demo/images/avatar/' + data.representative.image" width="32" style="vertical-align: middle" />
                 <span class="image-text">{{data.representative.name}}</span>
@@ -184,7 +184,7 @@ export default {
                 </MultiSelect>
             </template>
         </Column>
-        <Column field="status" header="Status" :showFilterMenu="false" :styles="{'min-width':'12rem'}">
+        <Column field="status" header="Status" :showFilterMenu="false" :styleName="{'min-width':'12rem'}">
             <template #body="{data}">
                 <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
             </template>
@@ -200,7 +200,7 @@ export default {
                 </Dropdown>
             </template>
         </Column>
-        <Column field="verified" header="Verified" dataType="boolean" :styles="{'min-width':'6rem'}">
+        <Column field="verified" header="Verified" dataType="boolean" :styleName="{'min-width':'6rem'}">
             <template #body="{data}">
                 <i class="pi" :class="{'true-icon pi-check-circle': data.verified, 'false-icon pi-times-circle': !data.verified}"></i>
             </template>
